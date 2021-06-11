@@ -11,7 +11,7 @@ function init(){
 
 //Función Listar
 function listar(){
-	var sucursal=$("#sucursal").val();
+	var sucursal=$("#sucursal_usuario").val();
 	tabla=$('#consultas_data').dataTable({
 		"aProcessing": true,//Activamos el procesamiento del datatables
 	    "aServerSide": true,//Paginación y filtrado realizados por el servidor

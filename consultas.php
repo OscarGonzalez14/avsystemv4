@@ -48,6 +48,7 @@ require_once('header.php');
 <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
 <input type="hidden" name="id_usuario" id="usuario" value="<?php echo $_SESSION["usuario"];?>"/>
 <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
+<input type="hidden" name="sucursal_usuario" id="sucursal_usuario" value="<?php echo $_SESSION["sucursal_usuario"];?>"/>
 <input type="text" id="fecha" value="<?php echo $hoy;?>">
 <script type="text/javascript" src="js/cleave.js"></script>
 <script type="text/javascript" src="js/pacientes.js"></script>
