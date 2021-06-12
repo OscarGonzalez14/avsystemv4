@@ -9,14 +9,12 @@ function init() {
   document.getElementById("iprima_oid").style.display = "none";
   document.getElementById("print_factura").style.display = "none";
   document.getElementById("credito_fiscal_print").style.display = "none";
-
 }
 
 $(document).ready(ocultar_btn_post_venta);
   function ocultar_btn_post_venta(){
   get_correlativo_venta();
   document.getElementById("post_venta").style.display = "none";
-
 }
 
 function mostrar_btn_post_venta(){

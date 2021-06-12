@@ -9,7 +9,6 @@ require_once("modals/modal_accesorios_ventas.php");
 require_once("modals/pacientes_con_consulta.php");
 require_once("modals/pacientes_sin_consulta.php");
 require_once("modals/listar_servicios_venta.php");
-
 require_once("modals/modal_recibo_inicial.php");
 require_once("modals/antireflejante_ventas.php");
 require_once("modals/photosensible_ventas.php");
@@ -17,7 +16,7 @@ require_once("modals/referentes.php");
 require_once("modals/empresas_credito_fiscal.php");
 require_once("modals/modal_correlativo_factura.php");
 require_once("modals/modal_oid.php");
-
+require_once("modals/modal_prima_oid.php");
 ?>
 <style>
   html{ 

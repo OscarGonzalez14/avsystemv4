@@ -153,7 +153,7 @@
  <a href="" id="print_pagare" target="_blank"><button class="btn btn-success" style="color:white;border-radius:5px;"><i class="fas fa-print"></i> IMPRIMIR PAGARÉ</button></a> 
 </div>
  <div style="margin: 2px">
- <a href="" id="iprima_oid" target="_blank"><button class="btn btn-dark" style="color:white;border-radius:5px;"><i class="fas fa-usd"></i> ABONAR PRIMA</button></a> 
+<button class="btn btn-dark" data-toggle="modal" data-target="#modal_prima_oid" data-backdrop="static" data-keyboard="false" id="iprima_oid" style="color:white;border-radius:5px;" onClick="get_correlativo_prima_oid();"><i class="fas fa-usd"></i> ABONAR PRIMA</button> 
 </div>
 </div> 
 

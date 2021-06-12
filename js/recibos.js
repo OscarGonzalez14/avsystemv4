@@ -41,6 +41,24 @@ function get_correlativo_recibo(){
     })
 }
 
+function get_correlativo_prima_oid(){
+  let sucursal_correlativo = $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
+
+  $.ajax({
+    url:"ajax/recibos.php?op=get_numero_recibo",
+    method:"POST",
+    data:{sucursal_correlativo:sucursal_correlativo,sucursal_usuario:sucursal_usuario},
+    cache:false,
+    dataType:"json",
+      success:function(data){
+      console.log(data); 
+    
+      $("#n_recibo_oid").html(data.correlativo);             
+      }
+    })
+}
+
 function registra_abono_inicial(){
   var fecha_rec_ini=$("#proxi_abono").val();
   var saldo=$("#saldo").val();
@@ -260,7 +278,94 @@ function listar_recibos_emitidos(){
        }).DataTable();
 }
 
+function reciboInicial(){
+  $('#recibo_inicial').modal('show');
+  var numero_venta = $("#n_venta").val();
+  var id_paciente = $("#id_paciente").val();
+  var evaluado = $("#evaluado").val();
+  var titular_cuenta = $("#titular_cuenta").val();
+  var monto_total = $("#total_venta").html();
 
+
+  $("#n_venta_recibo_ini").val(numero_venta);
+  $("#id_pac_ini").val(id_paciente);
+  $("#servicio_rec_ini").val(evaluado);
+  $("#recibi_rec_ini").val(titular_cuenta);
+  $("#monto_venta_rec_ini").val(monto_total);
+
+
+  $.ajax({
+  url:"ajax/ventas.php?op=get_datos_lentes_rec_ini",
+  method:"POST",
+  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  cache:false,
+  dataType:"json",
+  success:function(data)
+  {
+
+    console.log(data);  
+    $("#lente_rec_ini").val(data.producto);
+  }
+  })
+  ////////////////photo
+  $.ajax({
+  url:"ajax/ventas.php?op=get_datos_photo_rec_ini",
+  method:"POST",
+  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  cache:false,
+  dataType:"json",
+  success:function(data)
+  { 
+    console.log(data);  
+    $("#photo_rec_ini").val(data.producto);
+  }
+  })
+
+    ////////////////antireflejante
+  $.ajax({
+  url:"ajax/ventas.php?op=get_datos_ar_rec_ini",
+  method:"POST",
+  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  cache:false,
+  dataType:"json",
+  success:function(data)
+  { 
+    console.log(data);  
+    $("#ar_rec_ini").val(data.producto);
+  }
+  })
+      ////////////////aros
+  $.ajax({
+  url:"ajax/ventas.php?op=get_datos_aros_rec_ini",
+  method:"POST",
+  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  cache:false,
+  dataType:"json",
+  success:function(data)
+  { 
+    console.log(data);  
+    $("#marca_aro_ini").val(data.marca);
+    $("#modelo_aro_ini").val(data.modelo);
+    $("#color_aro_ini").val(data.color);
+  }
+  })
+//////////////DATOS PACIENTE
+  $.ajax({
+  url:"ajax/pacientes.php?op=datos_pacientes_rec_ini",
+  method:"POST",
+  data:{id_paciente:id_paciente},
+  cache:false,
+  dataType:"json",
+  success:function(data)
+  { 
+    console.log(data);  
+    $("#telefono_ini").val(data.telefono);
+    $("#empresa_ini").val(data.empresas);
+  }
+  })
+
+  
+}///////////FIN FUNCION RECIBO INICIAL
 
 
 init();
