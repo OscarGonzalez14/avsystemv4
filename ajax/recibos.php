@@ -148,4 +148,16 @@ switch ($_GET["op"]) {
       echo json_encode($results);      
     break;
 
+ ///////////////    GET DATA PRODUCTOS   /////////////////
+
+  case 'get_datos_lentes_prima':
+  $datos= $recibos->get_detalle_lente_od($_POST["id_paciente"],$_POST["correlativo_oid"]); 
+  if(is_array($datos)==true and count($datos)>0){
+    foreach($datos as $row){         
+      $output["producto"] = $row["producto"];                
+    }       
+    echo json_encode($output);
+  } 
+  break;  
+
 }

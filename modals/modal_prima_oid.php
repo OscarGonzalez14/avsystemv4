@@ -38,12 +38,12 @@
 
     <div class="form-group col-md-2">
       <label for="inputEmail4">Télefono</label>
-      <input type="text" class="form-control" id="telefono_abono_oid" readonly="" style="background: white">
+      <input type="text" class="form-control" id="telefono_ini_oid" readonly="" style="background: white">
     </div>
 
     <div class="form-group col-md-2">
       <label for="inputEmail4">Empresa</label>
-      <input type="text" class="form-control" id="empresa_abono_oid" readonly="" style="background: white">
+      <input type="text" class="form-control" id="empresa_ini_oid" readonly="" style="background: white">
     </div>
 
     <div class="form-group col-md-12">      
@@ -58,10 +58,10 @@
           <th>Monto</th>
           <th>Abonos Ant.</th>
           <th>Saldo Act.</th>
-          <th>Abono Actual</th>
+          <th>Monto Prima</th>
           <th>NuevoSaldo</th> 
           <th>Forma de Pago</th>
-          <th id="pr_abono_ini">Prox. Abono</th>
+
 
           </tr>
         </thead>
@@ -90,7 +90,7 @@
           <td align='center'>
           <div class="input-group">
             <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-          <input class='form-control' type='text' name='numero' id="numero_oid" onkeyup="nuevo_saldo()" style="text-align: right;" required>
+          <input class='form-control' type='text' name='numero' id="numero_oid" onkeyup="nuevo_saldo_oid()" style="text-align: right;" required>
         </div>  
         </td>
         <td align='center'>
@@ -109,8 +109,6 @@
           <option value='Davivienda'>Davivienda</option>
           <option value='Transferencia'>Transferencia</option>
         </select></td>
-        <td id="datepickers"><input type='date' class='form-control' id='pr_abono_oid' name='pr_abono'></td>
-
         </tbody>
       </table>
 
@@ -155,41 +153,29 @@
 
   </div>
 
-    <button type="button" onClick="registra_abonos()" id="registrar_abono" style="background: #3fb0ac;color:white"><i class="fa fa-save"></i>  Registrar Abono</button>
+    <button type="button" onClick="registra_abonos()" id="registrar_abono_oid" style="background: #3fb0ac;color:white"><i class="fa fa-save"></i>  Registrar Abono</button>
 
-    <a class="btn btn-primary" style="color:white;border-radius:1px;" href="" id="btn_print_recibos" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
+    <a class="btn btn-primary" style="color:white;border-radius:1px;" href="" id="btn_print_recibos_oid" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
 
 </div><!--Fin modal Content-->
-<input type="hidden" id="id_pac_ini">
-<input type="hidden" id="n_venta_recibo_ini">
+<input type="hidden" id="id_pac_ini_oid">
+<input type="hidden" id="n_venta_recibo_ini_oid">
 
   </div>
 </div>
 
 <script type="text/javascript">
 
-  function nuevo_saldo(){
+  function nuevo_saldo_oid(){
 
-  var monto = document.getElementById("saldo_credito").value;
-  var abono_ini_rec = document.getElementById("numero").value;
+  let monto_venta = document.getElementById("monto_venta_rec_ini_oid").value;
+  let abono_prima = document.getElementById("numero_oid").value;
   //var abono_ini_rec = document.getElementById("numero").toFixed(2);
-  var saldo = monto-abono_ini_rec;
+  let saldo_orden = monto_venta-abono_prima;
 
-  if (saldo<0) {
-    Swal.fire('El abono debe ser menor o igual al saldo!','','error')
-    document.getElementById("numero").value = "";
-    
-  }
 
-  document.getElementById("saldo").value = saldo.toFixed(2);
-  if(saldo==0){
-    document.getElementById('datepickers').style.display = 'none';
-    document.getElementById('pr_abono_ini').style.display = 'none';
-  }else{
-    document.getElementById('datepickers').style.display = 'block';
-    document.getElementById('pr_abono_ini').style.display = 'block';
-
-  }
+  document.getElementById("saldo_oid").value = saldo_orden.toFixed(2);
+  
 
 }
 

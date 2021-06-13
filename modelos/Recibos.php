@@ -338,8 +338,24 @@ public function valida_existencia_oc($numero_orden){
  
 }
 
+public function get_detalle_lente_od($id_paciente,$correlativo_oid){
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sql="select p.desc_producto,d.producto from productos as p inner join detalle_ventas_flotantes as d on p.id_producto=d.id_producto where d.numero_orden=? and d.id_paciente=? and p.categoria_producto='lentes';";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$correlativo_oid);
+  $sql->bindValue(2,$id_paciente);
+  $sql->execute();
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
-////SELECT u.usuario,v.fecha_venta,v.paciente,v.monto_total,v.tipo_venta,v.tipo_pago,v.sucursal from ventas as v inner join usuarios as u on v.id_usuario=u.id_usuario where v.fecha_venta like "%02-2021%" and v.sucursal="San Miguel" order by v.id_ventas desc limit 500;
+
+
+
+
+}
+
+
+
 
  ?>
  

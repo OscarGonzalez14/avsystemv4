@@ -42,6 +42,8 @@ function get_correlativo_recibo(){
 }
 
 function get_correlativo_prima_oid(){
+
+  recibo_inicial_prima();
   let sucursal_correlativo = $("#sucursal").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
 
@@ -57,6 +59,7 @@ function get_correlativo_prima_oid(){
       $("#n_recibo_oid").html(data.correlativo);             
       }
     })
+
 }
 
 function registra_abono_inicial(){
@@ -278,46 +281,50 @@ function listar_recibos_emitidos(){
        }).DataTable();
 }
 
-function reciboInicial(){
-  $('#recibo_inicial').modal('show');
-  var numero_venta = $("#n_venta").val();
-  var id_paciente = $("#id_paciente").val();
-  var evaluado = $("#evaluado").val();
-  var titular_cuenta = $("#titular_cuenta").val();
-  var monto_total = $("#total_venta").html();
+function recibo_inicial_prima(){
+
+  console.log('get data detalles recibo prima');
+
+  let numero_venta = $("#n_venta").val();
+  let id_paciente = $("#id_paciente").val();
+  let evaluado = $("#evaluado").val();
+  let titular_cuenta = $("#titular_cuenta").val();
+  let monto_total = $("#total_venta").html();
 
 
-  $("#n_venta_recibo_ini").val(numero_venta);
-  $("#id_pac_ini").val(id_paciente);
-  $("#servicio_rec_ini").val(evaluado);
-  $("#recibi_rec_ini").val(titular_cuenta);
-  $("#monto_venta_rec_ini").val(monto_total);
+  $("#n_venta_recibo_ini_oid").val(numero_venta);
+  $("#id_pac_ini_oid").val(id_paciente);
+  $("#servicio_abono_oid").val(evaluado);
+  $("#recibi_abono_oid").val(titular_cuenta);
+  $("#monto_venta_rec_ini_oid").val(monto_total);
 
+  ///////////////SE OBTENDRA EL DETALLE DE PRODUCTOS DESDE VENTAS FLOTANTES ////////////
+  let correlativo_oid = document.getElementById('correlativo_orden').innerHTML;
 
   $.ajax({
-  url:"ajax/ventas.php?op=get_datos_lentes_rec_ini",
+  url:"ajax/recibos.php?op=get_datos_lentes_prima",
   method:"POST",
-  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
   dataType:"json",
   success:function(data)
   {
 
     console.log(data);  
-    $("#lente_rec_ini").val(data.producto);
+    $("#lente_rec_ini_oid").val(data.producto);
   }
   })
   ////////////////photo
   $.ajax({
   url:"ajax/ventas.php?op=get_datos_photo_rec_ini",
   method:"POST",
-  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
   dataType:"json",
   success:function(data)
   { 
     console.log(data);  
-    $("#photo_rec_ini").val(data.producto);
+    $("#photo_rec_ini_oid").val(data.producto);
   }
   })
 
@@ -325,28 +332,28 @@ function reciboInicial(){
   $.ajax({
   url:"ajax/ventas.php?op=get_datos_ar_rec_ini",
   method:"POST",
-  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
   dataType:"json",
   success:function(data)
   { 
     console.log(data);  
-    $("#ar_rec_ini").val(data.producto);
+    $("#ar_rec_ini_oid").val(data.producto);
   }
   })
       ////////////////aros
   $.ajax({
   url:"ajax/ventas.php?op=get_datos_aros_rec_ini",
   method:"POST",
-  data:{id_paciente:id_paciente,numero_venta:numero_venta},
+  data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
   dataType:"json",
   success:function(data)
   { 
     console.log(data);  
-    $("#marca_aro_ini").val(data.marca);
-    $("#modelo_aro_ini").val(data.modelo);
-    $("#color_aro_ini").val(data.color);
+    $("#marca_aro_ini_oid").val(data.marca);
+    $("#modelo_aro_ini_oid").val(data.modelo);
+    $("#color_aro_ini_oid").val(data.color);
   }
   })
 //////////////DATOS PACIENTE
@@ -359,8 +366,8 @@ function reciboInicial(){
   success:function(data)
   { 
     console.log(data);  
-    $("#telefono_ini").val(data.telefono);
-    $("#empresa_ini").val(data.empresas);
+    $("#telefono_ini_oid").val(data.telefono);
+    $("#empresa_ini_oid").val(data.empresas);
   }
   })
 

@@ -302,7 +302,9 @@ if (isset($errors)){
     echo json_encode($output);
   } 
   break;
-      //////////GET DATA PHOTOSENSIBLES RECIBO INICIAL 
+
+  //////////GET DATA PHOTOSENSIBLES RECIBO INICIAL 
+  
   case 'get_datos_photo_rec_ini':
   $datos= $ventas->get_detalle_photo_rec_ini($_POST["id_paciente"],$_POST["numero_venta"]); 
 
