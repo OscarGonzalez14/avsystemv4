@@ -187,8 +187,17 @@ case "buscar_aros_venta":
      break;
 
 
-  case "buscar_accesorios_venta":          
-  $datos=$productos->buscar_accesorios_ventas($_POST["sucursal"]);
+  case "buscar_accesorios_venta":
+
+  if ($_POST["sucursal"]=="Empresarial") {
+    $sucursal = $_POST["sucursal_usuario"];
+  }else{
+    $sucursal = $_POST["sucursal"];
+  }
+
+  $datos=$productos->buscar_accesorios_ventas($sucursal);
+          
+  
   $data= Array();
   foreach($datos as $row){
     $sub_array = array();         

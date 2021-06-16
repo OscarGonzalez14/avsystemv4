@@ -82,40 +82,40 @@ function registra_abono_inicial(){
 
 function save_abono_inicial(){
 
-    console.log("ProofV1")
-    var pr_abono=$("#proxi_abono").val();
+    let pr_abono=$("#proxi_abono").val();
+    let a_anteriores="0";
+    let n_recibo = $("#n_recibo").html();
+    let n_venta_recibo_ini =$("#n_venta_recibo_ini").val();
+    let monto =$("#total_venta").html();
+    let fecha =$("#fecha").val();
+    let sucursal =$("#sucursal").val();
+    let id_paciente =$("#id_paciente").val();
+    let id_usuario =$("#usuario").val();
+    let telefono_ini =$("#telefono_ini").val();
+    let recibi_rec_ini =$("#recibi_rec_ini").val();
+    let empresa_ini =$("#empresa_ini").val();
+    let texto=$("#texto").val();
+    let numero=$("#numero").val();
+    let saldo=$("#saldo").val();
+    let forma_pago=$("#forma_pago").val();
+    let marca_aro_ini=$("#marca_aro_ini").val();
+    let modelo_aro_ini=$("#modelo_aro_ini").val();    
+    let color_aro_ini=$("#color_aro_ini").val();
+    let lente_rec_ini=$("#lente_rec_ini").val();
+    let ar_rec_ini=$("#ar_rec_ini").val();
+    let photo_rec_ini=$("#photo_rec_ini").val();
+    let observaciones_rec_ini=$("#observaciones_rec_ini").val();    
+    let servicio_rec_ini=$("#servicio_rec_ini").val();
+    let tipo_recibo = "recibo";
+    let sucursal_usuario = $("#sucursal_usuario").val();
 
-    var a_anteriores="0";
-    var n_recibo = $("#n_recibo").html();
-    var n_venta_recibo_ini =$("#n_venta_recibo_ini").val();
-    var monto =$("#total_venta").html();
-    var fecha =$("#fecha").val();
-    var sucursal =$("#sucursal").val();
-    var id_paciente =$("#id_paciente").val();
-    var id_usuario =$("#usuario").val();
-    var telefono_ini =$("#telefono_ini").val();
-    var recibi_rec_ini =$("#recibi_rec_ini").val();
-    var empresa_ini =$("#empresa_ini").val();
-    var texto=$("#texto").val();
-    var numero=$("#numero").val();
-    var saldo=$("#saldo").val();
-    var forma_pago=$("#forma_pago").val();
-    var marca_aro_ini=$("#marca_aro_ini").val();
-    var modelo_aro_ini=$("#modelo_aro_ini").val();    
-    var color_aro_ini=$("#color_aro_ini").val();
-    var lente_rec_ini=$("#lente_rec_ini").val();
-    var ar_rec_ini=$("#ar_rec_ini").val();
-    var photo_rec_ini=$("#photo_rec_ini").val();
-    var observaciones_rec_ini=$("#observaciones_rec_ini").val();
-    
-    var servicio_rec_ini=$("#servicio_rec_ini").val();    
     
     if (forma_pago !="") {
 
     $.ajax({
     url:"ajax/recibos.php?op=registrar_recibo",
     method:"POST",
-    data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini},
+    data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini,tipo_venta:tipo_recibo,sucursal_usuario:sucursal_usuario},
     cache: false,
     dataType:"json",
     error:function(x,y,z){
@@ -283,14 +283,11 @@ function listar_recibos_emitidos(){
 
 function recibo_inicial_prima(){
 
-  console.log('get data detalles recibo prima');
-
   let numero_venta = $("#n_venta").val();
   let id_paciente = $("#id_paciente").val();
   let evaluado = $("#evaluado").val();
   let titular_cuenta = $("#titular_cuenta").val();
   let monto_total = $("#total_venta").html();
-
 
   $("#n_venta_recibo_ini_oid").val(numero_venta);
   $("#id_pac_ini_oid").val(id_paciente);
@@ -316,7 +313,7 @@ function recibo_inicial_prima(){
   })
   ////////////////photo
   $.ajax({
-  url:"ajax/ventas.php?op=get_datos_photo_rec_ini",
+  url:"ajax/recibos.php?op=get_datos_photo_prima",
   method:"POST",
   data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
@@ -330,7 +327,7 @@ function recibo_inicial_prima(){
 
     ////////////////antireflejante
   $.ajax({
-  url:"ajax/ventas.php?op=get_datos_ar_rec_ini",
+  url:"ajax/recibos.php?op=get_datos_prima",
   method:"POST",
   data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
@@ -341,9 +338,10 @@ function recibo_inicial_prima(){
     $("#ar_rec_ini_oid").val(data.producto);
   }
   })
-      ////////////////aros
+
+////////////////aros
   $.ajax({
-  url:"ajax/ventas.php?op=get_datos_aros_rec_ini",
+  url:"ajax/recibos.php?op=get_datos_aros_prima",
   method:"POST",
   data:{id_paciente:id_paciente,correlativo_oid:correlativo_oid},
   cache:false,
@@ -355,7 +353,7 @@ function recibo_inicial_prima(){
     $("#modelo_aro_ini_oid").val(data.modelo);
     $("#color_aro_ini_oid").val(data.color);
   }
-  })
+  })  
 //////////////DATOS PACIENTE
   $.ajax({
   url:"ajax/pacientes.php?op=datos_pacientes_rec_ini",
@@ -374,5 +372,70 @@ function recibo_inicial_prima(){
   
 }///////////FIN FUNCION RECIBO INICIAL
 
+
+
+function registrar_abono_oid(){
+
+
+  let sucursal_usuario = $("#sucursal_uasuario").val();
+  let a_anteriores = "";
+  let n_recibo = $("#n_recibo_oid").html();
+  let n_venta_recibo_ini = "PRIMA OID";
+  let monto = $("#monto_venta_rec_ini_oid").val();
+  let fecha = "";
+  let sucursal = $("#sucursal").val();
+  let id_paciente = $("#id_paciente").val();
+  let id_usuario = $("#usuario").val();
+  let telefono_ini = $("#telefono_ini_oid").val();
+  let recibi_rec_ini = $("#recibi_abono_oid").val();
+  let empresa_ini = $("#empresa_ini_oid").val();
+  let texto = $("#texto_oid").val();
+  let numero = $("#numero_oid").val();
+  let saldo = $("#saldo_oid").val();
+  let forma_pago = $("#forma_pago_oid").val();
+  let marca_aro_ini = $("#marca_aro_ini_oid").val();
+  let modelo_aro_ini = $("#modelo_aro_ini_oid").val();    
+  let color_aro_ini = $("#color_aro_ini_oid").val();
+  let lente_rec_ini = $("#lente_rec_ini_oid").val();
+  let ar_rec_ini = $("#ar_rec_ini_oid").val();
+  let photo_rec_ini = $("#photo_rec_ini_oid").val();
+  let observaciones_rec_ini = $("#observaciones_rec_ini_oid").val();
+  let pr_abono = "";
+  let servicio_rec_ini = $("#servicio_abono_oid").val();
+  let numero_orden = $("#correlativo_orden").html();
+  let tipo_recibo = "prima";
+
+  if (forma_pago !="") {
+
+    $.ajax({
+    url:"ajax/recibos.php?op=registrar_prima",
+    method:"POST",
+    data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini,tipo_recibo:tipo_recibo,numero_orden:numero_orden},
+    cache: false,
+    dataType:"json",
+    error:function(x,y,z){
+      d_pacole.log(x);
+      console.log(y);
+      console.log(z);
+    }, 
+      
+    success:function(data){
+      console.log(data);
+      if(data=='error'){
+        Swal.fire('Este correlativo ya fué ingresado!','','error')
+        return false;
+      }else if (data=="ok") {
+        Swal.fire('Recibo registrado exitosamente!','','success');
+        $('#creditos_de_contado').DataTable().ajax.reload();
+      }      
+    }
+
+  });
+  }else{
+    Swal.fire('Especifique la forma de Pago!','','error')
+    return false;
+  } 
+
+}
 
 init();

@@ -90,6 +90,7 @@ public function agrega_detalle_venta(){
   $optometra = $_POST["optometra"];
   $plazo = $_POST["plazo"];
   $id_ref = $_POST["id_ref"];  
+  $sucursal_usuario = $_POST["sucursal_usuario"];
 
   $str = '';
   $detalles = array();
@@ -99,12 +100,19 @@ public function agrega_detalle_venta(){
 
   if($tipo_venta == "Contado" or ($tipo_venta == "Credito" and $tipo_pago == "Cargo Automatico")){ ////////////////////VALIDAR SI LA VENTA ES DE CONTADO  ///////////
 
+  if ($sucursal=="Empresarial") {
+    $sucursal_act = "Empresarial-".$sucursal_usuario;
+    $suc = $_POST["sucursal_usuario"];
+  }else{
+    $sucursal_act = $sucursal_usuario;
+    $suc = $sucursal;
+  }
+
     foreach ($detalles as $k => $v) {
       $cantidad = $v->cantidad;
       $categoria_prod = $v->categoria_prod;
       $categoria_ub = $v->categoria_ub;
       $codProd = $v->codProd;
-     // $descripcion = $v->descripcion;
       $descuento = $v->descuento;
       $id_ingreso = $v->id_ingreso;
       $num_compra = $v->num_compra;
@@ -157,7 +165,7 @@ public function agrega_detalle_venta(){
       $sql3="select * from existencias where id_producto=? and bodega=? and categoria_ub=? and num_compra=? and id_ingreso=?;";           
       $sql3=$conectar->prepare($sql3);
       $sql3->bindValue(1,$codProd);
-      $sql3->bindValue(2,$sucursal);
+      $sql3->bindValue(2,$suc);
       $sql3->bindValue(3,$categoria_ub);
       $sql3->bindValue(4,$num_compra);
       $sql3->bindValue(5,$id_ingreso);
@@ -177,7 +185,7 @@ public function agrega_detalle_venta(){
       $sql12 = $conectar->prepare($sql12);
       $sql12->bindValue(1,$cantidad_totales);
       $sql12->bindValue(2,$codProd);
-      $sql12->bindValue(3,$sucursal);
+      $sql12->bindValue(3,$suc);
       $sql12->bindValue(4,$id_ingreso);
       $sql12->bindValue(5,$categoria_ub);
       $sql12->bindValue(6,$num_compra);
@@ -217,7 +225,7 @@ public function agrega_detalle_venta(){
     $sql2->bindValue(7,$tipo_venta);          
     $sql2->bindValue(8,$id_usuario);
     $sql2->bindValue(9,$id_paciente);
-    $sql2->bindValue(10,$sucursal);
+    $sql2->bindValue(10,$sucursal_act);
     $sql2->bindValue(11,$evaluado);
     $sql2->bindValue(12,$optometra);
     $sql2->execute();
@@ -262,7 +270,7 @@ public function agrega_detalle_venta(){
     $sql2->bindValue(14,$abono_anterior);
     $sql2->bindValue(15,$abonos_realizados);
     $sql2->bindValue(16,$id_paciente);
-    $sql2->bindValue(17,$sucursal);
+    $sql2->bindValue(17,$sucursal_act);
     $sql2->bindValue(18,$sucursal_cobro);
     $sql2->bindValue(19,$tipo_ingreso);
 
@@ -303,13 +311,11 @@ public function agrega_detalle_venta(){
 
     $estado_orden = "0";
     $tipo_orden = "Individual";
-
     if ($sucursal=="Empresarial") {
       $sucursal_orden = "Empresarial-".$sucursal_usuario;
     }else{
       $sucursal_orden = $sucursal;
     }
-
     ////////////////////////CPMPROBAR SI NO EXISTE ORDEN CREDITO///////////////////
 
     $sql8="insert into orden_credito values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
@@ -558,6 +564,7 @@ public function get_detalle_ventas_paciente($numero_venta,$id_paciente){
 }
 $html .= "<tfoot style='text-align:center'><td colspan='4'><b>Subtotal</b></td><td>".$moneda." ".$subtotal."</td></tfoot>";                                     
 echo $html;
+
 }
 
 ////////////////GET UTILIDADES

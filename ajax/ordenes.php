@@ -9,7 +9,14 @@ $ordenes = new Ordenes();
 switch($_GET["op"]){
 
   case "get_consultas":
-	$datos=$ordenes->get_consultas_orden($_POST["sucursal"]);
+
+  $sucursal = $_POST["sucursal"];
+  if ($sucursal=="Empresarial"){
+    $datos=$ordenes->get_consultas_orden_emp($_POST["sucursal_usuario"]);
+  }else{
+	  $datos=$ordenes->get_consultas_orden($_POST["sucursal"]);
+  }
+
  	$data= Array();
     foreach($datos as $row){
 		$sub_array = array();

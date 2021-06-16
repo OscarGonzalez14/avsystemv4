@@ -8,7 +8,6 @@
   switch($_GET["op"]){
 
   case "listar":
-
   $datos=$consultas->get_consultas($_POST["sucursal"]);
  	$data= Array();
   

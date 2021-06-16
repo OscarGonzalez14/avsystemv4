@@ -22,6 +22,7 @@ $(document).on('click', '.ocultar_btns_oid', function(){
 ////////////////LISTAR CREDITOS DE CONTADO
 function listar_creditos_sucursal(){
   var sucursal= $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
   tabla_creditos_sucursal=$('#creditos_de_contado').dataTable(
   {
     "aProcessing": true,//Activamos el procesamiento del datatables
@@ -35,7 +36,7 @@ function listar_creditos_sucursal(){
         url: 'ajax/creditos.php?op=listar_creditos_contado',
         type : "post",
         dataType : "json",
-        data:{sucursal:sucursal},
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
         error: function(e){
           console.log(e.responseText);
         }
@@ -504,13 +505,14 @@ function registrar_abono(){
   let pr_abono = $("#pr_abono").val();
   let servicio_rec_ini = $("#servicio_abono").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
+  let tipo_recibo = "recibo";
 
   if (forma_pago !="") {
     $('#creditos_de_contado').DataTable().ajax.reload();
     $.ajax({
       url:"ajax/recibos.php?op=registrar_recibo",
       method:"POST",
-      data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini,sucursal_usuario:sucursal_usuario},
+      data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini,sucursal_usuario:sucursal_usuario,tipo_recibo:tipo_recibo},
       cache: false,
       dataType:"json",
       error:function(x,y,z){

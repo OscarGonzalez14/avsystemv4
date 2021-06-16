@@ -547,7 +547,8 @@ $(document).on("click","#btn_aros_venta", function(){
 
 ////////////////LISTAR AROS EN VENTAS
 $(document).on("click","#btn_accesorios_venta", function(){
-  var sucursal= $("#sucursal").val();
+  let sucursal= $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
 
   tabla_aros_venta = $('#lista_accesorios_ventas_data').DataTable({      
     "aProcessing": true,//Activamos el procesamiento del datatables
@@ -564,7 +565,7 @@ $(document).on("click","#btn_accesorios_venta", function(){
       url:"ajax/productos.php?op=buscar_accesorios_venta",
       type : "post",
         //dataType : "json",
-    data:{sucursal:sucursal},           
+    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},           
     error: function(e){
           console.log(e.responseText);
     },            

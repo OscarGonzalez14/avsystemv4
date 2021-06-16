@@ -15,7 +15,17 @@ where c.tipo_credito='Contado' and p.sucursal=? order by c.id_credito DESC;";
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-/////////////////////////LISTAR CREDITOS DE CARGO AUTOMATICO
+public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
+    $conectar= parent::conexion();
+    $sql= "select c.numero_venta,p.nombres,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta where c.tipo_credito='Contado' and (p.sucursal=? or p.sucursal=?) order by c.id_credito DESC;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$sucursal_usuario);
+    $sql->bindVAlue(2,"Empresarial-".$sucursal_usuario);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    } 
+
+/////////////////////////   LISTAR CREDITOS DE CARGO AUTOMATICO  ////////////////////
     public function get_creditos_cauto($sucursal){
     $conectar= parent::conexion();
     $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado
@@ -26,12 +36,14 @@ where c.tipo_credito='Contado' and p.sucursal=? order by c.id_credito DESC;";
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
+
 //////////////////////LISTAR CREDITOS DE DESCUENTO EN PLANILLA
     public function get_creditos_oid($sucursal,$empresa){
     $conectar= parent::conexion();
     $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
         where c.forma_pago='Descuento en Planilla' and p.sucursal=? and p.empresas=? order by c.id_credito DESC;";
+
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$sucursal);
     $sql->bindValue(2,$empresa);
@@ -52,7 +64,6 @@ where c.tipo_credito='Contado' and p.sucursal=? order by c.id_credito DESC;";
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
-
     //////////////////////LISTAR CREDITOS DE DESCUENTO EN PLANILLA
     public function get_ventas_ccf_empresarial($empresa){
     $conectar= parent::conexion();

@@ -17,7 +17,7 @@ class Recibos extends conectar {//inicio de la clase
   public function get_datos_pac_rec_ini($n_venta,$id_paciente){
 
     $conectar= parent::conexion();         
-  $sql= "select p.categoria_producto,d.producto from productos as p inner join detalle_ventas as d on p.id_producto=d.id_producto where categoria_producto='lentes'
+    $sql= "select p.categoria_producto,d.producto from productos as p inner join detalle_ventas as d on p.id_producto=d.id_producto where categoria_producto='lentes'
         and d.numero_venta=? and d.id_paciente=?";
 
     $sql=$conectar->prepare($sql);
@@ -39,7 +39,7 @@ public function valida_existencia_nrecibo($n_recibo){
   return $resultado=$sql->fetchAll();
 }
 ///////////////////GREGISTRA RECIBO
-public function agrega_detalle_abono($a_anteriores,$n_recibo,$n_venta_recibo_ini,$monto,$fecha,$sucursal,$id_paciente,$id_usuario,$telefono_ini,$recibi_rec_ini,$empresa_ini,$texto,$numero,$saldo,$forma_pago,$marca_aro_ini,$modelo_aro_ini,$color_aro_ini,$lente_rec_ini,$ar_rec_ini,$photo_rec_ini,$observaciones_rec_ini,$pr_abono,$servicio_rec_ini){
+public function agrega_detalle_abono($a_anteriores,$n_recibo,$n_venta_recibo_ini,$monto,$fecha,$sucursal,$id_paciente,$id_usuario,$telefono_ini,$recibi_rec_ini,$empresa_ini,$texto,$numero,$saldo,$forma_pago,$marca_aro_ini,$modelo_aro_ini,$color_aro_ini,$lente_rec_ini,$ar_rec_ini,$photo_rec_ini,$observaciones_rec_ini,$pr_abono,$servicio_rec_ini,$tipo_recibo){
 
 $conectar=parent::conexion();
 
@@ -333,12 +333,11 @@ public function valida_existencia_oc($numero_orden){
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$numero_orden);
     $sql->execute();
-    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
-
- 
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC); 
 }
 
-public function get_detalle_lente_od($id_paciente,$correlativo_oid){
+
+public function get_detalle_lente_od($id_paciente,$correlativo_oid){  
   $conectar=parent::conexion();
   parent::set_names();
   $sql="select p.desc_producto,d.producto from productos as p inner join detalle_ventas_flotantes as d on p.id_producto=d.id_producto where d.numero_orden=? and d.id_paciente=? and p.categoria_producto='lentes';";
@@ -349,14 +348,134 @@ public function get_detalle_lente_od($id_paciente,$correlativo_oid){
   return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function get_detalle_aros_od($id_paciente,$correlativo_oid){
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sql="select p.marca,p.modelo,p.color,d.producto from productos as p inner join detalle_ventas_flotantes as d on p.id_producto=d.id_producto where d.numero_orden=? and d.id_paciente=? and p.categoria_producto='aros';";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$correlativo_oid);
+  $sql->bindValue(2,$id_paciente);
+  $sql->execute();
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
+public function get_detalle_photo_prima($id_paciente,$correlativo_oid){
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sql="select p.desc_producto,d.producto from productos as p inner join detalle_ventas_flotantes as d on p.id_producto=d.id_producto where d.numero_orden=? and d.id_paciente=? and p.categoria_producto='photosensible'";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$correlativo_oid);
+  $sql->bindValue(2,$id_paciente);
+  $sql->execute();
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+////////LENADO DE RECIBO ANTIREFLEJANTES
+public function get_detalle_ar_prima($id_paciente,$correlativo_oid){
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sql="select p.desc_producto,d.producto from productos as p inner join detalle_ventas_flotantes as d on p.id_producto=d.id_producto where d.numero_orden=? and d.id_paciente=? and p.categoria_producto='antireflejante'";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$correlativo_oid);
+  $sql->bindValue(2,$id_paciente);
+  $sql->execute();
+  return $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+///////////////////////////registra prima oid
+public function agrega_detalle_prima($a_anteriores,$n_recibo,$n_venta_recibo_ini,$monto,$fecha,$sucursal,$id_paciente,$id_usuario,$telefono_ini,$recibi_rec_ini,$empresa_ini,$texto,$numero,$saldo,$forma_pago,$marca_aro_ini,$modelo_aro_ini,$color_aro_ini,$lente_rec_ini,$ar_rec_ini,$photo_rec_ini,$observaciones_rec_ini,$pr_abono,$servicio_rec_ini,$tipo_recibo,$numero_orden){
+
+$conectar=parent::conexion();
+
+  $sql="insert into recibos values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$n_recibo);
+  $sql->bindValue(2,$n_venta_recibo_ini);
+  $sql->bindValue(3,$monto);
+  $sql->bindValue(4,$fecha);
+  $sql->bindValue(5,$sucursal);
+  $sql->bindValue(6,$id_paciente);
+  $sql->bindValue(7,$id_usuario);
+  $sql->bindValue(8,$telefono_ini);
+  $sql->bindValue(9,$recibi_rec_ini);
+  $sql->bindValue(10,$empresa_ini);
+  $sql->bindValue(11,$texto);
+  $sql->bindValue(12,$a_anteriores);
+  $sql->bindValue(13,$numero);
+  $sql->bindValue(14,$saldo);
+  $sql->bindValue(15,$forma_pago);
+  $sql->bindValue(16,$marca_aro_ini);
+  $sql->bindValue(17,$modelo_aro_ini);
+  $sql->bindValue(18,$color_aro_ini);
+  $sql->bindValue(19,$lente_rec_ini);
+  $sql->bindValue(20,$ar_rec_ini);
+  $sql->bindValue(21,$photo_rec_ini);
+  $sql->bindValue(22,$observaciones_rec_ini);
+  $sql->bindValue(23,$pr_abono);
+  $sql->bindValue(24,$servicio_rec_ini);  
+  $sql->execute();
+
+  ///////////////REGISTRA ABONOS
+  $sql2="insert into abonos values(null,?,?,?,?,?,?,?,?);";
+  $sql2=$conectar->prepare($sql2);
+  $sql2->bindValue(1,$numero);
+  $sql2->bindValue(2,$forma_pago);
+  $sql2->bindValue(3,$fecha);
+  $sql2->bindValue(4,$id_paciente);
+  $sql2->bindValue(5,$id_usuario);
+  $sql2->bindValue(6,$n_recibo);
+  $sql2->bindValue(7,$n_venta_recibo_ini);
+  $sql2->bindValue(8,$sucursal);
+  $sql2->execute();  
+  date_default_timezone_set('America/El_Salvador');$hoy = date("d-m-Y");
+  $tipo_ingreso = "Recuperado";
+  $factura = "";
+  $tipo_venta="Contado";
+  $tipo_pago = "Efectivo";
+  $abono_ant ="0";
+  $suma_res ="0";
+  $sql17="insert into corte_diario values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  $sql17=$conectar->prepare($sql17);
+  $sql17->bindValue(1,$hoy);
+  $sql17->bindValue(2,$n_recibo);
+  $sql17->bindValue(3,$n_venta_recibo_ini);
+  $sql17->bindValue(4,$factura);
+  $sql17->bindValue(5,$recibi_rec_ini);
+  $sql17->bindValue(6,$id_usuario);
+  $sql17->bindValue(7,$monto);
+  $sql17->bindValue(8,$forma_pago);
+  $sql17->bindValue(9,$numero);
+  $sql17->bindValue(10,$saldo);
+  $sql17->bindValue(11,$tipo_venta);
+  $sql17->bindValue(12,$tipo_pago);
+  $sql17->bindValue(13,$id_usuario);
+  $sql17->bindValue(14,$abono_ant);
+  $sql17->bindValue(15,$suma_res);
+  $sql17->bindValue(16,$id_paciente);
+  $sql17->bindValue(17,$sucursal);
+  $sql17->bindValue(18,$sucursal);
+  $sql17->bindValue(19,$tipo_ingreso);
+  $sql17->execute();
+
+  $sql8 ="update orden_credito set monto=? where id_paciente=? and numero_orden=?";
+  $sql8 = $conectar->prepare($sql8);
+  $sql8->bindValue(1,$saldo);
+  $sql8->bindValue(2,$id_paciente);
+  $sql8->bindValue(3,$numero_orden);
+  $sql8->execute();
+
+  $sql10 ="update ventas_flotantes set monto_total=? where id_paciente=? and numero_orden=?";
+  $sql10 = $conectar->prepare($sql10);
+  $sql10->bindValue(1,$saldo);
+  $sql10->bindValue(2,$id_paciente);
+  $sql10->bindValue(3,$numero_orden);
+  $sql10->execute();
 
 
 }
 
+}
 
 
-
- ?>
  
  

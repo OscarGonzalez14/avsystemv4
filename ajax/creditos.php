@@ -21,7 +21,13 @@ switch ($_GET["op"]){
     break;
 
 	case 'listar_creditos_contado':
-	$datos=$creditos->get_creditos_contado($_POST["sucursal"]);
+	//$datos=$creditos->get_creditos_contado($_POST["sucursal"]);
+  if ($_POST["sucursal"]=="Empresarial") {    
+    $datos=$creditos->get_creditos_contado_emp($_POST["sucursal"],$_POST["sucursal_usuario"]);
+  }else{
+    $datos=$creditos->get_creditos_contado($_POST["sucursal"]);
+  }
+
   $data= Array();
   foreach($datos as $row){
     $sub_array = array();

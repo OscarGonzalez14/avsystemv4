@@ -9,8 +9,6 @@ switch ($_GET["op"]) {
   case 'get_detalle_lente_rec_ini':
      
   break;
-
-
 ///////////////////////GET NUMERO RECIBO
   case "get_numero_recibo":
   
@@ -57,11 +55,9 @@ switch ($_GET["op"]) {
       }else{
       $output["correlativo"] = "R".$prefijo."-1";
   }  
-  }
+  }  
 
-  
-
-   echo json_encode($output);
+  echo json_encode($output);
 
   break;
 
@@ -76,7 +72,50 @@ switch ($_GET["op"]) {
        $sucursal = $_POST["sucursal"];
     }
 
-    $recibos->agrega_detalle_abono($_POST['a_anteriores'],$_POST['n_recibo'],$_POST['n_venta_recibo_ini'],$_POST['monto'],$_POST['fecha'],$sucursal,$_POST['id_paciente'],$_POST['id_usuario'],$_POST['telefono_ini'],$_POST['recibi_rec_ini'],$_POST['empresa_ini'],$_POST['texto'],$_POST['numero'],$_POST['saldo'],$_POST['forma_pago'],$_POST['marca_aro_ini'],$_POST['modelo_aro_ini'],$_POST['color_aro_ini'],$_POST['lente_rec_ini'],$_POST['ar_rec_ini'],$_POST['photo_rec_ini'],$_POST['observaciones_rec_ini'],$_POST['pr_abono'],$_POST['servicio_rec_ini']);
+    $recibos->agrega_detalle_abono($_POST['a_anteriores'],$_POST['n_recibo'],$_POST['n_venta_recibo_ini'],$_POST['monto'],$_POST['fecha'],$sucursal,$_POST['id_paciente'],$_POST['id_usuario'],$_POST['telefono_ini'],$_POST['recibi_rec_ini'],$_POST['empresa_ini'],$_POST['texto'],$_POST['numero'],$_POST['saldo'],$_POST['forma_pago'],$_POST['marca_aro_ini'],$_POST['modelo_aro_ini'],$_POST['color_aro_ini'],$_POST['lente_rec_ini'],$_POST['ar_rec_ini'],$_POST['photo_rec_ini'],$_POST['observaciones_rec_ini'],$_POST['pr_abono'],$_POST['servicio_rec_ini'],$_POST["tipo_recibo"]);
+      $messages[]="ok";
+      
+    }else{
+      $errors[]="error";
+    }
+
+    if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   } 
+
+    break;
+
+//////////////////////////// REGISTRAR ABONO DE PRIMA
+  case 'registrar_prima':
+
+  $datos=$recibos->valida_existencia_nrecibo($_POST["n_recibo"]);
+  if(is_array($datos)==true and count($datos)==0){
+
+    if ($_POST["sucursal"]=="Empresarial") {
+       $sucursal = "Empresarial-".$_POST["sucursal_usuario"];
+    }else{
+       $sucursal = $_POST["sucursal"];
+    }
+
+    $recibos->agrega_detalle_prima($_POST['a_anteriores'],$_POST['n_recibo'],$_POST['n_venta_recibo_ini'],$_POST['monto'],$_POST['fecha'],$sucursal,$_POST['id_paciente'],$_POST['id_usuario'],$_POST['telefono_ini'],$_POST['recibi_rec_ini'],$_POST['empresa_ini'],$_POST['texto'],$_POST['numero'],$_POST['saldo'],$_POST['forma_pago'],$_POST['marca_aro_ini'],$_POST['modelo_aro_ini'],$_POST['color_aro_ini'],$_POST['lente_rec_ini'],$_POST['ar_rec_ini'],$_POST['photo_rec_ini'],$_POST['observaciones_rec_ini'],$_POST['pr_abono'],$_POST['servicio_rec_ini'],$_POST["tipo_recibo"],$_POST["numero_orden"]);
       $messages[]="ok";
       
     }else{
@@ -158,6 +197,41 @@ switch ($_GET["op"]) {
     }       
     echo json_encode($output);
   } 
-  break;  
+  break;
+  //////////////////////////////   GET DATA AROS 
+  case 'get_datos_aros_prima':
+  $datos= $recibos->get_detalle_aros_od($_POST["id_paciente"],$_POST["correlativo_oid"]);
+  if(is_array($datos)==true and count($datos)>0){
+    foreach($datos as $row){         
+      $output["marca"] = $row["marca"];
+      $output["modelo"] = $row["modelo"];
+      $output["color"] = $row["color"];                
+    }       
+    echo json_encode($output);
+
+  } 
+  break;
+
+  case 'get_datos_photo_prima':
+  $datos= $recibos->get_detalle_photo_prima($_POST["id_paciente"],$_POST["correlativo_oid"]); 
+
+  if(is_array($datos)==true and count($datos)>0){
+    foreach($datos as $row){         
+      $output["producto"] = $row["producto"];                
+    }       
+    echo json_encode($output);
+  } 
+  break;
+  //////////GET DATA ANTIREFLEJANTE RECIBO INICIAL 
+  case 'get_datos_prima':
+  $datos= $recibos->get_detalle_ar_prima($_POST["id_paciente"],$_POST["correlativo_oid"]); 
+
+  if(is_array($datos)==true and count($datos)>0){
+    foreach($datos as $row){         
+      $output["producto"] = $row["producto"];                
+    }       
+    echo json_encode($output);
+  } 
+  break;
 
 }

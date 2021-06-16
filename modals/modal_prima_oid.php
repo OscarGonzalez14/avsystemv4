@@ -98,7 +98,8 @@
             <div class="input-group-prepend"><span class="input-group-text">$</span></div>
         <input class='form-control' type='text' class='saldo' name='saldo' id="saldo_oid" style="text-align: right;" readonly></div>
       </td>
-        <td align='center'><select class='form-control' id='forma_pago_oid' name='forma_pago'>
+
+      <td align='center'><select class='form-control' id='forma_pago_oid' name='forma_pago'>
           <option value=''>Seleccione...</option>
           <option value='Efectivo'>Efectivo</option>
           <option value='Cheque'>Cheque</option>
@@ -153,9 +154,9 @@
 
   </div>
 
-    <button type="button" onClick="registra_abonos()" id="registrar_abono_oid" style="background: #3fb0ac;color:white"><i class="fa fa-save"></i>  Registrar Abono</button>
+    <button type="button" onClick="registrar_abono_oid()" id="reg_abono_oid" style="background: #3fb0ac;color:white"><i class="fa fa-save"></i>  Registrar Abono Inicial</button>
 
-    <a class="btn btn-primary" style="color:white;border-radius:1px;" href="" id="btn_print_recibos_oid" target="_blank"><i class="fas fa-print"></i> Imprimir</a>
+    <a class="btn btn-primary" style="color:white;border-radius:1px;" href="" id="btn_print_recibos_oid" target="_blank"><i class="fas fa-print"></i> Imprimir Recibo</a>
 
 </div><!--Fin modal Content-->
 <input type="hidden" id="id_pac_ini_oid">
@@ -170,20 +171,12 @@
 
   let monto_venta = document.getElementById("monto_venta_rec_ini_oid").value;
   let abono_prima = document.getElementById("numero_oid").value;
-  //var abono_ini_rec = document.getElementById("numero").toFixed(2);
   let saldo_orden = monto_venta-abono_prima;
-
-
   document.getElementById("saldo_oid").value = saldo_orden.toFixed(2);
-  
-
 }
 
-  document.getElementById("numero").addEventListener("click",function(e){
-  document.getElementById("texto").value = NumeroALetras(this.value);});
-
-  document.getElementById("numero").addEventListener("keyup",function(e){
-  document.getElementById("texto").value = NumeroALetras(this.value);});
+  document.getElementById("numero_oid").addEventListener("keyup",function(e){
+  document.getElementById("texto_oid").value = NumeroALetras(this.value);});
 
   function Unidades(num){
  

@@ -251,7 +251,7 @@ require_once("modals/modal_prima_oid.php");
                   <td style="width: 24% !important;text-align: center;font-size:11px" colspan="24"><span id="tit_add_tit"></span></td>
                   <td style="width: 20% !important;text-align: center;font-size:11px" colspan="20"><span id="empresa_add_tit"></span></td>
                   <td style="width: 23% !important;text-align: center;font-size:11px" colspan="23"><span id="eval_add_tit"></span></td>
-                  <td style="width: 11% !important;text-align: center;font-size:11px" colspan="11"><span id="saldo_act_add"></span></td>
+                  <td style="width: 11% !important;text-align: center;font-size:11px" colspget_numero_ventaan="11"><span id="saldo_act_add"></span></td>
                   <td style="width: 11% !important;text-align: center;font-size:11px" colspan="11"><span id="nuevo_saldo_add"></span></td>
                   <td style="width: 11% !important;text-align: center;font-size:11px" colspan="11"><input type="number" id="plazo_acts"></td>
               </tr>

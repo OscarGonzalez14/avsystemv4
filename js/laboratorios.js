@@ -12,6 +12,7 @@ function get_data_orden(){
  get_correlativo_orden();
  let tipo_venta_orden = $("#tipo_venta_orden").val();
  let sucursal = $("#sucursal").val();
+ let sucursal_usuario = $("#sucursal_usuario").val();
  let laboratorio_orden = $("#laboratorio_orden").val();
 
 
@@ -31,7 +32,7 @@ $("#modal_consultas_orden").modal('show');
 					url: 'ajax/ordenes.php?op=get_consultas',
 					type : "post",
 					dataType : "json",
-					data:{sucursal:sucursal},						
+					data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},						
 					error: function(e){
 						console.log(e.responseText);	
 					}

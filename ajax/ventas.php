@@ -6,6 +6,7 @@ require_once("../modelos/Ventas.php");
  //llamo al modelo Ventas
 $ventas = new Ventas();
 
+
 switch($_GET["op"]){
 ///////////////////////////AROS EN EXISTENCIAS
   case "agregar_aros_venta":          
@@ -54,7 +55,6 @@ switch($_GET["op"]){
     $output["error"]="El producto seleccionado está inactivo, intenta con otro";
 
   }
-
   echo json_encode($output);
 
   break;
@@ -100,6 +100,36 @@ break;
 
 ///////////////////////GET MUMERO VENTA
 case "get_numero_venta":
+
+$sucursal_act = $_POST["sucursal_correlativo"];
+$sucursal_u = $_POST["sucursal_usuario"];
+
+if ($_POST["sucursal_correlativo"]=="Empresarial") {
+
+  $sucursal_usuario = $_POST["sucursal_usuario"];
+  $sucursal = "Empresarial-".$_POST["sucursal_usuario"];  
+  $datos= $ventas->get_numero_venta($sucursal);  
+  $prefijo = "";
+
+  if ($sucursal_usuario=="Metrocentro") {
+    $prefijo = "MT";
+  }elseif ($sucursal_usuario=="Santa Ana") {
+    $prefijo="SA";
+  }elseif ($sucursal_usuario=="San Miguel") {
+  $prefijo="SM";
+  }
+
+  if(is_array($datos)==true and count($datos)>0){
+  foreach($datos as $row){                  
+    $codigo=$row["numero_venta"];
+    $cod=(substr($codigo,5,11))+1;
+    $output["correlativo"]="EV".$prefijo."-".$cod;
+  }             
+}else{
+  $output["correlativo"] = "EV".$prefijo."-1";
+}
+
+}else{
 $datos= $ventas->get_numero_venta($_POST["sucursal_correlativo"]);
 $sucursal = $_POST["sucursal_correlativo"];
 $prefijo = "";
@@ -118,6 +148,7 @@ if(is_array($datos)==true and count($datos)>0){
   }             
 }else{
   $output["correlativo"] = "AV".$prefijo."-1";
+}
 }
 
 echo json_encode($output);
@@ -344,8 +375,17 @@ if (isset($errors)){
 
   /// INICIO LISTAR TODAS LAS VENTAS
   case "listar_ventas_gral":
-  $datos=$ventas->get_ventas_gral($_POST["sucursal"]);
-    //Vamos a declarar un array
+  
+  $sucursal = $_POST["sucursal"];
+
+  if ($sucursal=="Empresarial") {
+    $suc = $_POST["sucursal_usuario"];
+  }else{
+    $suc = $_POST["sucursal"];
+  }
+
+  $datos=$ventas->get_ventas_gral($suc);
+  //Vamos a declarar un array
   $data= Array();
 
   foreach($datos as $row)

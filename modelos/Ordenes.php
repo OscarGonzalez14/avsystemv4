@@ -12,6 +12,17 @@ class Ordenes extends Conectar{
      	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);         
     }
 
+  public function get_consultas_orden_emp($sucursal){
+      $conectar= parent::conexion(); 
+
+      $suc= "%".$sucursal."%";      
+      $sql= "select p.id_paciente,p.nombres,p.empresas,c.fecha_consulta,c.p_evaluado,p.sucursal,c.id_consulta from pacientes as p inner join consulta as c  on c.id_paciente=p.id_paciente where p.sucursal like ? order by c.id_consulta DESC;";
+      $sql=$conectar->prepare($sql);
+      $sql->bindValue(1,$suc);
+      $sql->execute();
+      return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);         
+    }
+
     public function get_numero_venta($id_paciente,$evaluado){
     $conectar= parent::conexion();
     parent::set_names();

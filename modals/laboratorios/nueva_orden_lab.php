@@ -54,9 +54,7 @@
 
 <div class="eight" style="">
     <strong><h1>DATOS GENERALES</h1></strong>
-  <div class="form-row align-items-center row" style="margin: 4px"> 
-
-
+  <div class="form-row align-items-center row" style="margin: 4px">
 
     <div class="form-group col-sm-5">
       <label for="inlineFormInputGroup">Paciente</label>
@@ -237,9 +235,10 @@
 
 <script type="text/javascript" src="js/cleave.js"></script>
 <script>
-  function mayus(e) {
-    e.value = e.value.toUpperCase();
-  }
+
+function mayus(e) {
+  e.value = e.value.toUpperCase();
+}
 
 var dui = new Cleave('#dui_pac', {
   delimiter: '-',
