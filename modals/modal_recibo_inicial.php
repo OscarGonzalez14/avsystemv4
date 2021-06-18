@@ -98,17 +98,17 @@
     <div class="row" style="margin: 8px"><!--aros datos-->
     <div class="form-group col-md-4">
       <label for="inputPassword4">Marca Aro</label>
-      <input type="text" class="form-control" id="marca_aro_ini" readonly="" style="background: white">
+      <input type="text" class="form-control" id="marca_aro_ini" value="-" style="background: white">
     </div>
 
     <div class="form-group col-md-4">
       <label for="inputPassword4">Modelo Aros</label>
-      <input type="text" class="form-control" id="modelo_aro_ini" readonly="" style="background: white">
+      <input type="text" class="form-control" id="modelo_aro_ini" value="-" style="background: white">
     </div>
 
     <div class="form-group col-md-4">
       <label for="inputEmail4">Color</label>
-      <input type="text" class="form-control" id="color_aro_ini" readonly="" style="background: white">
+      <input type="text" class="form-control" id="color_aro_ini" value="-" style="background: white">
     </div>
 
     </div><!--FIN aros datos-->
@@ -117,21 +117,22 @@
 
     <div class="form-group col-md-4">
       <label for="inputPassword4">Lente</label>
-      <input type="text" class="form-control" id="lente_rec_ini" style="background: white" readonly="">
+      <input type="text" class="form-control" id="lente_rec_ini" style="background: white" value="-">
     </div>
 
     <div class="form-group col-md-4">
       <label for="inputPassword4">Photosensible</label>
-      <input type="text" class="form-control" id="photo_rec_ini" style="background: white" readonly="">
+      <input type="text" class="form-control" id="photo_rec_ini" style="background: white" value="-">
     </div>
 
     <div class="form-group col-md-4">
       <label for="inputEmail4">Antireflejante</label>
-      <input type="text" class="form-control" id="ar_rec_ini" style="background: white" readonly="">
+      <input type="text" class="form-control" id="ar_rec_ini" style="background: white" value="-">
     </div>
 
     <div class="form-group col-md-12">
-      <input type="text" class="form-control" id="observaciones_rec_ini" style="background: white" placeholder="OBSERVACIONES">
+      <label for="inputEmail4">Observaciones</label>
+      <input type="text" class="form-control" id="observaciones_rec_ini" style="background: white" value="-">
     </div>
 
   </div>

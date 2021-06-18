@@ -178,7 +178,7 @@ function agregarAccVenta(id_producto,id_ingreso){
    $('#listar_accesorios_ventas').modal("hide");
     console.log(detalles);
     }//fin success
-  });//fin de ajax
+  });//fin de ajaxsaveV
 }
 
 function agregar_detalles_lente_venta(id_producto){

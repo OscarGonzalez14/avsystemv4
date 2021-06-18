@@ -803,9 +803,10 @@ function print_facturas_ventas(){
 
 function print_invoices(id_paciente,numero_venta){
  // console.log(numero_venta);return false;
- var sucursal = $("#sucursal").val();
- var id_usuario = $("#usuario").val();
- var fecha_fac = $("#fecha_facturacion").val();
+ let sucursal = $("#sucursal").val();
+ let sucursal_usuario = $("#sucursal_usuario").val();
+ let id_usuario = $("#usuario").val();
+ let fecha_fac = $("#fecha_facturacion").val();
  $("#id_paciente_venta_factura").val(id_paciente);
  $("#print_invoices").modal("show");
  $("#n_venta_factura").val(numero_venta);
@@ -813,7 +814,7 @@ function print_invoices(id_paciente,numero_venta){
  $.ajax({
   url:"ajax/creditos.php?op=get_correlativo_factura",
   method:"POST",
-  data:{sucursal:sucursal},
+  data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
   cache:false,
   dataType:"json",
   success:function(data){ 

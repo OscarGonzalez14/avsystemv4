@@ -8,7 +8,15 @@ $creditos = new Creditos();
 switch ($_GET["op"]){
 
   case 'get_correlativo_factura':
-    $datos=$creditos->get_correlativo_factura($_POST["sucursal"]);
+  
+    if($_POST["sucursal"]=="Empresarial") {
+      $sucursal = $_POST["sucursal_usuario"];
+    }else{
+      $sucursal = $_POST["sucursal"];
+    }
+
+
+    $datos=$creditos->get_correlativo_factura($sucursal);
 
     if(is_array($datos)==true and count($datos)>0){
       foreach($datos as $row){

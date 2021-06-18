@@ -26,7 +26,7 @@ if ($sucursal == "Metrocentro") {
   $wha = "7469-2542";
   $correo = "metrocentro@opticaavplussv.com";
 }elseif ($sucursal == "San Miguel") {
-  $direccion = "San Miguel 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115 ";
+  $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
   $telefono = "2661 7549";
   $wha = "7946-0464";
   $correo = "opticaavplussanmiguel@gmail.com";
