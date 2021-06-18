@@ -795,14 +795,18 @@ $('#listar_det_ventas').html('');
 /////////////////REGISTRAR PRIMERA OID
 data_oid = [];
 function guardar_oid(){
-
+    
     let prima_oid = $("#prima_oid").val();
+    let observaciones_oid = $("#observaciones_oid").val();
     if (prima_oid == '0') {
       Swal.fire('Debe especificar SI/NO existe prima inicial!','','warning');
       return false;
     }else if(prima_oid == 'Si'){
       Swal.fire('Debe realizar un abono inicial obligatoriamente!','','warning');
       document.getElementById("iprima_oid").style.display = "inline";
+    }else if(prima_oid == 'Si' && observaciones_oid==""){
+      Swal.fire('El campo observaciones debe contener una descripcion!','','warning');
+      return false;
     }
 
     let sucursal_usuario = $("#sucursal_usuario").val();
@@ -825,7 +829,7 @@ function guardar_oid(){
     let codigo = $("#correlativo_orden").html();
     let numero_venta = $("#n_venta").val();
     let sucursal = $("#sucursal").val();
-    let observaciones_oid = $("#observaciones_oid").val();
+
 
 
   if(fecha_inicio !="" && empresa !="" && funcion_laboral !="" && edad_pac !="" && dui_pac !="" && tel_pac !="" && tel_of_pac !="" && direccion_pac !="" && ref_1 !="" && tel_ref1 !="" && ref_2 !="" && tel_ref2 !=""){

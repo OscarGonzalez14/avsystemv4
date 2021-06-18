@@ -341,5 +341,51 @@ public function get_detalle_vf_beneficiario($evaluado,$n_orden){
 }
 
 
+/////////////////////DATA RECIBO PRIMA OID  ////////
+public function get_data_prima_oid($n_orden,$id_paciente){
+	$conectar= parent::conexion();
+	parent::set_names();
+	$sql="select cantidad_venta from detalle_ventas_flotantes where numero_orden=? and id_paciente=? order by id_detalle_venta_flotante ASC;";
+	$sql=$conectar->prepare($sql);
+	$sql->bindValue(1,$n_orden);
+    $sql->bindValue(2,$id_paciente);
+	$sql->execute();
+	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function get_datos_det_vflotante($n_orden,$id_paciente){
+	$conectar= parent::conexion();
+	parent::set_names();
+	$sql="select producto from detalle_ventas_flotantes where numero_orden=? and id_paciente=? order by id_detalle_venta_flotante ASC;";
+	$sql=$conectar->prepare($sql);
+	$sql->bindValue(1,$n_orden);
+       $sql->bindValue(2,$id_paciente);
+	$sql->execute();
+	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/////////GET DATOS PRECIO UNITARIO DE PRODUCTOS FACTURA
+public function get_datos_prima_p_unitario($n_orden,$id_paciente){
+	$conectar= parent::conexion();
+	parent::set_names();
+	$sql="select precio_final from detalle_ventas_flotantes where numero_orden=? and id_paciente=? order by id_detalle_venta_flotante ASC;";
+	$sql=$conectar->prepare($sql);
+	$sql->bindValue(1,$n_orden);
+    $sql->bindValue(2,$id_paciente);
+	$sql->execute();
+	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function get_datos_prima_subtotal($n_orden,$id_paciente){
+	$conectar= parent::conexion();
+	parent::set_names();
+	$sql="select precio_final as subtotal from detalle_ventas_flotantes where numero_orden=?  and id_paciente=? order by id_detalle_venta_flotante ASC;";
+	$sql=$conectar->prepare($sql);
+	$sql->bindValue(1,$n_orden);
+    $sql->bindValue(2,$id_paciente);
+	$sql->execute();
+	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }

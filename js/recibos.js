@@ -11,6 +11,7 @@ $(document).ready(ocultar_btn_print_rec_ini);
 
 function ocultar_btn_print_rec_ini(){
   document.getElementById("btn_print_recibos").style.display = "none";
+  document.getElementById("btn_print_recibos_oid").style.display = "none";
 }
 
 //////// AL DAR IMPRIMIR EN LISTA DE RECIBOS 
@@ -377,7 +378,7 @@ function recibo_inicial_prima(){
 function registrar_abono_oid(){
 
 
-  let sucursal_usuario = $("#sucursal_uasuario").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
   let a_anteriores = "";
   let n_recibo = $("#n_recibo_oid").html();
   let n_venta_recibo_ini = "PRIMA OID";
@@ -410,7 +411,7 @@ function registrar_abono_oid(){
     $.ajax({
     url:"ajax/recibos.php?op=registrar_prima",
     method:"POST",
-    data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini,tipo_recibo:tipo_recibo,numero_orden:numero_orden},
+    data:{a_anteriores:a_anteriores,n_recibo:n_recibo,n_venta_recibo_ini:n_venta_recibo_ini,monto:monto,fecha:fecha,sucursal:sucursal,id_paciente:id_paciente,id_usuario:id_usuario,telefono_ini:telefono_ini,recibi_rec_ini:recibi_rec_ini,empresa_ini:empresa_ini,texto:texto,numero:numero,saldo:saldo,forma_pago:forma_pago,marca_aro_ini:marca_aro_ini,modelo_aro_ini:modelo_aro_ini,color_aro_ini:color_aro_ini,lente_rec_ini:lente_rec_ini,ar_rec_ini:ar_rec_ini,photo_rec_ini:photo_rec_ini,observaciones_rec_ini:observaciones_rec_ini,pr_abono:pr_abono,servicio_rec_ini:servicio_rec_ini,tipo_recibo:tipo_recibo,numero_orden:numero_orden,sucursal_usuario:sucursal_usuario},
     cache: false,
     dataType:"json",
     error:function(x,y,z){
@@ -437,5 +438,25 @@ function registrar_abono_oid(){
   } 
 
 }
+///////////////////////////   BTN RECIBO CARGAR DATA IMPRIMIR RECIBO
+  $(document).on('click', '#reg_abono_oid', function(){
+    var n_recibo = $("#n_recibo_oid").html();
+    var n_orden =$("#correlativo_orden").html();
+    var id_paciente =$("#id_paciente").val();
+    document.getElementById("btn_print_recibos_oid").style.display = "block";
+    let sucursal = $("#sucursal").val();
+    let sucursal_usuario = $("#sucursal_usuario").val();
+    let suc ='';
+    if (sucursal=="Empresarial") {
+      suc = sucursal_usuario;
+    }else{
+      suc = sucursal;
+    }
+
+    document.getElementById("btn_print_recibos_oid").href='print_prima_oid_pdf.php?n_recibo='+
+    n_recibo+'&'+'n_orden='+n_orden+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+suc;
+
+  });
+
 
 init();

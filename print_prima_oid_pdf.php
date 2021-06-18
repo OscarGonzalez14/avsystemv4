@@ -7,17 +7,17 @@ require_once 'dompdf/autoload.inc.php';
 require_once("modelos/Reporteria.php");
 $reporteria=new Reporteria();
 $id_paciente =$_GET["id_paciente"];
-$n_venta =$_GET["n_venta"];
+$n_orden =$_GET["n_orden"];
 $n_recibo =$_GET["n_recibo"];
 $sucursal = $_GET["sucursal"];
 
 /////////////DESCRIBE DETALLE DE RECIBO---FROM FACTURAS
-$datos_factura_cantidad = $reporteria->get_datos_factura_cantidad($_GET["n_venta"],$_GET["id_paciente"]);
-$datos_factura_producto = $reporteria->get_datos_factura($_GET["n_venta"],$_GET["id_paciente"]);
-$datos_factura_precio_u = $reporteria->get_datos_factura_p_unitario($_GET["n_venta"],$_GET["id_paciente"]);
-$datos_factura_subtotal = $reporteria->get_datos_factura_subtotal($_GET["n_venta"],$_GET["id_paciente"]);
+$datos_factura_cantidad = $reporteria->get_data_prima_oid($_GET["n_orden"],$_GET["id_paciente"]);
+$datos_factura_producto = $reporteria->get_datos_det_vflotante($_GET["n_orden"],$_GET["id_paciente"]);
+$datos_factura_precio_u = $reporteria->get_datos_prima_p_unitario($_GET["n_orden"],$_GET["id_paciente"]);
+$datos_factura_subtotal = $reporteria->get_datos_prima_subtotal($_GET["n_orden"],$_GET["id_paciente"]);
 $datos_factura_paciente = $reporteria->get_datos_factura_paciente($_GET["id_paciente"]);
-$datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],$_GET["id_paciente"]);
+//$datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],$_GET["id_paciente"]);
 
 
 if ($sucursal == "Metrocentro") {
@@ -26,7 +26,7 @@ if ($sucursal == "Metrocentro") {
   $wha = "7469-2542";
   $correo = "metrocentro@opticaavplussv.com";
 }elseif ($sucursal == "San Miguel") {
-  $direccion = "San Miguel 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115 ";
+  $direccion = "3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115 ";
   $telefono = "2661 7549";
   $wha = "7946-0464";
   $correo = "opticaavplussanmiguel@gmail.com";
@@ -37,7 +37,7 @@ if ($sucursal == "Metrocentro") {
     $correo = "opticaavplussantana@gmail.com";
 }
 
-$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_venta"],$_GET["id_paciente"]);
+$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_recibo"],$_GET["id_paciente"]);
 
 ?>
 <!DOCTYPE html>
@@ -216,7 +216,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 ?>
 <tr style="font-size:10pt" class="even_row">
     <td style="text-align: center;width: 14%" colspan="14" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["monto"];?></span></td>
-    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$".number_format($datos_recibo[$i]["a_anteriores"],2,".",",");?></span></td>
+    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$".number_format(floatval($datos_recibo[$i]["a_anteriores"]),2,".",",");?></span></td>
 
     <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$ ".number_format($datos_recibo[$i]["abono_act"],2,".",",");?></span></td>
     <td style="text-align: center;width: 20%" colspan="20" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["saldo"];?></span></td>
@@ -393,7 +393,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 ?>
 <tr style="font-size:10pt" class="even_row">
     <td style="text-align: center;width: 14%" colspan="14" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["monto"];?></span></td>
-    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$".number_format($datos_recibo[$i]["a_anteriores"],2,".",",");?></span></td>
+    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$".number_format(floatval($datos_recibo[$i]["a_anteriores"]),2,".",",");?></span></td>
 
     <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$ ".number_format($datos_recibo[$i]["abono_act"],2,".",",");?></span></td>
     <td style="text-align: center;width: 20%" colspan="20" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["saldo"];?></span></td>

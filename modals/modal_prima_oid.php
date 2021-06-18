@@ -149,19 +149,17 @@
     </div>
 
     <div class="form-group col-md-12">
-      <input type="text" class="form-control" id="observaciones_rec_ini_oid" style="background: white" placeholder="OBSERVACIONES">
+      <input type="text" class="form-control" id="observaciones_rec_ini_oid" style="background: white" value="ABONO EN CONCEPTO DE PRIMA PARA CREDITO DESCUENTO EN PLANILLA">
     </div>
 
   </div>
 
     <button type="button" onClick="registrar_abono_oid()" id="reg_abono_oid" style="background: #3fb0ac;color:white"><i class="fa fa-save"></i>  Registrar Abono Inicial</button>
-
+    
     <a class="btn btn-primary" style="color:white;border-radius:1px;" href="" id="btn_print_recibos_oid" target="_blank"><i class="fas fa-print"></i> Imprimir Recibo</a>
 
 </div><!--Fin modal Content-->
 <input type="hidden" id="id_pac_ini_oid">
-<input type="hidden" id="n_venta_recibo_ini_oid">
-
   </div>
 </div>
 
