@@ -8,13 +8,12 @@ $creditos = new Creditos();
 switch ($_GET["op"]){
 
   case 'get_correlativo_factura':
-  
+
     if($_POST["sucursal"]=="Empresarial") {
       $sucursal = $_POST["sucursal_usuario"];
     }else{
       $sucursal = $_POST["sucursal"];
     }
-
 
     $datos=$creditos->get_correlativo_factura($sucursal);
 
@@ -23,10 +22,9 @@ switch ($_GET["op"]){
         $output["correlativo"] = $row["n_correlativo"];
       }
     }
-
     echo json_encode($output);
 
-    break;
+  break;
 
 	case 'listar_creditos_contado':
 	//$datos=$creditos->get_creditos_contado($_POST["sucursal"]);

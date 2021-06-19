@@ -858,8 +858,9 @@ function registrar_impresion(){
 ///////////////REGISTRAR ORDEN DE DESCUENTO //////////////
 function calculaFinCredito(){
   setTimeout ("get_finaliza();", 3000);
-
 }
+
+
 function get_finaliza(){
   let inicio = $("#fecha_inicio").val();
   let plazo_credito = $("#plazo_credito").val();
