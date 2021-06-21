@@ -151,7 +151,7 @@ public function get_datos_recuperado_contado($fecha,$sucursal){
 	parent::set_names();
  
 	$fecha_corte = $fecha."%";
-	$sql="select  c.n_factura,c.fecha_ingreso,c.n_recibo,c.paciente,u.usuario,c.total_factura,c.abono_anterior,c.saldo_credito+c.monto_cobrado as saldo_anterior,c.forma_cobro,c.monto_cobrado,c.saldo_credito,c.abonos_realizados from
+	$sql="select  c.n_factura,c.fecha_ingreso,c.n_recibo,c.paciente,u.usuario,c.total_factura,c.abono_anterior,c.saldo_credito+c.monto_cobrado as saldo_anterior,c.forma_cobro,c.monto_cobrado,c.saldo_credito,c.abonos_realizados,c.vendedor from
     corte_diario as c inner join usuarios as u on u.id_usuario=c.id_usuario where c.fecha_ingreso like ? and c.tipo_ingreso='Recuperado' and c.tipo_venta='Contado' and sucursal_cobro=?;";
 	$sql=$conectar->prepare($sql);
 	$sql->bindValue(1,$fecha_corte);
@@ -166,7 +166,7 @@ public function get_datos_recuperado_empresarial($fecha,$sucursal){
 	parent::set_names();
  
 	$fecha_corte = $fecha."%";
-	$sql="select  c.n_factura,c.fecha_ingreso,c.n_recibo,c.paciente,u.usuario,c.total_factura,c.abono_anterior,c.saldo_credito+c.monto_cobrado as saldo_anterior,c.forma_cobro,c.monto_cobrado,c.saldo_credito,c.abonos_realizados from
+	$sql="select  c.n_factura,c.fecha_ingreso,c.n_recibo,c.paciente,c.vendedor,u.usuario,c.total_factura,c.abono_anterior,c.saldo_credito+c.monto_cobrado as saldo_anterior,c.forma_cobro,c.monto_cobrado,c.saldo_credito,c.abonos_realizados from
 corte_diario as c inner join usuarios as u on u.id_usuario=c.id_usuario where c.fecha_ingreso like ? and c.tipo_ingreso='Recuperado' and c.tipo_pago='Descuento en Planilla' and c.sucursal_cobro=?;";
 	$sql=$conectar->prepare($sql);
 	$sql->bindValue(1,$fecha_corte);
@@ -181,7 +181,7 @@ public function get_datos_recuperado_cargo($fecha,$sucursal){
 	parent::set_names();
  
 	$fecha_corte = $fecha."%";
-	$sql="select  c.n_factura,c.fecha_ingreso,c.n_recibo,c.paciente,u.usuario,c.total_factura,c.abono_anterior,c.saldo_credito+c.monto_cobrado as saldo_anterior,c.forma_cobro,c.monto_cobrado,c.saldo_credito,c.abonos_realizados from
+	$sql="select  c.n_factura,c.fecha_ingreso,c.n_recibo,c.paciente,u.usuario,c.total_factura,c.abono_anterior,c.saldo_credito+c.monto_cobrado as saldo_anterior,c.forma_cobro,c.monto_cobrado,c.saldo_credito,c.abonos_realizados,c.vendedor from
 corte_diario as c inner join usuarios as u on u.id_usuario=c.id_usuario where c.fecha_ingreso like ? and c.tipo_ingreso='Recuperado' and c.tipo_pago='Cargo Automatico' and sucursal_cobro=?;";
 	$sql=$conectar->prepare($sql);
 	$sql->bindValue(1,$fecha_corte);

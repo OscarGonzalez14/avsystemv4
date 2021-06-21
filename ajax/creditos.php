@@ -86,7 +86,13 @@ switch ($_GET["op"]){
   ///////////////////GET CREDITOS CARGO AUTOMATICO
 
   case 'listar_creditos_cauto':
-  $datos=$creditos->get_creditos_cauto($_POST["sucursal"]);
+
+  if ($_POST["sucursal"]=="Empresarial") {
+    $sucursal = $_POST["sucursal_usuario"];
+  }else{
+    $sucursal = $_POST["sucursal"];    
+  }
+  $datos=$creditos->get_creditos_cauto($sucursal);
   $data= Array();
   foreach($datos as $row){
     $sub_array = array();
@@ -120,9 +126,9 @@ switch ($_GET["op"]){
     $sub_array[] = "$".number_format($row["monto"],2,".",","); 
     $sub_array[] = "$".number_format($row["saldo"],2,".",",");    
 
-    $sub_array[] = '<button type="button" onClick="realizarAbonos('.$row["id_paciente"].','.$row["id_credito"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-md bg-warning" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus" aria-hidden="true" style="color:white"></i></button>';
-     $sub_array[] = '<button type="button" onClick="verDetAbonos('.$row["id_paciente"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-md bg-success"><i class="fas fa-file-invoice-dollar" aria-hidden="true" style="color:white"></i></button>';
-   $sub_array[] = '<button type="button"  class="btn '.$atrib.' btn-sm" onClick="'.$event.'('.$row["id_paciente"].',\''.$row["numero_venta"].'\');"><i class="'.$icon.'"></i>'.$txt.'</button>';          
+    $sub_array[] = '<button type="button" onClick="realizarAbonos('.$row["id_paciente"].','.$row["id_credito"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-warning" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus" aria-hidden="true" style="color:white"></i></button>';
+     $sub_array[] = '<button type="button" onClick="verDetAbonos('.$row["id_paciente"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-success"><i class="fas fa-file-invoice-dollar" aria-hidden="true" style="color:white"></i></button>';
+   $sub_array[] = '<button type="button"  class="btn '.$atrib.' btn-xs" onClick="'.$event.'('.$row["id_paciente"].',\''.$row["numero_venta"].'\');"><i class="'.$icon.'"></i>'.$txt.'</button>';          
                                                 
     $data[] = $sub_array;
   }

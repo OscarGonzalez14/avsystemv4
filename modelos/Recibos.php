@@ -175,16 +175,18 @@ $conectar=parent::conexion();
   $fecha_ingr = substr($fecha_ing, 0,10);
   date_default_timezone_set('America/El_Salvador');$hoy = date("d-m-Y");
 
-////////////////////GET SUCUSAL VENTA /////////
+////////////////////GET SUCUSAL VENTA para comisiones/////////
 
-  $sql22 = "select sucursal from ventas where numero_venta=? limit 1;";
+  $sql22 = "select u.usuario,v.sucursal from ventas as v inner join usuarios as u on u.id_usuario=v.id_usuario where v.numero_venta=? and id_paciente=? order by v.id_ventas ASC limit 1;";
   $sql22=$conectar->prepare($sql22);
   $sql22->bindValue(1,$n_venta_recibo_ini);
+  $sql22->bindValue(2,$id_paciente);
   $sql22->execute();    
   $sucursal_venta = $sql22 ->fetchAll(PDO::FETCH_ASSOC);
 
   foreach ($sucursal_venta as $v) {
     $suc_venta = $v["sucursal"];
+    $vendedor = $v["usuario"];
   }
   
 if (($fecha_ingr != $hoy) or ($fecha_ingr == $fecha_venta and $suma_res>1)){
@@ -198,7 +200,7 @@ if (($fecha_ingr != $hoy) or ($fecha_ingr == $fecha_venta and $suma_res>1)){
   $sql17->bindValue(3,$n_venta_recibo_ini);
   $sql17->bindValue(4,$factura);
   $sql17->bindValue(5,$recibi_rec_ini);
-  $sql17->bindValue(6,$id_usuario);
+  $sql17->bindValue(6,$vendedor);
   $sql17->bindValue(7,$monto);
   $sql17->bindValue(8,$forma_pago);
   $sql17->bindValue(9,$numero);
@@ -209,13 +211,12 @@ if (($fecha_ingr != $hoy) or ($fecha_ingr == $fecha_venta and $suma_res>1)){
   $sql17->bindValue(14,$suma_abonos_ant-$numero);
   $sql17->bindValue(15,$suma_res);
   $sql17->bindValue(16,$id_paciente);
-  $sql17->bindValue(17,$suc_venta);
-  $sql17->bindValue(18,$suc_venta);
+  $sql17->bindValue(17,$sucursal);
+  $sql17->bindValue(18,$sucursal);
   $sql17->bindValue(19,$tipo_ingreso);
   $sql17->execute();
 
   }elseif($fecha_ingr == $hoy and $suma_res==1){
-
     $tipo_ingreso = "Venta";
     $factura='';
     $sql6="update corte_diario set forma_cobro=?,monto_cobrado=?,n_recibo=?,sucursal_cobro=?,saldo_credito=?,tipo_ingreso=?,sucursal_venta=? where id_paciente=? and n_venta=?;";
@@ -223,10 +224,10 @@ if (($fecha_ingr != $hoy) or ($fecha_ingr == $fecha_venta and $suma_res>1)){
     $sql6->bindValue(1,$forma_pago);
     $sql6->bindValue(2,$numero);
     $sql6->bindValue(3,$n_recibo);
-    $sql6->bindValue(4,$suc_venta);
+    $sql6->bindValue(4,$sucursal);
     $sql6->bindValue(5,$saldo);
     $sql6->bindValue(6,$tipo_ingreso);
-    $sql6->bindValue(7,$suc_venta);
+    $sql6->bindValue(7,$sucursal);
     $sql6->bindValue(8,$id_paciente);
     $sql6->bindValue(9,$n_venta_recibo_ini);
     $sql6->execute(); 

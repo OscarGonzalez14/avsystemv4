@@ -87,7 +87,7 @@ $datos_ventas_c_auto = $reporteria->get_datos_ventas_cargo($fecha,$sucursal);
   </tr>
   <tr><td colspan="105"></td></tr>
     <tr>
-     <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">VENTAS DE CONTADO</th>
+     <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">VENTAS DE SUCURSAL</th>
   </tr>
   <thead>
   <tr>
@@ -130,7 +130,7 @@ if(($datos_ventas_contado[$j]["monto_cobrado"])>0){
 
 <table width="100%" class="table2" style="margin-top: 2px">
       <tr>
-      <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">VENTAS EMPRESARIAL</th>
+      <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">VENTAS DESCUENTO EN PLANILLA</th>
     </tr>
   <thead>
   <tr>    
@@ -224,18 +224,19 @@ if(($datos_ventas_c_auto[$j]["monto_cobrado"])>0){
 ?>
 <table width="100%" class="table2" style="margin-top: 2px;">
       <tr>
-      <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">RECUPERADO CONTADO</th>
+      <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">RECUPERADO SUCURSAL</th>
     </tr>
   <thead>
   <tr>    
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">FACTURA</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">RECIBO</span></th>
-    <th bgcolor="#004e00" colspan="30" class="stilot2"><span class="Estilo11">NOMBRE PACIENTE</span></th>
+    <th bgcolor="#004e00" colspan="25" class="stilot2"><span class="Estilo11">NOMBRE PACIENTE</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">VENDEDOR</span></th>
+    <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">COBRADOR</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">TOTAL FACTURA</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">ANTICIPOS ANT.</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">SALDO ANT.</span></th>
-    <th bgcolor="#004e00" colspan="15" class="stilot2"><span class="Estilo11 vendedor">FORMA DE COBRO</span></th>
+    <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11 vendedor">FORMA DE COBRO</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">TOTAL COBRADO</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">NUEVO SALDO</span></th>
   </tr>
@@ -254,12 +255,13 @@ if(($recuperado_contado[$j]["monto_cobrado"])>0){
 <tr>
 <td colspan="5" class="stilot1"><?php echo $recuperado_contado[$j]["n_factura"];;?></td>
 <td colspan="5" class="stilot1"><?php echo $recuperado_contado[$j]["n_recibo"];?></td>
-<td colspan="30" class="stilot1"><?php echo $recuperado_contado[$j]["paciente"];?></td>
+<td colspan="25" class="stilot1"><?php echo $recuperado_contado[$j]["paciente"];?></td>
+<td colspan="10" class="stilot1  vendedor"><?php echo $recuperado_contado[$j]["vendedor"];?></td>
 <td colspan="10" class="stilot1  vendedor"><?php echo $recuperado_contado[$j]["usuario"];?></td>
 <td colspan="10" class="stilot1"><?php echo "$".number_format($recuperado_contado[$j]["total_factura"],2,".",",");?></td>
 <td colspan="10" class="stilot1 vendedor"><?php echo "$".number_format($recuperado_contado[$j]["abono_anterior"],2,".",",");?></td>
 <td colspan="10" class="stilot1"><?php echo "$".number_format($recuperado_contado[$j]["saldo_anterior"],2,".",",");?></td>
-<td colspan="15" class="stilot1 vendedor"><?php echo $recuperado_contado[$j]["forma_cobro"];?></td>
+<td colspan="10" class="stilot1 vendedor"><?php echo $recuperado_contado[$j]["forma_cobro"];?></td>
 <td colspan="5" class="stilot1" style="color:blue"><?php echo "$".number_format($monto_c,2,".",",");?></td>
 <td colspan="5" class="stilot1"><?php echo "$".number_format($recuperado_contado[$j]["saldo_credito"],2,".",",");?></td>
 </tr>
@@ -277,18 +279,19 @@ if(($recuperado_contado[$j]["monto_cobrado"])>0){
 ?>
 <table width="100%" class="table2" style="margin-top: 2px;">
       <tr>
-      <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">RECUPERADO EMPRESARIAL</th>
+      <th style="text-align: center;font-size: 12px;background: #C0C0C0" colspan="105">RECUPERADO DESCUENTO EN PLANILLA</th>
     </tr>
   <thead>
   <tr>    
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">FACTURA</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">RECIBO</span></th>
-    <th bgcolor="#004e00" colspan="30" class="stilot2"><span class="Estilo11">NOMBRE PACIENTE</span></th>
+    <th bgcolor="#004e00" colspan="25" class="stilot2"><span class="Estilo11">NOMBRE PACIENTE</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">VENDEDOR</span></th>
+    <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">COBRADOR</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">TOTAL FACTURA</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">ANTICIPOS ANT.</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">SALDO ANT.</span></th>
-    <th bgcolor="#004e00" colspan="15" class="stilot2"><span class="Estilo11 vendedor">FORMA DE COBRO</span></th>
+    <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11 vendedor">FORMA DE COBRO</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">TOTAL COBRADO</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">NUEVO SALDO</span></th>
   </tr>
@@ -307,12 +310,13 @@ if(($recuperado_emp[$j]["monto_cobrado"])>0){
 <tr>
 <td colspan="5" class="stilot1"><?php echo $recuperado_emp[$j]["n_factura"];;?></td>
 <td colspan="5" class="stilot1"><?php echo $recuperado_emp[$j]["n_recibo"];?></td>
-<td colspan="30" class="stilot1"><?php echo $recuperado_emp[$j]["paciente"];?></td>
+<td colspan="25" class="stilot1"><?php echo $recuperado_emp[$j]["paciente"];?></td>
+<td colspan="10" class="stilot1  vendedor"><?php echo $recuperado_emp[$j]["vendedor"];?></td>
 <td colspan="10" class="stilot1  vendedor"><?php echo $recuperado_emp[$j]["usuario"];?></td>
 <td colspan="10" class="stilot1"><?php echo "$".number_format($recuperado_emp[$j]["total_factura"],2,".",",");?></td>
 <td colspan="10" class="stilot1 vendedor"><?php echo "$".number_format($recuperado_emp[$j]["abono_anterior"],2,".",",");?></td>
 <td colspan="10" class="stilot1"><?php echo "$".number_format($recuperado_emp[$j]["saldo_anterior"],2,".",",");?></td>
-<td colspan="15" class="stilot1 vendedor"><?php echo $recuperado_emp[$j]["forma_cobro"];?></td>
+<td colspan="10" class="stilot1 vendedor"><?php echo $recuperado_emp[$j]["forma_cobro"];?></td>
 <td colspan="5" class="stilot1" style="color:blue"><?php echo "$".number_format($monto_c,2,".",",");?></td>
 <td colspan="5" class="stilot1"><?php echo "$".number_format($recuperado_emp[$j]["saldo_credito"],2,".",",");?></td>
 </tr>
@@ -335,12 +339,13 @@ if(($recuperado_emp[$j]["monto_cobrado"])>0){
   <tr>    
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">FACTURA</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">RECIBO</span></th>
-    <th bgcolor="#004e00" colspan="30" class="stilot2"><span class="Estilo11">NOMBRE PACIENTE</span></th>
+    <th bgcolor="#004e00" colspan="25" class="stilot2"><span class="Estilo11">NOMBRE PACIENTE</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">VENDEDOR</span></th>
+    <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">COBRADOR</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">TOTAL FACTURA</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">ANTICIPOS ANT.</span></th>
     <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11">SALDO ANT.</span></th>
-    <th bgcolor="#004e00" colspan="15" class="stilot2"><span class="Estilo11 vendedor">FORMA DE COBRO</span></th>
+    <th bgcolor="#004e00" colspan="10" class="stilot2"><span class="Estilo11 vendedor">FORMA DE COBRO</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">TOTAL COBRADO</span></th>
     <th bgcolor="#004e00" colspan="5" class="stilot2"><span class="Estilo11">NUEVO SALDO</span></th>
   </tr>
@@ -359,12 +364,13 @@ if(($recuperado_cargo[$j]["monto_cobrado"])>0){
 <tr>
 <td colspan="5" class="stilot1"><?php echo $recuperado_cargo[$j]["n_factura"];;?></td>
 <td colspan="5" class="stilot1"><?php echo $recuperado_cargo[$j]["n_recibo"];?></td>
-<td colspan="30" class="stilot1"><?php echo $recuperado_cargo[$j]["paciente"];?></td>
+<td colspan="25" class="stilot1"><?php echo $recuperado_cargo[$j]["paciente"];?></td>
+<td colspan="10" class="stilot1  vendedor"><?php echo $recuperado_cargo[$j]["vendedor"];?></td>
 <td colspan="10" class="stilot1  vendedor"><?php echo $recuperado_cargo[$j]["usuario"];?></td>
 <td colspan="10" class="stilot1"><?php echo "$".number_format($recuperado_cargo[$j]["total_factura"],2,".",",");?></td>
 <td colspan="10" class="stilot1 vendedor"><?php echo "$".number_format($recuperado_cargo[$j]["abono_anterior"],2,".",",");?></td>
 <td colspan="10" class="stilot1"><?php echo "$".number_format($recuperado_cargo[$j]["saldo_anterior"],2,".",",");?></td>
-<td colspan="15" class="stilot1 vendedor"><?php echo $recuperado_cargo[$j]["forma_cobro"];?></td>
+<td colspan="10" class="stilot1 vendedor"><?php echo $recuperado_cargo[$j]["forma_cobro"];?></td>
 <td colspan="5" class="stilot1" style="color:blue"><?php echo "$".number_format($monto_c,2,".",",");?></td>
 <td colspan="5" class="stilot1"><?php echo "$".number_format($recuperado_cargo[$j]["saldo_credito"],2,".",",");?></td>
 </tr>

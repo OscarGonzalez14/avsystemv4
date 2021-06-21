@@ -33,9 +33,9 @@ require_once("modals/modal_correlativo_factura.php");
  		<div class="card-body">
  		  <section class="content">
  			<div class="container_fluid"><!--inicio del contenido-->
-           
-        <table id="creditos_cauto" class="table-hover" width="100%">
-           <thead style="background:#034f84;color:white;text-align: center;">
+        <input type="hidden" name="sucursal_usuario" id="sucursal_usuario" value="<?php echo $_SESSION["sucursal_usuario"];?>"/>   
+        <table id="creditos_cauto" class="table-hover table-bordered" width="100%">
+           <thead style="background:#034f84;color:white;font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;">
             <tr>
             <th style='text-align: center;'>No. Venta</th>
             <th style='text-align: center;'>Titular de cuenta</th>
@@ -48,7 +48,7 @@ require_once("modals/modal_correlativo_factura.php");
             <th style='text-align: center;'>Factura</th>
           </tr>
      </thead>
-     <tbody style="text-align: center">
+     <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center">
    </table> 
  			</div>
  		  </section>

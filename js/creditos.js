@@ -98,8 +98,9 @@ function listar_creditos_sucursal(){
        }).DataTable();
 }
 ///////////////LISTAR CREDITOS DE CARGO AUTOMATICO
-function listar_creditos_cauto(){
-  var sucursal= $("#sucursal").val();
+/*function listar_creditos_cauto(){
+  let sucursal= $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
   tabla_creditos_cauto=$('#creditos_cauto').dataTable(
   {
     "aProcessing": true,//Activamos el procesamiento del datatables
@@ -113,7 +114,7 @@ function listar_creditos_cauto(){
         url: 'ajax/creditos.php?op=listar_creditos_cauto',
         type : "post",
         dataType : "json",
-        data:{sucursal:sucursal},
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
         error: function(e){
           console.log(e.responseText);
         }
@@ -173,7 +174,7 @@ function listar_creditos_cauto(){
          }//cerrando language
 
        }).DataTable();
-}
+}*/
 
 
 /////////////RELLENAR LA EMPRESA DE PACIENTE EMPRESARIAL
@@ -860,7 +861,7 @@ function calculaFinCredito(){
   setTimeout ("get_finaliza();", 3000);
 }
 
-
+//////////////  
 function get_finaliza(){
   let inicio = $("#fecha_inicio").val();
   let plazo_credito = $("#plazo_credito").val();
@@ -1317,6 +1318,7 @@ function denegar_od_planilla(){
 
 function listar_creditos_cauto(){
   var sucursal= $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
   tabla_creditos_cauto=$('#creditos_cauto').dataTable(
   {
     "aProcessing": true,//Activamos el procesamiento del datatables
@@ -1330,7 +1332,7 @@ function listar_creditos_cauto(){
         url: 'ajax/creditos.php?op=listar_creditos_cauto',
         type : "post",
         dataType : "json",
-        data:{sucursal:sucursal},
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
         error: function(e){
           console.log(e.responseText);
         }
