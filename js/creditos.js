@@ -965,6 +965,93 @@ function get_finaliza(){
 
     }
 
+    /************************************************************
+    *****************ORDENES DE CARGO AUTOMATICO************
+    *************************************************************/
+    function listar_ordenes_pendientes(){
+    let sucursal = $("#sucursal").val();
+    let sucursal_usuario = $("#sucursal_usuario").val();
+    tabla_ordenes_pla = $('#cargos_pendientes').DataTable({      
+    "aProcessing": true,//Activamos el procesamiento del datatables
+    "aServerSide": true,//Paginación y filtrado realizados por el servidor
+    dom: 'Bfrtip',//Definimos los elementos del control de tabla
+    buttons: [              
+    'copyHtml5',
+    'excelHtml5',
+    'csvHtml5',
+    'pdf'
+    ],
+
+    "ajax":{
+      url:"ajax/creditos.php?op=listar_cautos_pendientes",
+      type : "post",
+      dataType : "json",
+      data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},         
+      error: function(e){
+        console.log(e.responseText);
+      },           
+    },
+
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+          "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+          "language": {
+
+            "sProcessing":     "Procesando...",
+
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+
+            "sZeroRecords":    "No se encontraron resultados",
+
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+            "sInfoPostFix":    "",
+
+            "sSearch":         "Buscar:",
+
+            "sUrl":            "",
+
+            "sInfoThousands":  ",",
+
+            "sLoadingRecords": "Cargando...",
+
+            "oPaginate": {
+
+              "sFirst":    "Primero",
+
+              "sLast":     "Último",
+
+              "sNext":     "Siguiente",
+
+              "sPrevious": "Anterior"
+
+            },
+
+            "oAria": {
+
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+            }
+
+         }, //cerrando language
+
+          //"scrollX": true
+
+        });
+
+    }  
+
   var detalle_venta_flotante = [];
   var venta_flotante = [];
   var beneficiarios_orden = [];
@@ -1397,10 +1484,11 @@ function listar_creditos_cauto(){
 
 /////////LISTAR OIDS CREADAS
 function listar_oid_aprobadas(){
-  var sucursal= $("#sucursal").val();
-  tabla_oid_creadas=$('#oid_aprobadas').dataTable(
-  {
-    "aProcessing": true,//Activamos el procesamiento del datatables
+  let sucursal= $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
+  //console.log(sucursal_usuario).val();return false;
+  tabla_oid_creadas=$('#oid_aprobadas').dataTable({
+      "aProcessing": true,//Activamos el procesamiento del datatables
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
       dom: 'Bfrtip',//Definimos los elementos del control de tabla
       buttons: [
@@ -1411,7 +1499,7 @@ function listar_oid_aprobadas(){
         url: 'ajax/creditos.php?op=listar_oid_aprobadas',
         type : "post",
         dataType : "json",
-        data:{sucursal:sucursal},
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
         error: function(e){
           console.log(e.responseText);
         }

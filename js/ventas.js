@@ -9,6 +9,9 @@ function init() {
   document.getElementById("iprima_oid").style.display = "none";
   document.getElementById("print_factura").style.display = "none";
   document.getElementById("credito_fiscal_print").style.display = "none";
+  document.getElementById("tipo_tarjeta").style.display = "none";
+  document.getElementById("numero_tarjeta").style.display = "none";
+  document.getElementById("vencimiento_tarjet").style.display = "none";
 }
 
 $(document).ready(ocultar_btn_post_venta);
@@ -587,17 +590,21 @@ function saveVenta(){
   let plazo = $("#plazo").val();
 
   if (tipo_venta=="Contado") {
-     registrarVenta();
+    registrarVenta();
     //$('#recibo_inicial').modal('show');
     //setTimeout ("mostrar_recibo_inicial();", 2000);
   }else if(tipo_venta=="Credito" && tipo_pago=="Descuento en Planilla"){
+    get_correlativo_orden();
     buscar_existe_oid();
     //$("#oid").modal("show");    
     //let id_paciente = $("#id_paciente").val();
     
   }else if(tipo_venta=="Credito" && tipo_pago=="Cargo Automatico"){
-    registrarVenta();
-    Swal.fire('Cargo Automático Registrado!','','success');
+   get_correlativo_orden();
+   document.getElementById("tipo_tarjeta").style.display = "block";
+   document.getElementById("numero_tarjeta").style.display = "block";
+   document.getElementById("vencimiento_tarjet").style.display = "block";
+   data_cargo_form();
   }
 }
 
@@ -608,11 +615,11 @@ function buscar_existe_oid(){
   let id_paciente = $("#id_paciente").val();
   let paciente = $("#titular_cuenta").val();
   let evaluado = $("#evaluado").val();
-
+  let tipo_pago = $("#tipo_pago").val();
   $.ajax({
   url:"ajax/creditos.php?op=buscar_existe_oid",
   method:"POST",
-  data:{id_paciente:id_paciente},
+  data:{id_paciente:id_paciente,tipo_pago:tipo_pago},
   cache:false,
   dataType:"json",
   success:function(data){ 
@@ -687,6 +694,33 @@ function buscar_existe_oid(){
 })     
 }
 
+function data_cargo_form(){
+    $("#oid").modal("show");
+    let id_paciente = $("#id_paciente").val();    
+    let tipo_pago = $("#tipo_pago").val();
+    let tipo_venta = $("#tipo_venta").val();
+    let plazo = $("#plazo").val();
+    let evaluado = $("#evaluado").val();  
+    console.log("FFFFFFFF000000")
+    document.getElementById("print_manual_oid").style.display = "block";
+    $.ajax({
+    url:"ajax/ventas.php?op=show_datos_paciente",
+    method:"POST",
+    data:{id_paciente:id_paciente},
+    cache:false,
+    dataType:"json",
+    success:function(data){ 
+    console.log(data);   
+      $("#paciente_empresarial").val(data.nombres);
+      $("#edad_pac").val(data.edad);
+      $("#tel_pac").val(data.telefono);
+      $("#dui_pac").val(data.dui);
+      $("#plazo_credito").val(plazo);
+      $("#benef_empresarial").val(evaluado);      
+    }
+    })
+}
+
 function get_plazo_orden(n_orden_add,id_paciente){    
   ///////////GET PLAZO ACTUAL DE ORDEN CREDITO //////
   $.ajax({
@@ -699,8 +733,7 @@ function get_plazo_orden(n_orden_add,id_paciente){
       console.log(data);
       let plazo_orden = $("#plazo_acts").val();
       document.getElementById("plazo_acts").placeholder = "Plazo Actual: "+data.plazo+" Meses";
-      $("#plazo_acts_1").val(data.plazo);
-      
+      $("#plazo_acts_1").val(data.plazo);      
   }
   });
 
@@ -829,37 +862,61 @@ function guardar_oid(){
     let codigo = $("#correlativo_orden").html();
     let numero_venta = $("#n_venta").val();
     let sucursal = $("#sucursal").val();
+    let tipo_venta = $("#tipo_venta").val();
+    let tipo_pago = $("#tipo_pago").val();
+    let tipo_tarjeta_c = $("#tipo_tarjeta_c").val();
+    let numero_tarjeta_c = $("#numero_tarjeta_c").val();
+    let vencimiento_tarjeta_c = $("#vencimiento_tarjeta_c").val();
+
+    if((tipo_pago == "Cargo Automatico") && (tipo_tarjeta_c == "" || numero_tarjeta_c == "" || vencimiento_tarjeta_c == "")){
+        setTimeout ("Swal.fire('Campos de tarjeta vacia','','error')", 100);
+        return false;
+    }
+
+    if (tipo_pago=="Descuento en Planilla" && (empresa == "" || funcion_laboral =="")) {
+       setTimeout ("Swal.fire('Existen campos obligatorios vacios','','error')", 100);
+       return false;
+    }
 
 
-
-  if(fecha_inicio !="" && empresa !="" && funcion_laboral !="" && edad_pac !="" && dui_pac !="" && tel_pac !="" && tel_of_pac !="" && direccion_pac !="" && ref_1 !="" && tel_ref1 !="" && ref_2 !="" && tel_ref2 !=""){
-    var obj = {
-          id_paciente:id_paciente,
-          fecha_inicio:fecha_inicio,
-          plazo_credito:plazo_credito,
-          empresa:empresa,
-          funcion_laboral:funcion_laboral,
-          edad_pac:edad_pac,
-          dui_pac:dui_pac,
-          nit_pac:nit_pac,
-          tel_pac:tel_pac,
-          tel_of_pac:tel_of_pac,
-          corre_pac:corre_pac,
-          direccion_pac:direccion_pac,
-          ref_1:ref_1,
-          tel_ref1:tel_ref1,
-          ref_2:ref_2,
-          tel_ref2:tel_ref2,
-          codigo: codigo,
-          observaciones_oid :observaciones_oid,
-          sucursal_usuario:sucursal_usuario
+    if(fecha_inicio !="" && edad_pac !="" && dui_pac !="" && tel_pac !="" && tel_of_pac !="" && direccion_pac !="" && ref_1 !="" && tel_ref1 !="" && ref_2 !="" && tel_ref2 !=""){
+      var obj = {
+        id_paciente:id_paciente,
+        fecha_inicio:fecha_inicio,
+        plazo_credito:plazo_credito,
+        empresa:empresa,
+        funcion_laboral:funcion_laboral,
+        edad_pac:edad_pac,
+        dui_pac:dui_pac,
+        nit_pac:nit_pac,
+        tel_pac:tel_pac,
+        tel_of_pac:tel_of_pac,
+        corre_pac:corre_pac,
+        direccion_pac:direccion_pac,
+        ref_1:ref_1,
+        tel_ref1:tel_ref1,
+        ref_2:ref_2,
+        tel_ref2:tel_ref2,
+        codigo: codigo,
+        observaciones_oid :observaciones_oid,
+        sucursal_usuario:sucursal_usuario,
+        tipo_pago:tipo_pago,
+        tipo_tarjeta_c:tipo_tarjeta_c,
+        numero_tarjeta_c:numero_tarjeta_c,
+        vencimiento_tarjeta_c:vencimiento_tarjeta_c
     }
 
     data_oid.push(obj);
     //console.log(data_oid);
     document.getElementById("btn_reg_orden").style.display = "none";
-    document.getElementById("print_orden_descplanilla").href='print_oid_v.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
     document.getElementById("print_pagare").href='imprimir_pagare_pdf.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
+    if(tipo_pago=="Descuento en Planilla"){
+          document.getElementById("print_orden_descplanilla").href='print_oid_v.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
+    
+    }else if(tipo_pago=="Cargo Automatico"){
+         document.getElementById("print_orden_descplanilla").href='print_cauto.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
+    }
+
     setTimeout("show_btn_print_oid();",1500);
 
     registrarVenta();
@@ -888,10 +945,11 @@ function show_btn_print_oid(){
 function get_correlativo_orden(){
   let sucursal = $("#sucursal").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
+  let tipo_pago = $("#tipo_pago").val();
     $.ajax({
     url:"ajax/ventas.php?op=get_correlativo_orden",
     method:"POST",
-    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
+    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,tipo_pago:tipo_pago},
     cache:false,
     dataType:"json",
     success:function(data){ 
@@ -1215,5 +1273,7 @@ if (tipo_venta=="Credito Fiscal"){
  
 });
 
+
+//function
 
 init();

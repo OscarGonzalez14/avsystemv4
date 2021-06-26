@@ -23,19 +23,19 @@
     }
 </style>
 
-<div class="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="oid" style="border-radius:0px !important;">
+<div class="modal fade bd-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="form_cargo" style="border-radius:0px !important;">
   <div class="modal-dialog modal-dialog-scrollable" role="document" id="tamModal_orden_desc">
 
   <div class="modal-content">
   <div class="modal-header" id="head_oid" style="justify-content:space-between">
-    <span><i class="far fa-file-alt"></i> FORMULARIO DESCUENTOS#</span><span id="correlativo_orden"></span>
+    <span><i class="far fa-file-alt"></i> FORMULARIO DESCUENTO CARGO AUTOMATICO #</span><span id="correlativo_ca"></span>
     <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
   </div>
     <div class="modal-body">
       <div class="card card-danger" style="margin-top: 5px">
      <div class="form-group col-md-2">
       <label for="inputCity">Plazo</span></label>
-      <input type="hidden" class="form-control" id="plazo_credito">
+      <input type="hidden" class="form-control" id="plazo_cargo">
     </div>
       
   <div class="form-row" style="margin: 5px;font-size: 12px">
@@ -128,32 +128,13 @@
 
    <!--ABONO INICIAL-->
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-4">
       <label for="inputPassword4">Existe Prima inicial?</label>
       <select class="form-control" id="prima_oid" required="">
         <option value="0">Seleccionar opcion</option>
         <option value="No">No</option>
         <option value="Si">Si</option>
       </select>
-    </div>
-
-    <div class="form-group col-md-3" id="tipo_tarjeta">
-      <label for="inputPassword4">Tipo tarjeta<span class="obs">*</span></label>
-      <select class="form-control" id="tipo_tarjeta_c" required="">
-        <option value="0">Seleccionar tarjeta</option>
-        <option value="Credito">Credito</option>
-        <option value="Debito">Debito</option>
-      </select>
-    </div>
-
-    <div class="form-group col-md-3" id="numero_tarjeta">
-      <label for="inputCity">Numero Tarjeta<span class="obs">*</span></label>
-      <input type="text" class="form-control get_correlativo_o" id="numero_tarjeta_c">
-    </div>
-
-    <div class="form-group col-md-3" id="vencimiento_tarjet">
-      <label for="inputCity">Fecha vencimiento<span class="obs">*</span></label>
-      <input type="text" class="form-control get_correlativo_o" id="vencimiento_tarjeta_c" placeholder="00-0000">
     </div>
 
   <div class="form-group purple-border col-md-12">
@@ -222,10 +203,4 @@ var dui = new Cleave('#tel_ref2', {
   blocks: [4,4],
   uppercase : true
 });
-var venc = new Cleave('#vencimiento_tarjeta', {
-  delimiter: '-',
-  blocks: [2,4],
-  uppercase : true
-});
-
 </script>

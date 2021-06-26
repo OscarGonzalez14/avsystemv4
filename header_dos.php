@@ -37,6 +37,8 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
 
+
+
 <style type="text/css">
 <?php $cat_user = $_SESSION["categoria"];?>
 </style>
@@ -102,7 +104,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="cargos_pend.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Cargos Automaticos</p>
                 </a>
@@ -207,7 +209,23 @@
               </p>
             </a>
           </li>';
-        }?>  
+        }?>
+
+        <?php
+          if ($cat_user=="administrador") {
+            echo '
+            <li class="nav-item">
+            <a href="comisiones.php" class="nav-link">
+              <i class="nav-icon fas fa-file-invoice-dollar"></i>
+              <p>
+                Comisiones y planillas
+                <span class="right badge badge-danger" style="visibility:hidden">New</span>
+              </p>
+            </a>
+          </li> 
+            ';
+          }
+        ?>
         
         </ul>
       </nav>

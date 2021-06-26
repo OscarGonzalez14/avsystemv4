@@ -6,7 +6,6 @@
   <title>AdminLTE 3 | Advanced form elements</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -1051,6 +1050,7 @@
             <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Color & Time Picker</h3>
+                <input type="text" class="form-control" id="fecha_comision">
               </div>
               <div class="card-body">
                 <!-- Color Picker -->
@@ -1362,23 +1362,10 @@
 <!-- Page script -->
 <script>
   $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-    //Money Euro
-    $('[data-mask]').inputmask()
-
+    //Initialize Select2 Elements    
     //Date range picker
     $('#reservation').daterangepicker()
+    $('#fecha_comision').daterangepicker()
     //Date range picker with time picker
     $('#reservationtime').daterangepicker({
       timePicker: true,
@@ -1410,22 +1397,7 @@
     $('#timepicker').datetimepicker({
       format: 'LT'
     })
-    
-    //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
 
-    //Colorpicker
-    $('.my-colorpicker1').colorpicker()
-    //color picker with addon
-    $('.my-colorpicker2').colorpicker()
-
-    $('.my-colorpicker2').on('colorpickerChange', function(event) {
-      $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
-    });
-
-    $("input[data-bootstrap-switch]").each(function(){
-      $(this).bootstrapSwitch('state', $(this).prop('checked'));
-    });
 
   })
 </script>

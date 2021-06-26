@@ -20,11 +20,8 @@ if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
   $wha = "7469-2542";
   $correo = "metrocentro@opticaavplussv.com";
   $dir2="San Salvador";
-  $info="";
-  $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
-  <b>Giro:</b> Venta al por mayor de artículos de óptica";
-  $correo = "opticaavplussanmiguel@gmail.com";
-  $info="";
+  $info=""; 
+
 }elseif ($sucursal == "San Miguel" or $sucursal == "Empresarial-San Miguel") {
    $encabezado = "OPTICA AVPLUS";
   $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
@@ -36,7 +33,6 @@ if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
   $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
   <b>Giro:</b> Venta al por mayor de artículos de óptica";
   $correo = "opticaavplussanmiguel@gmail.com";
-  $info="";
 }elseif ($sucursal == "Santa Ana" or $sucursal == "Empresarial-Santa Ana"){
     $encabezado = "OPTICA AVPLUS S.A de C.V.";
     $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
@@ -45,10 +41,8 @@ if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
     $correo = "opticaavplussantana@gmail.com";
     $dir2="Santa Ana";
     $info="";
-    $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
-    <b>Giro:</b> Venta al por mayor de artículos de óptica";
-    $correo = "opticaavplussanmiguel@gmail.com";
-    $info="";
+    
+
 }
 //$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_venta"],$_GET["id_paciente"]);
 date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
@@ -76,6 +70,9 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
     $ref_dos = $data_orden_desc[$i]["ref_dos"];
     $tel_ref_dos = $data_orden_desc[$i]["tel_ref_dos"];
     $observaciones_oid = $data_orden_desc[$i]["observaciones"];
+    $tipo_tarjeta = $data_orden_desc[$i]["tipo_tarjeta"];
+    $n_tarjeta = $data_orden_desc[$i]["n_tarjeta"];
+    $fecha_vencimiento = $data_orden_desc[$i]["fecha_vencimiento"];
 }
 $cuotas_creditos = $suma_monto_orden/$plazo_credito;
 ?>
@@ -134,7 +131,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
     <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
   </tr>
   <tr>
-    <td  style="text-align: center;margin-top: 0px;color:#0088b6;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><b>ORDEN DE DESCUENTO EN PLANILLA</b></td>
+    <td  style="text-align: center;margin-top: 0px;color:#0088b6;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><b>ORDEN DE DESCUENTO CARGO AUTOMATICO</b></td>
   </tr>
   <tr>
     <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
@@ -165,8 +162,8 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
       $empresa_pac = $datos_paciente[$j]["empresas"];
       $nombre_pac = $datos_paciente[$j]["nombres"];
      ?>
-      <span> <b>EMPRESA:</b>&nbsp; <u><?php echo $datos_paciente[$j]["empresas"]."."?></u></span><br>
-      <span style="font-size:13px;font-family: Helvetica, Arial, sans-serif;">Por la presente y de confirmidad con el artículo N° 136 del código de trabajo, publicado en el Diario Oficial del 31 de Julio de 1972, autorizo a usted a descontar de mi sueldo mensual que devengo en esta empresa como empleado(a) de la misma; la cantidad de:&nbsp;<b style="color: black"><u><?php echo "$".number_format($suma_monto_orden,2,".",",");?></u></b> en <?php echo $plazo_credito?> cuotas __mensuales de: <b><u><?php echo "$".number_format($cuotas_creditos,2,".",",");?></u></b>, las cuales deberán pagar por mi cuenta a partir de: <u><?php echo date("d-m-Y", strtotime($inicio_credito));?></u> hasta <u><?php echo date("d-m-Y", strtotime($fin_credito));?></u>. Por lo tanto autorizo a que se realicen los pagos en concepto de producto y servicios visuales. <br><br>  <b>Atentamente.</b><br></span>
+      <span> <b>Señores presentes</b><br>
+      <span style="font-size:13px;font-family: Helvetica, Arial, sans-serif;">Por la presente y de confirmidad con el artículo N° 136 del código de trabajo, publicado en el Diario Oficial del 31 de Julio de 1972, autorizo a usted a descontar de mi tarjeta crédito/debito; la cantidad de:&nbsp;<b style="color: black"><u><?php echo "$".number_format($suma_monto_orden,2,".",",");?></u></b> en <?php echo $plazo_credito?> cuotas __mensuales de: <b><u><?php echo "$".number_format($cuotas_creditos,2,".",",");?></u></b>, las cuales deberán pagar por mi cuenta a partir de: <u><?php echo date("d-m-Y", strtotime($inicio_credito));?></u> hasta <u><?php echo date("d-m-Y", strtotime($fin_credito));?></u>. Por lo tanto autorizo a que se realicen los pagos en concepto de producto y servicios visuales. <br><br>  <b>Atentamente.</b><br></span>
 
   <table width="100%" class="table2">
         <tr>
@@ -174,24 +171,24 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
     </tr>
     <tr>
       <th colspan="45" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:45%" bgcolor="#c5e2f6"><b>NOMBRE COMPLETO</b></th>
-      <th colspan="30" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:30%" bgcolor="#c5e2f6"><b>FUNCIÓN LABORAL</b></th>
-      <th colspan="25" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:25%" bgcolor="#c5e2f6"><b>DEPARTAMENTO</b></th>
+      <th colspan="30" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:30%" bgcolor="#c5e2f6"><b>NUMERO TARJETA</b></th>
+      <th colspan="25" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:25%" bgcolor="#c5e2f6"><b>FECHA VENCIMIENTO</b></th>
     </tr>
     <tr>
-      <td colspan="45" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:45%;text-align: center"><?php echo $datos_paciente[$j]["nombres"];?></td>
-      <td colspan="30" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:30%;text-align: center"><?php echo $datos_paciente[$j]["ocupacion"];?></td>
-      <td colspan="25" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:25%;text-align: center"><?php echo strtoupper($datos_paciente[$j]["empresa_dept"]);?></td>
+      <td colspan="45" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:45%;text-align: center"><?php echo $datos_paciente[$j]["nombres"]; ?></td>
+      <td colspan="30" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:30%;text-align: center"><?php echo $n_tarjeta;?></td>
+      <td colspan="25" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:25%;text-align: center"><?php echo $tipo_tarjeta;?></td>
     </tr>
 
     <tr>
-      <th colspan="10" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:10%" bgcolor="#c5e2f6"><b>COD. EMP.</b></th>
+      <th colspan="10" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:10%" bgcolor="#c5e2f6"><b>TIPO TARJETA</b></th>
       <th colspan="20" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:20%" bgcolor="#c5e2f6"><b>EDAD</b></th>
       <th colspan="15" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:15%" bgcolor="#c5e2f6"><b>TELEFONO</b></th>
       <th colspan="30" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:30%" bgcolor="#c5e2f6"><b>TEL. OFICINA</b></th>
       <th colspan="25" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:25%" bgcolor="#c5e2f6"><b>DUI</b></th>
     </tr>
     <tr>
-      <td colspan="10" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:20%;text-align: center"><?php echo $datos_paciente[$j]["departamento"];?></td>
+      <td colspan="10" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:20%;text-align: center"><?php echo $fecha_vencimiento;?></td>
       <td colspan="20" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:10%;text-align: center"><?php echo $datos_paciente[$j]["edad"]." años";?></td>
       <td colspan="15" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:15%;text-align: center"><?php echo $datos_paciente[$j]["telefono"];?></td>
       <td colspan="30" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:30%;text-align: center"><?php echo $datos_paciente[$j]["telefono_oficina"];?></td>
@@ -292,10 +289,10 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
  <br>
 
  <div style="border: solid 1px black;">
- <h3 style="text-align: center;">AREA DE PAGADURÍA <?php echo strtoupper($empresa_pac)?></h3>
+ <h3 style="text-align: center;">AREA DE CRÉDITOS Y COBROS <?php echo $encabezado?></h3>
  <div style="margin: 8px">
  <b style="font-size: 11px">Presente.</b><br> 
- <span style="font-size: 12px;text-align: justify;text-justify:inter-word;">Al tomar nota de la carta anterior nos comprometemos con optica AV Plus a descontar del sueldo mensual de Sr.(a) con nombre <u><?php echo strtoupper($nombre_pac)?>.</u> Las cuotas de <b><?php echo "$".number_format($cuotas_creditos,2,".",","); ?></b>, durante un período de tiempo que consta de <?php echo $plazo_credito." meses "?>para remitirlas a su cuenta con forma de pago: ____Mensual ___Quincenal. Cada Fecha:_______________________</span>
+ <span style="font-size: 12px;text-align: justify;text-justify:inter-word;">Al tomar nota de la carta anterior nos comprometemos con óptica AV Plus a descontar del sueldo mensual de Sr.(a) con nombre <u><?php echo strtoupper($nombre_pac)?>.</u> Las cuotas de <b><?php echo "$".number_format($cuotas_creditos,2,".",","); ?></b>, durante un período de tiempo que consta de <?php echo $plazo_credito." meses "?>para remitirlas a su cuenta con forma de pago: ____Mensual ___Quincenal. Cada Fecha:_______________________</span>
  <br><br>
  <table width="100%">
   <tr>
@@ -315,7 +312,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
 </table>
 </div>
 </div>
-<span style="text-align: right;font-size: 9px;margin-top: 8PX" align="right">Este documento ha sido emitido por el departamento Empresarial de Óptica AV Plus y creado por: <?php echo $_SESSION["nombres"]."&nbsp;-&nbsp;".$hoy;?></span>
+<span style="text-align: right;font-size: 9px;margin-top: 8PX" align="right">Este documento ha sido emitido por el departamento creditos y cobrosde Óptica AV Plus y creado por: <?php echo $_SESSION["nombres"]."&nbsp;-&nbsp;".$hoy;?></span>
 </div><!--Fin primera parte-->
 
 

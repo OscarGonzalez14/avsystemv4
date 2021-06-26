@@ -17,6 +17,7 @@ require_once("modals/empresas_credito_fiscal.php");
 require_once("modals/modal_correlativo_factura.php");
 require_once("modals/modal_oid.php");
 require_once("modals/modal_prima_oid.php");
+require_once("modals/modal_cargo_automatico.php");
 ?>
 <style>
   html{ 
@@ -28,10 +29,10 @@ require_once("modals/modal_prima_oid.php");
   <div class="content-wrapper">
 
     <!-- Main content -->
-    <section class="content" style="margin-top: 5px">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
+  <section class="content" style="margin-top: 5px">
+    <div class="row">
+      <div class="col-12">
+      <div class="card">
   
 <div class="card-body"><!--CONTENIDO-->
 

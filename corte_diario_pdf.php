@@ -353,7 +353,6 @@ if(($recuperado_emp[$j]["monto_cobrado"])>0){
 <tbody>
 
 <?php for($j=0;$j<count($recuperado_cargo);$j++){
-
 if(($recuperado_cargo[$j]["monto_cobrado"])>0){
   $monto_c = $recuperado_cargo[$j]["monto_cobrado"];
 }else{

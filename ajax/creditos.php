@@ -418,15 +418,12 @@ switch ($_GET["op"]){
 
 
     /************************************************************
-    *****************ORDENES DE DESCUENTO EN PLANILLA************
+    *****************ORDENES DE DESCUENTO EN PLANILLA PENDIENTES************
     *************************************************************/
-    case 'listar_oid_pendientes':
-
-    
+    case 'listar_oid_pendientes':    
 
     if ($_POST["sucursal"]=="Empresarial") {
-      $sucursal_usuario = "Empresarial-".$_POST["sucursal_usuario"];
-      $datos=$creditos->get_ordenes_descuento_empresarial($_POST["sucursal"],$sucursal_usuario);
+      $datos=$creditos->get_ordenes_descuento_empresarial($_POST["sucursal_usuario"]);
     }else{
       $datos=$creditos->get_ordenes_descuento_pendientes($_POST["sucursal"]);
     }
@@ -463,6 +460,48 @@ switch ($_GET["op"]){
       echo json_encode($results);
       //echo json_encode("salida prueba: ".$sucursal_usuario);      
     break;
+
+     /************************************************************
+    *****************ORDENES DE CARGOS AUTOMATICOS ************
+    *************************************************************/
+    case 'listar_cautos_pendientes':    
+
+    if ($_POST["sucursal"]=="Empresarial") {
+      $datos=$creditos->get_ordenes_cauto_pendientes($_POST["sucursal_usuario"]);
+    }else{
+      $datos=$creditos->get_ordenes_cauto_empresarial($_POST["sucursal"]);
+    }
+   
+    //Vamos a declarar un array
+    $data= Array();
+
+    foreach($datos as $row){
+
+      $sub_array = array();
+        if ($row['estado']==0){
+          $estado = 'Pendiente';
+        }
+
+        $sub_array = array();
+        $sub_array[] = $row["id_orden"];
+        $sub_array[] = $row["numero_orden"];
+        $sub_array[] = $row["nombres"];
+        $sub_array[] = $row["fecha_registro"];
+        $sub_array[] = $estado;  
+        $sub_array[] = '<i class="fas fa-cog" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
+        $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-infos btn-md"><i class="glyphicon glyphicon-edit"></i> Imprimir</button></a>';
+        $sub_array[] = '<i class="fas fa-trash" style="border-radius:0px;color:red" data-toggle="modal" data-target="#detalle_ventas" onClick="detalleVentas(\''.$row["numero_orden"].'\','.$row["id_paciente"].')"></i>';
+        $data[] = $sub_array;
+      }
+
+      $results = array(
+      "sEcho"=>1, //Información para el datatables
+      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+      "aaData"=>$data);
+      echo json_encode($results);
+      //echo json_encode("salida prueba: ".$sucursal_usuario);      
+    break;   
 
 
 case 'get_detalles_orden_oid':
@@ -732,7 +771,12 @@ $datos=$creditos->get_det_orden($_POST["n_orden_add"],$_POST["id_paciente"]);
   break;
 
 case 'listar_oid_aprobadas':
-    $datos=$creditos->get_ordenes_descuento_aprobadas($_POST["sucursal"]);
+if ($_POST['sucursal']=="Empresarial") {
+  $suc = $_POST["sucursal_usuario"];
+}else{
+  $suc = $_POST["sucursal"];
+}
+    $datos=$creditos->get_ordenes_descuento_aprobadas($suc);
     //Vamos a declarar un array
     $data= Array();
 

@@ -437,15 +437,36 @@ if (isset($errors)){
   echo json_encode($output);
   break;
 
-  case 'get_correlativo_orden':
- 
+case 'get_correlativo_orden':
+
  if ($_POST["sucursal"]=="Empresarial") {
   $sucursal = $_POST["sucursal_usuario"];
 
  }else{
   $sucursal = $_POST["sucursal"];
  }
-
+////////////// VALIDACIO N  TIPO PAGO  ///////////
+if ($_POST["tipo_pago"]=="Cargo Automatico") {
+    $prefijo = "";
+  if ($sucursal == "Metrocentro") {
+    $prefijo = "ME";
+  }elseif($sucursal == "Santa Ana") {
+    $prefijo = "SA";
+  }elseif($sucursal == "San Miguel") {
+    $prefijo = "SM";
+  }
+  ########## FIN PREFIJOS #######  
+  $resultado_correlativo = $ventas->get_correlativo_cargo($sucursal);
+  if(is_array($resultado_correlativo) == true and count($resultado_correlativo) > 0){
+    foreach($resultado_correlativo as $row){
+      $correlativo = $row["numero_orden"];
+      $cod = substr($correlativo,4,11)+1;
+      $codigo = "C".$prefijo."-".($cod);
+    }
+  }else{
+      $codigo = "C".$prefijo."-1";
+  }
+}else{
   $prefijo = "";
   if ($sucursal=="Metrocentro") {
     $prefijo="ME";
@@ -456,7 +477,6 @@ if (isset($errors)){
   }
   ########## FIN PREFIJOS #######  
   $resultado_correlativo = $ventas->get_correlativo_orden($sucursal);
-
   if(is_array($resultado_correlativo) == true and count($resultado_correlativo) > 0){
     foreach($resultado_correlativo as $row){
       $correlativo = $row["numero_orden"];
@@ -466,7 +486,8 @@ if (isset($errors)){
   }else{
     $codigo = "O".$prefijo."-1";
   }
-  echo json_encode($codigo);
+}  
+echo json_encode($codigo);
   break;
 }
 ?>

@@ -683,4 +683,9 @@ function get_id_caja_chica(){
     
 }
 
+function fecha_com(){
+  fecha = $("#fecha_comision").val();
+  console.log(fecha)
+}
+
 init();

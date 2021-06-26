@@ -16,7 +16,6 @@ where e.id_producto=? and e.id_ingreso=?";
   $sql->bindValue(2,$id_ingreso);
   $sql->execute();
   return $result = $sql->fetchAll(PDO::FETCH_ASSOC);
-
 }
 
 public function buscar_accesorios_ventas($id_producto,$id_ingreso){
@@ -98,7 +97,7 @@ public function agrega_detalle_venta(){
   $conectar= parent::conexion();
   parent::set_names();
 
-  if($tipo_venta == "Contado" or ($tipo_venta == "Credito" and $tipo_pago == "Cargo Automatico")){ ////////////////////VALIDAR SI LA VENTA ES DE CONTADO  ///////////
+  if($tipo_venta == "Contado"){ ////////////////////VALIDAR SI LA VENTA ES DE CONTADO  ///////////
 
   if ($sucursal=="Empresarial") {
     $sucursal_act = "Empresarial-".$sucursal_usuario;
@@ -241,8 +240,7 @@ public function agrega_detalle_venta(){
     $sql2->execute();
   }
 
-#################  REGISTRAR VENTA EN CORTE DIARIO #####################
-
+    #################  REGISTRAR VENTA EN CORTE DIARIO #####################
     $n_recibo="";
     $n_factura="";
     $forma_cobro="";
@@ -279,7 +277,7 @@ public function agrega_detalle_venta(){
 
 
 //////////////////////VALIDAR SI VENTA ES CREDITO
-  }elseif($tipo_venta == "Credito" and $tipo_pago == "Descuento en Planilla"){//////////////////////FIN PARA VALIDAR SI9 VENTA  == CONTADO
+  }elseif(($tipo_venta == "Credito" and $tipo_pago == "Descuento en Planilla") or ($tipo_venta == "Credito" and $tipo_pago == "Cargo Automatico")){//////////////////////FIN PARA VALIDAR SI9 VENTA  == CONTADO
   ////////////////////////   SI NO ES  == CONTADO REGISTRAR VENTAS FLOTANTES /////////////
   $detalles_oid = array();
   $detalles_oid = json_decode($_POST['arrayOid']);
@@ -305,12 +303,22 @@ public function agrega_detalle_venta(){
       $codigo = $v->codigo;
       $observaciones_oid = $v->observaciones_oid;
       $sucursal_usuario = $v->sucursal_usuario;
+      $tipo_pago = $v->tipo_pago;
+      $tipo_tarjeta_c = $v->tipo_tarjeta_c;
+      $numero_tarjeta_c = $v->numero_tarjeta_c;
+      $vencimiento_tarjeta_c = $v->vencimiento_tarjeta_c;
   }//Fin foreach
 
     $finalizacion = date("d-m-Y",strtotime($fecha_inicio."+ $plazo month"));
 
+    if ($tipo_pago=="Cargo Automatico") {
+      $tipo_orden = "Cargo Automatico";
+    }else{
+      $tipo_orden = "Individual";
+    }
+
     $estado_orden = "0";
-    $tipo_orden = "Individual";
+    
     if ($sucursal=="Empresarial") {
       $sucursal_orden = "Empresarial-".$sucursal_usuario;
     }else{
@@ -318,7 +326,7 @@ public function agrega_detalle_venta(){
     }
     ////////////////////////CPMPROBAR SI NO EXISTE ORDEN CREDITO///////////////////
 
-    $sql8="insert into orden_credito values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql8="insert into orden_credito values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     $sql8=$conectar->prepare($sql8);          
     $sql8->bindValue(1,$codigo);
     $sql8->bindValue(2,$id_paciente);
@@ -336,6 +344,9 @@ public function agrega_detalle_venta(){
     $sql8->bindValue(14,$plazo);
     $sql8->bindValue(15,$observaciones_oid);
     $sql8->bindValue(16,$tipo_orden);
+    $sql8->bindValue(17,$tipo_tarjeta_c);
+    $sql8->bindValue(18,$numero_tarjeta_c);
+    $sql8->bindValue(19,$vencimiento_tarjeta_c);
 
     $sql8->execute();
 
@@ -406,41 +417,130 @@ public function agrega_detalle_venta(){
     $sql5->bindValue(14,$estado_flotante);
     $sql5->execute();
 
+  }elseif ($tipo_venta == "Credito" and $tipo_pago == "Cargo Automatico") {
+    $detalles_oid = array();
+    $detalles_oid = json_decode($_POST['arrayOid']);
 
-    //if($categoria_prod=="aros"){
-    ////////////////////ACTUALIZAR STOCK DE BODEGA SI PRODUCTO == aros o accesorios
-     /* $sql3="select * from existencias where id_producto=? and bodega=? and categoria_ub=? and num_compra=? and id_ingreso=?;";           
-      $sql3=$conectar->prepare($sql3);
-      $sql3->bindValue(1,$codProd);
-      $sql3->bindValue(2,$sucursal);
-      $sql3->bindValue(3,$categoria_ub);
-      $sql3->bindValue(4,$num_compra);
-      $sql3->bindValue(5,$id_ingreso);
-      $sql3->execute();
+  foreach ($detalles_oid as $k => $v) {
+      $id_paciente = $v->id_paciente;
+      $fecha_inicio = $v->fecha_inicio;
+      $plazo_credito = $v->plazo_credito;
+      $empresa = $v->empresa;
+      $funcion_laboral = $v->funcion_laboral;
+      $edad_pac = $v->edad_pac;
 
-      $resultados = $sql3->fetchAll(PDO::FETCH_ASSOC);
+      $dui_pac = $v->dui_pac;
+      $nit_pac = $v->nit_pac;
+      $tel_pac = $v->tel_pac;
+      $tel_of_pac = $v->tel_of_pac;
+      $corre_pac = $v->corre_pac;
+      $direccion_pac = $v->direccion_pac;
+      $ref_1 = $v->ref_1;
+      $tel_ref1 = $v->tel_ref1;
+      $ref_2 = $v->ref_2;
+      $tel_ref2 = $v->tel_ref2;
+      $codigo = $v->codigo;
+      $observaciones_oid = $v->observaciones_oid;
+      $sucursal_usuario = $v->sucursal_usuario;
+  }//Fin foreach
 
-      foreach($resultados as $b=>$row){
-      $re["existencia"] = $row["stock"];
-    }            
+    $finalizacion = date("d-m-Y",strtotime($fecha_inicio."+ $plazo month"));
+    $estado_orden = "0";
+    $tipo_orden = "Individual";
+    if ($sucursal=="Empresarial") {
+      $sucursal_orden = "Empresarial-".$sucursal_usuario;
+    }else{
+      $sucursal_orden = $sucursal;
+    }
+    ////////////////////////CPMPROBAR SI NO EXISTE ORDEN CREDITO///////////////////
+
+    $sql8="insert into orden_credito values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql8=$conectar->prepare($sql8);          
+    $sql8->bindValue(1,$codigo);
+    $sql8->bindValue(2,$id_paciente);
+    $sql8->bindValue(3,$ref_1);
+    $sql8->bindValue(4,$tel_ref1);
+    $sql8->bindValue(5,$ref_2);
+    $sql8->bindValue(6,$tel_ref2);
+    $sql8->bindValue(7,$fecha_venta);
+    $sql8->bindValue(8,$fecha_inicio);
+    $sql8->bindValue(9,$finalizacion);
+    $sql8->bindValue(10,$estado_orden);
+    $sql8->bindValue(11,$id_usuario);
+    $sql8->bindValue(12,$sucursal_orden);
+    $sql8->bindValue(13,$monto_total);
+    $sql8->bindValue(14,$plazo);
+    $sql8->bindValue(15,$observaciones_oid);
+    $sql8->bindValue(16,$tipo_orden);
+
+    $sql8->execute();
+
+  ///////////////////////UPDATE DATOS DE PACIENTE
+   $sql9 = "update pacientes set telefono=?,ocupacion=?,dui=?,correo=?,empresas=?,nit=?,telefono_oficina=?,direccion=? where id_paciente=?;";
+   $sql9 = $conectar->prepare($sql9);
+   $sql9->bindValue(1,$tel_pac);
+   $sql9->bindValue(2,$funcion_laboral);
+   $sql9->bindValue(3,$dui_pac);
+   $sql9->bindValue(4,$corre_pac);
+   $sql9->bindValue(5,$empresa);
+   $sql9->bindValue(6,$nit_pac);
+   $sql9->bindValue(7,$tel_of_pac);
+   $sql9->bindValue(8,$direccion_pac);
+   $sql9->bindValue(9,$id_paciente);
+   $sql9->execute();
+
+  ///////////////   insert into detalle ventas flotantes //////////////
+  foreach ($detalles as $k => $v) {
+    $cantidad = $v->cantidad;
+    $categoria_prod = $v->categoria_prod;
+    $categoria_ub = $v->categoria_ub;
+    $codProd = $v->codProd;
+    $descripcion = $v->descripcion;
+    $descuento = $v->descuento;
+    $id_ingreso = $v->id_ingreso;
+    $num_compra = $v->num_compra;
+    $precio_venta = $v->precio_venta;
+    $stock = $v->stock;
+    $subtotal = $v->subtotal;
     
-    $cantidad_totales = $row["stock"] - $cantidad;
+    $sql5="insert into detalle_ventas_flotantes values(null,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql5=$conectar->prepare($sql5);
+    $sql5->bindValue(1,$codigo);
+    $sql5->bindValue(2,$codProd);
+    $sql5->bindValue(3,$descripcion);
+    $sql5->bindValue(4,$precio_venta);
+    $sql5->bindValue(5,$cantidad);
+    $sql5->bindValue(6,$descuento);
+    $sql5->bindValue(7,$subtotal);
+    $sql5->bindValue(8,$fecha_venta);
+    $sql5->bindValue(9,$id_usuario);
+    $sql5->bindValue(10,$id_paciente);
+    $sql5->bindValue(11,$evaluado);
+    $sql5->bindValue(12,$categoria_ub);    
+    $sql5->execute();
+  } 
 
-    if(is_array($resultados)==true and count($resultados)>0) {                    
-
-    $sql12 = "update existencias set stock=? where id_producto=? and bodega=? and id_ingreso=? and categoria_ub=? and num_compra=?";
-      $sql12 = $conectar->prepare($sql12);
-      $sql12->bindValue(1,$cantidad_totales);
-      $sql12->bindValue(2,$codProd);
-      $sql12->bindValue(3,$sucursal);
-      $sql12->bindValue(4,$id_ingreso);
-      $sql12->bindValue(5,$categoria_ub);
-      $sql12->bindValue(6,$num_compra);
-      $sql12->execute();
-  } */         
-
-  //}//////////// fin validar para descontar de inventario   
+    $estado_flotante = 0;
+    $sql5="insert into ventas_flotantes values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $sql5=$conectar->prepare($sql5);
+    $sql5->bindValue(1,$codigo);          
+    $sql5->bindValue(2,$fecha_venta);
+    $sql5->bindValue(3,$numero_venta);
+    $sql5->bindValue(4,$paciente);
+    $sql5->bindValue(5,$vendedor);       
+    $sql5->bindValue(6,$monto_total);
+    $sql5->bindValue(7,$tipo_pago);
+    $sql5->bindValue(8,$tipo_venta);          
+    $sql5->bindValue(9,$id_usuario);
+    $sql5->bindValue(10,$id_paciente);
+    $sql5->bindValue(11,$sucursal_orden);
+    $sql5->bindValue(12,$evaluado);
+    $sql5->bindValue(13,$optometra);
+    $sql5->bindValue(14,$estado_flotante);
+    $sql5->execute();
   }
+
+
 
 }//////////FIN FUNCION REGISTRA VENTA
 
@@ -448,13 +548,26 @@ public function get_correlativo_orden($sucursal){
  /*GET NUMERO ORDEN */
   $conectar=parent::conexion();
   parent::set_names();
-  $sucursal_orden = "%".$sucursal;
-  $sql="select numero_orden from orden_credito where sucursal like ? order by id_orden DESC limit 1;";
+  $sucursal_orden = "%".$sucursal."%";
+  $sql="select numero_orden from orden_credito where sucursal like ? and tipo_orden != 'Cargo Automatico' order by id_orden DESC limit 1;";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1,$sucursal_orden);
   $sql->execute();
   return $resultado_correlativo = $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+
+public function get_correlativo_cargo($sucursal){
+ /*GET NUMERO ORDEN */
+  $conectar=parent::conexion();
+  parent::set_names();
+  $sucursal_orden = "%".$sucursal."%";
+  $sql="select numero_orden from orden_credito where sucursal like ?  and tipo_orden = 'Cargo Automatico' order by id_orden DESC limit 1;";
+  $sql=$conectar->prepare($sql);
+  $sql->bindValue(1,$sucursal_orden);
+  $sql->execute();
+  return $resultado_correlativo = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
 ////////LENADO DE RECIBO INICIAL DE LENTE
 public function get_detalle_lente_rec_ini($id_paciente,$numero_venta){
   $conectar=parent::conexion();
@@ -586,4 +699,6 @@ public function show_datos_paciente($id_paciente){
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
+
+
 }//////Fin de la clase
