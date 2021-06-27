@@ -35,6 +35,9 @@
 <!-- date-range-picker -->
 <script src="plugins/moment/moment.min.js"></script>
 <script src="plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Select2 -->
+<script src="plugins/select2/js/select2.full.min.js"></script>
+<script src="plugins/autocomplete.js"></script>
 <!-- page script -->
 <script>
   $(function () {

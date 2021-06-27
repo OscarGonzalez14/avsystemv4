@@ -386,8 +386,14 @@ var opoi=$("#opoi").val();
 var diagnostico=$("#diagnostico").val();
 var medicamento=$("#medicamento").val();
 var observaciones=$("#observaciones").val();
-var id_usuario=$("#id_usuario").val();
+var id_user=$("#id_usuario").val();
+let id_usuario = id_user.toString();
 var codigop = $("#codigop").val();
+
+if (id_usuario == 0 || id_usuario == "") {
+	Swal.fire('No se puede registrar sin optometra','','error');
+	return false;
+}
 
 $.ajax({
     url:"ajax/consultas.php?op=guardar_consulta",

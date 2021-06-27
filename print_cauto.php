@@ -163,7 +163,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
       $nombre_pac = $datos_paciente[$j]["nombres"];
      ?>
       <span> <b>Señores presentes</b><br>
-      <span style="font-size:13px;font-family: Helvetica, Arial, sans-serif;">Por la presente y de confirmidad con el artículo N° 136 del código de trabajo, publicado en el Diario Oficial del 31 de Julio de 1972, autorizo a usted a descontar de mi tarjeta crédito/debito; la cantidad de:&nbsp;<b style="color: black"><u><?php echo "$".number_format($suma_monto_orden,2,".",",");?></u></b> en <?php echo $plazo_credito?> cuotas __mensuales de: <b><u><?php echo "$".number_format($cuotas_creditos,2,".",",");?></u></b>, las cuales deberán pagar por mi cuenta a partir de: <u><?php echo date("d-m-Y", strtotime($inicio_credito));?></u> hasta <u><?php echo date("d-m-Y", strtotime($fin_credito));?></u>. Por lo tanto autorizo a que se realicen los pagos en concepto de producto y servicios visuales. <br><br>  <b>Atentamente.</b><br></span>
+      <span style="font-size:13px;font-family: Helvetica, Arial, sans-serif;">Por la presente autorizo a <b><?php echo $encabezado; ?></b> a descontar de mi tarjeta bancaria; la cantidad de:&nbsp;<b style="color: black"><u><?php echo "$".number_format($suma_monto_orden,2,".",",");?></u></b> en <?php echo $plazo_credito?> cuotas __mensuales de: <b><u><?php echo "$".number_format($cuotas_creditos,2,".",",");?></u></b>, las cuales deberán pagar por mi cuenta a partir de: <u><?php echo date("d-m-Y", strtotime($inicio_credito));?></u> hasta <u><?php echo date("d-m-Y", strtotime($fin_credito));?></u>. Por lo tanto autorizo a que se realicen los pagos en concepto de productos y servicios visuales. <br><br>  <b>Atentamente.</b><br></span>
 
   <table width="100%" class="table2">
         <tr>
@@ -292,7 +292,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
  <h3 style="text-align: center;">AREA DE CRÉDITOS Y COBROS <?php echo $encabezado?></h3>
  <div style="margin: 8px">
  <b style="font-size: 11px">Presente.</b><br> 
- <span style="font-size: 12px;text-align: justify;text-justify:inter-word;">Al tomar nota de la carta anterior nos comprometemos con óptica AV Plus a descontar del sueldo mensual de Sr.(a) con nombre <u><?php echo strtoupper($nombre_pac)?>.</u> Las cuotas de <b><?php echo "$".number_format($cuotas_creditos,2,".",","); ?></b>, durante un período de tiempo que consta de <?php echo $plazo_credito." meses "?>para remitirlas a su cuenta con forma de pago: ____Mensual ___Quincenal. Cada Fecha:_______________________</span>
+ <span style="font-size: 12px;text-align: justify;text-justify:inter-word;">Al tomar nota de la carta anterior me comprometo con <?php echo $encabezado;?> a descontar de mi tarjeta de <?php echo $tipo_tarjeta;?> a  nombre de: <u><?php echo strtoupper($nombre_pac)?>.</u> Las cuotas de <b><?php echo "$".number_format($cuotas_creditos,2,".",","); ?></b>, durante un período de tiempo que consta de <?php echo $plazo_credito." meses "?>para remitirlas a su cuenta con forma de pago: ____Mensual ___Quincenal. Cada Fecha:_______________________</span>
  <br><br>
  <table width="100%">
   <tr>

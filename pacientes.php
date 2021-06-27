@@ -5,6 +5,11 @@ if(isset($_SESSION["usuario"])){
 require_once("modelos/Reporteria.php");
 $alerts = new Reporteria();
 $ganadores=$alerts->count_ganadores();
+
+require_once("modelos/Externos.php");
+$users = new Externos();
+$opto = $users->get_usuarios();
+
 require_once("header_dos.php");
 require_once("modals/nuevo_paciente.php");
 require_once("modals/modal_consultas.php");
@@ -86,7 +91,7 @@ require_once("modals/modal_consultas.php");
 
 <?php require_once("footer.php");?>
 <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
-<input type="hidden" name="id_usuario" id="usuario" value="<?php echo $_SESSION["usuario"];?>"/>
+<!--<input type="hidden" name="id_usuario" id="usuario" value="<?php //echo $_SESSION["usuario"];?>"/>-->
 <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
 <input type="hidden" name="sucursal_usuario" id="sucursal_usuario" value="<?php echo $_SESSION["sucursal_usuario"];?>"/>
 <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
@@ -114,6 +119,17 @@ require_once("modals/modal_consultas.php");
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+      })
+</script>  
 <script>
 
 function mayus(e) {

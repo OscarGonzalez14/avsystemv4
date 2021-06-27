@@ -368,7 +368,7 @@ public function aprobar_orden(){
         $sucursal = $v->sucursal;
 
     if ($estado=="Ok"){
-    /////////// GET NUMERO DE VENTA
+    /////////// GET NUMERO DE VENTA ////////
         require_once("Ventas.php");
         $ventas = new Ventas();
         $correlativo = $ventas->get_numero_venta($sucursal);
@@ -401,7 +401,7 @@ public function aprobar_orden(){
                 $num_venta =$prefijo.$sufijo."-".$cod;
             }///FIN FOREACH             
         }else{
-            $num_venta = "AV".$prefijo."-1";
+            $num_venta = $prefijo.$sufijo."-1";
         }
     //////////GET ITEMS DE VENTAS FLOTANTES POR BENEFICIARIO   
     $sql = "select*from detalle_ventas_flotantes where numero_orden=? and beneficiario=?;";
@@ -589,14 +589,13 @@ public function aprobar_orden(){
 
 }
 
+
 public function denegar_orden($numero_orden){
     $conectar = parent::conexion();
     $sql3 = "update orden_credito set estado='2' where numero_orden=?;";
     $sql3 = $conectar->prepare($sql3);
-    $sql3->bindValue(1,$numero_orden);
-   
-    $sql3->execute();
-    
+    $sql3->bindValue(1,$numero_orden);   
+    $sql3->execute();    
 }
 
 public function buscar_existe_oid($id_paciente){

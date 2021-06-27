@@ -53,10 +53,21 @@ body.modal-open {
               <input class="form-control" id="parentesco_evaluado" name="parentesco_evaluado" type="text" onkeyup="mayus(this);">
             </div>
 
-            <div class="col-sm-2">
-              <label for="ex3">Telefono</label>
-              <input class="form-control" id="tel_evaluado" type="text" name="tel_evaluado" placeholder="Paciente Evaluado">
+
+            <div class="col-sm-2 select2-purple">
+              <label for="ex3">Optometra</label>
+              <select class="select2 form-control" id="id_usuario" multiple="multiple" data-placeholder="Seleccionar optometra" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                  <option value="0">Seleccionar usuario</option>
+                  <?php
+                  for ($i=0; $i < sizeof($opto); $i++) { ?>
+          <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo $opto[$i]["usuario"]?></option>
+         <?php  } ?>
+                </select>
+              
             </div>
+
+            <input class="form-control" id="tel_evaluado" type="hidden" name="tel_evaluado" placeholder="Paciente Evaluado">
+
             <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
             <div class="col-sm-2">
               <label for="ex3">Fecha</label>
@@ -225,7 +236,7 @@ body.modal-open {
   <input class="form-control" id="observaciones" name="observaciones" placeholder="Observaciones" required>
 </div>
 <input class="form-control" id="codigop" name="codigop" type="hidden" readonly>
-<input type="hidden" name="id_usuario" id="id_usuario" value="<?php echo $_SESSION["id_usuario"];?>"/>
+
 </div><!--FIN FORM-GROUP-->
 <button type="button" class="btn btn-primary btn-block" onClick="guardarConsultas()"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>
 Guardar</button>
