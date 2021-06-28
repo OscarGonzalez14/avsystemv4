@@ -3,7 +3,7 @@ require_once("config/conexion.php");
 if(isset($_SESSION["usuario"])){ 
 require_once('header_dos.php');
 require_once('modals/modal_detalle_orden.php');
-require_once("modals/modal_correlativo_factura.php");
+//require_once("modals/modal_correlativo_factura.php");
 
 $cat_user = $_SESSION["categoria"];
 require_once("modelos/Reporteria.php");
@@ -39,7 +39,7 @@ $reporteria = new Reporteria();
     <div class="card" style="margin: 1px">
      
     <!--ESTE DATATABLE SE RECARGA DESDE  credit-->
-    <table id="ordenes_desc_pendientes" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
+    <table id="data_orden_aprob" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
       <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="bg-info">
           <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 12px;text-align: center">
             <td  style="text-align:center;">ID</td>

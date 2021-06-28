@@ -51,20 +51,7 @@ body.modal-open {
             <div class="col-sm-2">
               <label for="ex1">Parentesco</label>
               <input class="form-control" id="parentesco_evaluado" name="parentesco_evaluado" type="text" onkeyup="mayus(this);">
-            </div>
-
-
-            <div class="col-sm-2 select2-purple">
-              <label for="ex3">Optometra</label>
-              <select class="select2 form-control" id="id_usuario" multiple="multiple" data-placeholder="Seleccionar optometra" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                  <option value="0">Seleccionar usuario</option>
-                  <?php
-                  for ($i=0; $i < sizeof($opto); $i++) { ?>
-          <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo $opto[$i]["usuario"]?></option>
-         <?php  } ?>
-                </select>
-              
-            </div>
+            </div>            
 
             <input class="form-control" id="tel_evaluado" type="hidden" name="tel_evaluado" placeholder="Paciente Evaluado">
 
@@ -236,7 +223,16 @@ body.modal-open {
   <input class="form-control" id="observaciones" name="observaciones" placeholder="Observaciones" required>
 </div>
 <input class="form-control" id="codigop" name="codigop" type="hidden" readonly>
-
+<div class="col-sm-12 select2-purple">
+  <label for="ex3">Optometra</label>
+  <select class="select2 form-control" id="id_usuario" multiple="multiple" data-placeholder="Seleccionar optometra" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+    <option value="0">Seleccionar usuario</option>
+    <?php
+      for ($i=0; $i < sizeof($opto); $i++) { ?>
+    <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo $opto[$i]["usuario"]?></option>
+    <?php  } ?>              
+  </select>              
+</div>
 </div><!--FIN FORM-GROUP-->
 <button type="button" class="btn btn-primary btn-block" onClick="guardarConsultas()"><span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>
 Guardar</button>

@@ -242,7 +242,7 @@ require_once("modals/modal_correlativo_factura.php");
     document.getElementById("title_mod").innerHTML=" "+
     title;
 
-     function mayus(e) {
+    function mayus(e) {
     e.value = e.value.toUpperCase();
 	}
   </script>

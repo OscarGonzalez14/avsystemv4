@@ -1,3 +1,9 @@
+<?php
+require_once("modelos/Externos.php");
+$users = new Externos();
+$opto = $users->get_usuarios_ventas();
+?>
+
 <style>
     #tamModal_abonosg{
       max-width: 92% !important;
@@ -46,8 +52,19 @@
       <input type="text" class="form-control" id="empresa_abono" readonly="" style="background: white">
     </div>
 
-    <div class="form-group col-md-12">      
+    <div class="form-group col-md-9">
+      <label for="inputEmail4">Cantidad en letras</label>      
       <input type="text" class="form-control" id="texto" readonly="" placeholder="CANTIDAD EN LETRAS">
+    </div>
+    <div class="col-sm-3 select2-purple">
+      <label for="ex3">Gestor</label>
+      <select class="select2 form-control" id="id_gestor" multiple="multiple" data-placeholder="Seleccionar gestor" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+      <option value="0">Seleccionar usuario</option>
+      <?php
+        for ($i=0; $i < sizeof($opto); $i++) { ?>
+          <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo $opto[$i]["usuario"]?></option>
+            <?php  } ?>              
+      </select>              
     </div>
 
     </div><!--FIN aros datos-->

@@ -77,7 +77,20 @@ require_once("modals/modal_ccf_generica.php");
 <script type="text/javascript" src="js/bootbox.min.js"></script>
 <script type="text/javascript" src="js/recibos.js"></script>
 <script type="text/javascript" src="js/reporteria.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
 
+    $(".select2").select2({
+    maximumSelectionLength: 1
+});
+      })
+</script>
 
   <script type="text/javascript">
     var title = document.getElementById("name_pag").value;

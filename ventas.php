@@ -1,7 +1,12 @@
  
 <?php
 require_once("config/conexion.php");
-if(isset($_SESSION["usuario"])){ 
+if(isset($_SESSION["usuario"])){
+
+require_once("modelos/Externos.php");
+$users = new Externos();
+$opto = $users->get_usuarios_ventas();
+
 require_once("header_dos.php");
 require_once("modals/listar_aros_en_venta.php");
 require_once("modals/modal_lente_en_venta.php");
@@ -90,14 +95,25 @@ require_once("modals/modal_cargo_automatico.php");
                       </select>
                   </div>
 
-                <div class="form-group col-sm-3">
+                  <div class="col-sm-3 select2-purple">
+                      <label for="ex3">Vendedor</label>
+                      <select class="select2 form-control" id="usuario" multiple="multiple" data-placeholder="Seleccionar vendedor" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+                      <option value="0">Seleccionar usuario</option>
+                      <?php
+                      for ($i=0; $i < sizeof($opto); $i++) { ?>
+                      <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
+                      <?php  } ?>              
+                      </select>              
+                  </div>
+
+                <!--<div class="form-group col-sm-3">
                     <label for="">Tipo Paciente</label>
                       <select class="form-control input-dark" id="tipo_paciente" required="">
                         <option value=''>Seleccionar...</option>
                         <option value='Normal'>Normal</option>
                         <option value='Referido'>Referido</option>
                       </select>
-                  </div>
+                  </div>-->
 
             </div>
             <div class="dropdown-divider"></div>
@@ -274,7 +290,7 @@ require_once("modals/modal_cargo_automatico.php");
 
 <?php require_once("footer.php");?>
 <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
-<input type="hidden" name="usuario" id="usuario" value="<?php echo $_SESSION["id_usuario"];?>"/>
+<!--<input type="hidden" name="usuario" id="usuario" value="<?php //echo $_SESSION["id_usuario"];?>"/>-->
 <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
 <input type="hidden" name="sucursal_usuario" id="sucursal_usuario" value="<?php echo $_SESSION["sucursal_usuario"];?>"/>
 <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
@@ -312,6 +328,21 @@ function mayus(e) {
 }
 </script>
 
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    $(".select2").select2({
+    maximumSelectionLength: 1
+});
+      })
+</script>
 
 <div id="empresasModal" class="modal fade" data-modal-index="2">
         <div class="modal-dialog modal-lg">

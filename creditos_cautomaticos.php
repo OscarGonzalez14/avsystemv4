@@ -84,6 +84,21 @@ require_once("modals/modal_correlativo_factura.php");
 	}
   </script>
 
+  <script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    $(".select2").select2({
+    maximumSelectionLength: 1
+    });
+  })
+</script>
+
 
    <?php } else{
 echo "Acceso denegado";

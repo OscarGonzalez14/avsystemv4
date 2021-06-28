@@ -128,6 +128,9 @@ require_once("modals/modal_consultas.php");
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     })
+        $(".select2").select2({
+    maximumSelectionLength: 1
+});
       })
 </script>  
 <script>
@@ -190,6 +193,7 @@ var telefono = new Cleave('#telefono', {
     })
   </script>
 <script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
 <script type="text/javascript">
   $(function () {
       $("input[data-bootstrap-switch]").each(function(){

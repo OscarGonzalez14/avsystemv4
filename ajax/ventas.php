@@ -249,8 +249,9 @@ break;
 //////////////////////////SE REGISTRA VENTA O PRIMER REGISTRO DE CREDITO /////////////////////
 case 'registrar_venta':
 
-$sucursal_act = $_POST["sucursal"]; 
-if($sucursal_act=="Empresarial"){
+$sucursal_act = $_POST["sucursal"];
+$tipo_pago = $_POST["tipo_pago"]; 
+if($tipo_pago=="Descuento en Planilla" or $tipo_pago=="Cargo Automatico"){
   $ventas->agrega_detalle_venta();
   $messages[]="ok";
 }else{

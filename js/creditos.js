@@ -1,12 +1,15 @@
 function init(){
+
+  listar_ordenes_pendientes();
+  listar_ordenes_pendientes_cauto();
 	listar_creditos_sucursal();
   listar_creditos_cauto();
-  listar_ordenes_pendientes();
+  //listar_ordenes_pendientes();
   listar_oid_aprobadas();
 
 }
 ///////////OCULTAR ELEMENTOS AL INICIO
-$(document).ready(ocultar_element_ini);
+//$(document).ready(ocultar_element_ini);
 
 function ocultar_element_ini(){
   document.getElementById("print_orden_desp").style.display = "none";
@@ -488,7 +491,7 @@ function registrar_abono(){
   let fecha = $("#fecha").val();
   let sucursal = $("#sucursal").val();
   let id_paciente = $("#id_paciente").val();
-  let id_usuario = $("#usuario").val();
+  //let id_usuario = $("#usuario").val();
   let telefono_ini = $("#telefono_abono").val();
   let recibi_rec_ini = $("#recibi_abono").val();
   let empresa_ini = $("#empresa_abono").val();
@@ -507,6 +510,12 @@ function registrar_abono(){
   let servicio_rec_ini = $("#servicio_abono").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
   let tipo_recibo = "recibo";
+  let id_user=$("#id_gestor").val();
+  let id_usuario = id_user.toString();
+  if (id_usuario == 0 || id_usuario == "") {
+      Swal.fire('Debe seleccionar vendedor','','error');
+      return false;
+  }
 
   if (forma_pago !="") {
     $('#creditos_de_contado').DataTable().ajax.reload();
@@ -881,10 +890,12 @@ function get_finaliza(){
     /************************************************************
     *****************ORDENES DE DESCUENTO EN PLANILLA************
     *************************************************************/
+ 
     function listar_ordenes_pendientes(){
+
     let sucursal = $("#sucursal").val();
     let sucursal_usuario = $("#sucursal_usuario").val();
-    tabla_ordenes_pla = $('#ordenes_desc_pendientes').DataTable({      
+    tabla_ordenes_pla = $('#data_orden_aprob').DataTable({      
     "aProcessing": true,//Activamos el procesamiento del datatables
     "aServerSide": true,//Paginación y filtrado realizados por el servidor
     dom: 'Bfrtip',//Definimos los elementos del control de tabla
@@ -968,7 +979,7 @@ function get_finaliza(){
     /************************************************************
     *****************ORDENES DE CARGO AUTOMATICO************
     *************************************************************/
-    function listar_ordenes_pendientes(){
+    function listar_ordenes_pendientes_cauto(){
     let sucursal = $("#sucursal").val();
     let sucursal_usuario = $("#sucursal_usuario").val();
     tabla_ordenes_pla = $('#cargos_pendientes').DataTable({      

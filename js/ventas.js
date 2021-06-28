@@ -588,6 +588,12 @@ function saveVenta(){
   var tipo_pago = $("#tipo_pago").val();
   var tipo_venta = $("#tipo_venta").val();
   let plazo = $("#plazo").val();
+   var id_user=$("#usuario").val();
+  let id_usuario = id_user.toString();
+  if (id_usuario == 0 || id_usuario == "") {
+      Swal.fire('Debe seleccionar vendedor','','error');
+      return false;
+  }
 
   if (tipo_venta=="Contado") {
     registrarVenta();
@@ -968,11 +974,11 @@ function registrarVenta(){
   var fecha_venta = $("#fecha").val();  
   var numero_venta = $("#n_venta").val();
   var paciente = $("#titular_cuenta").val();
-  var vendedor = $("#usuario").val();
+  var vend = $("#usuario").val();
   var monto_total = $("#total_venta").html();
   var tipo_pago = $("#tipo_pago").val();
   var tipo_venta = $("#tipo_venta").val();
-  var id_usuario = $("#usuario").val();
+  //var id_usuario = $("#usuario").val();
   var id_paciente = $("#id_paciente").val();
   var sucursal = $("#sucursal").val();
   var evaluado = $("#evaluado").val();
@@ -980,6 +986,13 @@ function registrarVenta(){
   var plazo = $("#plazo").val();
   var id_ref = $("#id_refererido").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
+  let vendedor = vend.toString();
+  var id_user=$("#usuario").val();
+  let id_usuario = id_user.toString();
+  if (id_usuario == 0 || id_usuario == "") {
+      Swal.fire('Debe seleccionar vendedor','','error');
+      return false;
+  }
 
   if (tipo_venta=="Credito" && tipo_pago == "Descuento en Planilla") {
 
@@ -1032,6 +1045,10 @@ if (paciente !="" && tipo_pago !=""  && tipo_venta !="") {
       mostrar_btn_post_venta();        
     }else if(tipo_venta == "Credito" && tipo_pago == "Descuento en Planilla"){
       Swal.fire('OID Registrada a la espera de Aprobación...','','info');
+
+    }
+    else if(tipo_venta == "Credito" && tipo_pago == "Cargo Automatico"){
+      Swal.fire('Cargo Automatico Registrado a la espera de Aprobación...','','info');
 
     }
 }else{

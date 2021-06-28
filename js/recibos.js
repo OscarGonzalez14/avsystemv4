@@ -91,7 +91,7 @@ function save_abono_inicial(){
     let fecha =$("#fecha").val();
     let sucursal =$("#sucursal").val();
     let id_paciente =$("#id_paciente").val();
-    let id_usuario =$("#usuario").val();
+    //let id_usuario =$("#usuario").val();
     let telefono_ini =$("#telefono_ini").val();
     let recibi_rec_ini =$("#recibi_rec_ini").val();
     let empresa_ini =$("#empresa_ini").val();
@@ -110,7 +110,12 @@ function save_abono_inicial(){
     let tipo_recibo = "recibo";
     let sucursal_usuario = $("#sucursal_usuario").val();
 
-    
+    var id_user=$("#usuario").val();
+    let id_usuario = id_user.toString();
+    if (id_usuario == 0 || id_usuario == "") {
+      Swal.fire('Debe seleccionar vendedor','','error');
+      return false;
+  }
     if (forma_pago !="") {
 
     $.ajax({
