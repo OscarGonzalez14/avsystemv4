@@ -11,6 +11,11 @@
       <input type="hidden" name="" id="n_venta_factura">
       <input type="hidden" name="" id="id_paciente_venta_factura">
       <div class="modal-footer">
+        <?php
+         if ($level_user=="Admin") {
+         echo '<a id="empty_invoice_print" target="_blank" href=""><button type="button" class="btn btn-warning btn-block" style="border: solid black 1px" id="">Formato en blanco</button></a>';
+         }
+         ?>        
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <a id="link_invoice_print" target="_blank" href=""><button type="button" class="btn btn-primary" onClick="registrar_impresion();">Imprimir</button></a>
       </div>

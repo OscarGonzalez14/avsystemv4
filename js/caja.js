@@ -685,7 +685,22 @@ function get_id_caja_chica(){
 
 function fecha_com(){
   fecha = $("#fecha_comision").val();
-  console.log(fecha)
+  $("#mesage").val(fecha);
+}
+
+function year_comision(){
+  $('#year_comision').each(function() {
+  var year = (new Date()).getFullYear();
+  var current = year;
+  year -= 1;
+  for (var i = 0; i < 15; i++) {
+    if ((year+i) == current)
+      $(this).append('<option selected value="' + (year + i) + '">' + (year + i) + '</option>');
+    else
+      $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');
+  }
+
+})
 }
 
 init();

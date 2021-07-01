@@ -4,6 +4,9 @@
   require_once('header_dos.php');
   require_once("modelos/Reporteria.php");
   $reportes = new Reporteria();
+  require_once("modelos/Externos.php");
+$users = new Externos();
+$emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
 ?>
  <style type="text/css">
     .dataTables_filter {
@@ -15,30 +18,100 @@
 <div class="content-wrapper">
   <input type="hidden" name="cat_user" id="cat_user" value="<?php echo $cat_user;?>"/>
     <section class="content" style="border-right:50px">
-      <div class="container-fluid">
-    <div class="col-md-12">
-      <div class="card" style="margin: 1px">
-        <div class="card-body"></div>
-    <input type="text" class="form-control" id="fecha_comision">
-    <button onClick="fecha_com();">BUSCAR</button>
-   <!-- <table id="data_comisiones" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
-      <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="bg-info">
-          <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 15px">
+    <div class="container-fluid">
+      <div class="card" style="margin: 0px">
+        <div class="card-body" style="margin-top: 1px">
+          <div class="row">
+            <div class="col-sm-3">
+              <label for="">Año</label>
+              <select name="" id="year_comision" class="form-control"></select>
+            </div>
 
-            <td style="text-align:center">FECHA</td>
-            <td style="text-align:center">PACIENTE</td>
+            <div class="col-sm-3 select2-purple">
+              <label for="">Mes</label>
+              <select name="" id="month_comision" class="form-control">
+                <option value="0">Seleccionar mes</option>
+                <option value="01">Enero</option>
+                <option value="02">Febrero</option>
+                <option value="03">Marzo</option>
+                <option value="04">Abril</option>
+                <option value="05">Mayo</option>
+                <option value="06">Junio</option>
+                <option value="07">Julio</option>
+                <option value="08">Agosto</option>
+                <option value="09">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+              </select>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="">Empleado</label>
+                <select class="select2 form-control" id="emp_comision" multiple="multiple" data-placeholder="Seleccionar vendedor" data-dropdown-css-class="select2-purple" style="width: 100%;color:black">              
+                <option value="0" style="width: 100%;color:black">Seleccionar empleado</option>
+                  <?php for ($i=0; $i < sizeof($emp); $i++) { ?>
+                      <option value="<?php echo $emp[$i]["id_usuario"]?>"><?php echo strtoupper($emp[$i]["nick"]);?></option>
+                  <?php  } ?>              
+                </select>    
+            </div>
+
+            <div class="col-sm-2">
+              <label style="visibility: hidden;">Calcular comision</label>
+              <button class="btn btn-dark btn-block" onClick="get_categoria_empleado()();"><i class="fas fa-file-invoice-dollar"></i> Calcular</button>
+            </div>
+          </div><!--FIN FORM row-->
+
+          <div class="row" style="margin-top: 3px">
+
+              <div class="input-group input-group-sm col-sm-3">
+                  <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Sucursal  &nbsp;&nbsp;</button>
+                  </span>
+                  <input type="text" class="form-control">
+                </div>
+
+            <div class="input-group input-group-sm col-sm-3">
+                  <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Categoría&nbsp;</button>
+                  </span>
+                  <input type="text" class="form-control">
+                </div>
+
+                <div class="input-group input-group-sm col-sm-3">
+                  <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">Total ventas</button>
+                  </span>
+                  <input type="text" class="form-control">
+                </div>
+
+                <div class="input-group input-group-sm col-sm-3">
+                  <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Comisión&nbsp;&nbsp;</button>
+                  </span>
+                  <input type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+  <h4 style="text-align: center;font-size: 14px">DETALLE DE VENTAS JUNIO</h4>
+   <table id="data_comisiones" width="100%" style="text-align: center;text-align:center;font-family: Helvetica, Arial, sans-serif" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
+      <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 12px" class="bg-info">
+          <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 12px">
+
             <td style="text-align:center">Fecha</td>
-            <td style="text-align:center">Estado</td>
+            <td style="text-align:center">#Venta</td>
+            <td style="text-align:center">Titular</td>
             <td style="text-align:center">Sucursal</td>
-            <td style="text-align:center">Acciones</td>
-            <td style="text-align:center">Imprimir</td>
+            <td style="text-align:center">Tipo pago</td>
+            <td style="text-align:center">Monto</td>
          </tr>
         </thead>
         <tbody style="text-align:center;color: black">                                        
         </tbody>
-      </table>-->
+      </table>
     </div>
-    </div>
+
           <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
           <input type="hidden" name="usuario" id="usuario" value="<?php echo $_SESSION["usuario"];?>"/>
           <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
@@ -46,46 +119,13 @@
            
  
  <?php require_once("footer.php"); ?>
- <input type="hidden" id="name_pag" value="MODULO CAJA CHICA">
- <script type="text/javascript" src="js/caja.js"></script>
+ <input type="hidden" id="name_pag" value="COMISIONES">
+ <script type="text/javascript" src="js/comisiones.js"></script>
    <script type="text/javascript">
     var title = document.getElementById("name_pag").value;
     document.getElementById("title_mod").innerHTML=" "+ title;
   </script>
 
-    <!-- MODAL DEPOSITO A CAJA CHICA -->
-  <div class="modal fade" id="depositos_caja">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">CAJA CHICA</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          <div class="form-row">
-
-            <div class="col-sm-12 invoice-col">
-              <span style="margin-right: 5px"><strong>Saldo Actual $<span id="saldo_caja" style="font-size: 18px;color: blue"></span></strong><br>
-              <label>Monto a Depositar $</label>
-                <input type="number" class="form-control" id="monto_deposito" style="margin:0px;text-align: right;">
-              </div>
-          </div>
-        </div>
-        <input type="hidden" id="tipo_mov" value="deposito">
-        <input type="hidden" id="id_caja_chica">
-        <!-- Modal footer -->
-        <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="clear_items_req();"> CANCELAR</button>
-              <button type="button" class="btn btn-success" onClick="deposito_caja();"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> DEPOSITAR</button>
-            </div>
-        
-      </div>
-    </div>
-  </div>
   <script>
  $(function () {
     /// Date range picker /// 
@@ -111,6 +151,20 @@
         },
  }, cb);     
   });
+</script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    $(".select2").select2({
+    maximumSelectionLength: 1
+});
+      })
 </script>
  <?php } else{
 echo "Acceso no permitido";

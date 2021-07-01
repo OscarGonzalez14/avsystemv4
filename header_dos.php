@@ -43,7 +43,11 @@
 
 
 <style type="text/css">
-<?php $cat_user = $_SESSION["categoria"];?>
+<?php 
+$cat_user = $_SESSION["categoria"];
+$level_user = $_SESSION["id_user_emp"];
+//echo $level_user;
+?>
 </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -85,7 +89,6 @@
 
         </div>
       </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -215,7 +218,7 @@
         }?>
 
         <?php
-          if ($cat_user=="administrador") {
+          if ($level_user=="Admin") {
             echo '
             <li class="nav-item">
             <a href="comisiones.php" class="nav-link">

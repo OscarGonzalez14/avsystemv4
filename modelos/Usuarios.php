@@ -40,6 +40,7 @@ public function login(){
         $_SESSION["sucursal_usuario"] = $resultado["sucursal"];
         $_SESSION["categoria"] = $resultado["categoria"];
         $_SESSION["nombres"] = $resultado["nombres"];
+        $_SESSION["id_user_emp"] = $resultado["id_user_emp"];
         require_once("Usuarios.php");
 
         $usuario = new Usuarios();

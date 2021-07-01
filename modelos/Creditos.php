@@ -182,9 +182,10 @@ pacientes as p inner join recibos as r on r.id_paciente=p.id_paciente join credi
 /////////////////////GET CORRELATIVO FACTURAS
 public function get_correlativo_factura($sucursal){
   $conectar= parent::conexion();
-  $sql= "select n_correlativo+1 as n_correlativo from correlativo_factura where sucursal=? order by id_correlativo desc limit 1;";
+  $suc='%'.$sucursal.'%';
+  $sql= "select n_correlativo+1 as n_correlativo from correlativo_factura where sucursal like ? order by id_correlativo desc limit 1;";
   $sql=$conectar->prepare($sql);
-  $sql->bindValue(1,$sucursal);
+  $sql->bindValue(1,$suc);
   $sql->execute();
   return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }

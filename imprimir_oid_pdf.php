@@ -28,7 +28,7 @@ if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
   $telefono = "2661-7549";
   $wha ="7946-0464";
   $dir2="San Miguel";
-  $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
+  $info="<b>CARMEN ARELY VASQUEZ FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
   <b>Giro:</b> Venta al por mayor de artículos de óptica";
   $correo = "opticaavplussanmiguel@gmail.com";
 }elseif ($sucursal == "Santa Ana" or $sucursal == "Empresarial-Santa Ana"){

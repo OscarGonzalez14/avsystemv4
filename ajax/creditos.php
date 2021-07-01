@@ -381,9 +381,14 @@ switch ($_GET["op"]){
   break;
 
   case 'save_correlativo_factura':
-      $datos = $creditos->validar_correlativo($_POST["correlativo_fac"],$_POST["sucursal"]);
+  if ($_POST["sucursal"]== "Empresarial") {
+    $sucursal="Empresarial-".$_POST["sucursal_usuario"];
+  }else{
+    $sucursal=$_POST["sucursal"];
+  }
+      $datos = $creditos->validar_correlativo($_POST["correlativo_fac"],$sucursal);
         if(is_array($datos)==true and count($datos)==0){  
-        $creditos->registrar_impresion_factura($_POST["sucursal"],$_POST["numero_venta"],$_POST["id_usuario"],$_POST["correlativo_fac"],$_POST["id_paciente"]);
+        $creditos->registrar_impresion_factura($sucursal,$_POST["numero_venta"],$_POST["id_usuario"],$_POST["correlativo_fac"],$_POST["id_paciente"]);
         $messages[]="ok";
       }else{
         $errors[]="error";

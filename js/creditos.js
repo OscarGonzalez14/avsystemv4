@@ -832,8 +832,9 @@ function print_invoices(id_paciente,numero_venta){
 
     $("#correlativo_factura").html(data.correlativo);
     var correlativo_f = data.correlativo;
-    console.log(correlativo_f);
+    //console.log(correlativo_f);
     document.getElementById("link_invoice_print").href='imprimir_factura_pdf.php?n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'correlativo_f='+correlativo_f+'&'+'fecha_fac='+fecha_fac;
+    document.getElementById("empty_invoice_print").href='imprimir_factura_empty_pdf.php?n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'correlativo_f='+correlativo_f+'&'+'fecha_fac='+fecha_fac;
   }
 })
 
@@ -845,16 +846,18 @@ function print_invoices(id_paciente,numero_venta){
 function registrar_impresion(){
 
   let sucursal = $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
   let id_usuario = $("#usuario").val();
   let correlativo_fac = $("#correlativo_factura").html();
   let numero_venta = $("#n_venta_factura").val();
   var id_paciente = $("#id_paciente_venta_factura").val();
   $("#print_invoices").modal("hide"); 
+
   ///////////// REGISTRA CORRELATIVO EN BD ////////////////
   $.ajax({
     url:"ajax/creditos.php?op=save_correlativo_factura",
     method:"POST",
-    data:{sucursal:sucursal,numero_venta:numero_venta,id_usuario:id_usuario,correlativo_fac:correlativo_fac,id_paciente:id_paciente},
+    data:{sucursal:sucursal,numero_venta:numero_venta,id_usuario:id_usuario,correlativo_fac:correlativo_fac,id_paciente:id_paciente,sucursal_usuario:sucursal_usuario},
     cache:false,
     dataType:"json",
     success:function(data){ 

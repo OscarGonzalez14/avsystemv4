@@ -58,6 +58,18 @@ class Externos extends conectar
 
     }
 
+    public function get_usuarios_comision($sucursal){
+    	$conectar = parent::conexion();
+    	parent::set_names();
+
+    	$sql = "select*from usuarios where estado = 1 and sucursal=?;";
+    	$sql=$conectar->prepare($sql);
+    	$sql->bindValue(1, $sucursal);
+    	$sql->execute();
+    	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
 	}/////FIN CLASS
 
  ?>
