@@ -236,6 +236,20 @@ require_once("modals/modal_correlativo_factura.php");
 <script type="text/javascript" src="js/recibos.js"></script>
 <script type="text/javascript" src="js/empresas.js"></script>
 <script type="text/javascript" src="js/reporteria.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
+    $(".select2").select2({
+    maximumSelectionLength: 1
+});
+      })
+</script>
 
   <script type="text/javascript">
     var title = document.getElementById("name_pag").value;
@@ -246,6 +260,7 @@ require_once("modals/modal_correlativo_factura.php");
     e.value = e.value.toUpperCase();
 	}
   </script>
+  
 <script>
     $(function(){
       $('.btn[data-toggle=modal]').on('click', function(){

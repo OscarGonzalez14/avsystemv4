@@ -229,7 +229,7 @@ body.modal-open {
     <option value="0">Seleccionar usuario</option>
     <?php
       for ($i=0; $i < sizeof($opto); $i++) { ?>
-    <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo $opto[$i]["usuario"]?></option>
+    <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo $opto[$i]["nick"]?></option>
     <?php  } ?>              
   </select>              
 </div>

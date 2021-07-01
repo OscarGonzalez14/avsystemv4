@@ -1046,8 +1046,7 @@ if (paciente !="" && tipo_pago !=""  && tipo_venta !="") {
     }else if(tipo_venta == "Credito" && tipo_pago == "Descuento en Planilla"){
       Swal.fire('OID Registrada a la espera de Aprobación...','','info');
 
-    }
-    else if(tipo_venta == "Credito" && tipo_pago == "Cargo Automatico"){
+    }else if(tipo_venta == "Credito" && tipo_pago == "Cargo Automatico"){
       Swal.fire('Cargo Automatico Registrado a la espera de Aprobación...','','info');
 
     }

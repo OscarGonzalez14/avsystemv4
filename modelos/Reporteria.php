@@ -388,4 +388,22 @@ public function get_datos_prima_subtotal($n_orden,$id_paciente){
 	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+//////////////////////////PAGOS DE COMISION /////////////
+
+/*public function get_comision_cat_uno(){
+	select sum(monto_total) from ventas where sucursal="Metrocentro" and fecha_venta like "%06-2021%";
+    select*from ventas where sucursal = "Metrocentro";
+
+}*/
+
+/*public function get_comision_cat_dos(){
+	select sum(monto_total) from ventas where id_usuario=3;
+    select*from ventas where id_usuario=3;
+}*/
+
+/*public function get_comision_cat_3(){
+	select sum(monto_total) from ventas where ((sucursal = "Metrocentro") or (sucursal="Empresarial-Metrocentro" and optometra="7")) and fecha_venta like "%06-2021%";
+    select*from ventas where ((sucursal = "Metrocentro") or (sucursal="Empresarial-Metrocentro" and optometra="7")) and fecha_venta like "%06-2021%";
+}*/
+
 }
