@@ -89,6 +89,7 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
                   </span>
                   <input type="text" class="form-control" id="com_uno" readonly="">
                 </div>
+                
             </div>
         </div>
 
@@ -96,7 +97,6 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
    <table id="data_comisiones" width="100%" style="text-align: center;text-align:center;font-family: Helvetica, Arial, sans-serif" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
       <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 12px" class="bg-info">
           <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 12px">
-
             <td style="text-align:center">Fecha</td>
             <td style="text-align:center">#Venta</td>
             <td style="text-align:center">Titular</td>
@@ -105,20 +105,31 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
             <td style="text-align:center">Monto</td>
          </tr>
         </thead>
-        <tbody style="text-align:center;color: black">                                        
-        </tbody>
+        <tbody style="text-align:center;color: black;font-family: Helvetica, Arial, sans-serif;font-size: 12px"></tbody>
+        <tfoot>
+          <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 12px">
+            <td style="text-align:center"></td>
+            <td style="text-align:center"></td>
+            <td style="text-align:center"></td>
+            <td style="text-align:center"></td>
+            <td style="text-align:right;font-size:14"><b>Total Ventas</b></td>
+            <td style="text-align:center;color: green;font-size:14" id="tot_ventas_mes"><b></b></td>
+
+         </tr>
+        </tfoot>
       </table>
     </div>
 
-          <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
-          <input type="hidden" name="usuario" id="usuario" value="<?php echo $_SESSION["usuario"];?>"/>
-          <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
-          <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
+    <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
+    <input type="hidden" name="usuario" id="usuario" value="<?php echo $_SESSION["usuario"];?>"/>
+    <?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");?>
+    <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
            
  
  <?php require_once("footer.php"); ?>
  <input type="hidden" id="name_pag" value="COMISIONES">
  <script type="text/javascript" src="js/empleados.js"></script>
+ <script type="text/javascript" src="js/sum.js"></script>
    <script type="text/javascript">
     var title = document.getElementById("name_pag").value;
     document.getElementById("title_mod").innerHTML=" "+ title;
