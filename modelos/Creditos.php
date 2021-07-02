@@ -1,7 +1,7 @@
 <?php 
 require_once("../config/conexion.php");
 
-	class Creditos extends conectar{
+	class Creditos extends Conectar{
 
 	
 	public function get_creditos_contado($sucursal){
@@ -206,6 +206,7 @@ public function registrar_impresion_factura($sucursal,$numero_venta,$id_usuario,
     $conectar = parent::conexion();
     parent::set_names();
 
+
     $sql2 = "select paciente from ventas where id_paciente=? and numero_venta=?;";
     $sql2 = $conectar->prepare($sql2);
     $sql2->bindValue(1,$id_paciente);
@@ -221,6 +222,8 @@ public function registrar_impresion_factura($sucursal,$numero_venta,$id_usuario,
     date_default_timezone_set('America/El_Salvador');
     $hoy = date("d-m-Y H:i:s");
 
+    $estado_correlativo = "Impreso";
+
     $sql ="insert into correlativo_factura values(null,?,?,?,?,?,?);";
     $sql = $conectar->prepare($sql);
     $sql->bindValue(1,$correlativo_fac);
@@ -229,8 +232,9 @@ public function registrar_impresion_factura($sucursal,$numero_venta,$id_usuario,
     $sql->bindValue(4,$id_usuario);
     $sql->bindValue(5,$hoy);
     $sql->bindValue(6,$titular);
+   // $sql->bindValue(7,$estado_correlativo);
     $sql->execute();
-
+    
     ////////////////////UPDATE EN CORTE DIARIO //////////
     $sql = "update corte_diario set n_factura = ? where n_venta =? and id_paciente=?;";
     $sql = $conectar->prepare($sql);

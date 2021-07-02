@@ -850,9 +850,8 @@ function registrar_impresion(){
   let id_usuario = $("#usuario").val();
   let correlativo_fac = $("#correlativo_factura").html();
   let numero_venta = $("#n_venta_factura").val();
-  var id_paciente = $("#id_paciente_venta_factura").val();
-  $("#print_invoices").modal("hide"); 
-
+  let id_paciente = $("#id_paciente_venta_factura").val();
+  $("#print_invoices").modal("hide");
   ///////////// REGISTRA CORRELATIVO EN BD ////////////////
   $.ajax({
     url:"ajax/creditos.php?op=save_correlativo_factura",

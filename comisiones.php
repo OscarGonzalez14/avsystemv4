@@ -57,44 +57,42 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
             </div>
 
             <div class="col-sm-2">
-              <label style="visibility: hidden;">Calcular comision</label>
-              <button class="btn btn-dark btn-block" onClick="get_categoria_empleado()();"><i class="fas fa-file-invoice-dollar"></i> Calcular</button>
+              <label style="">Calcular</label>
+              <button class="btn btn-dark btn-block" onClick="get_categoria_empleado();"><i class="fas fa-file-invoice-dollar"></i></button>
             </div>
           </div><!--FIN FORM row-->
 
           <div class="row" style="margin-top: 3px">
-
               <div class="input-group input-group-sm col-sm-3">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Sucursal  &nbsp;&nbsp;</button>
                   </span>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" value="<?php echo $_SESSION["sucursal"];?>" readonly="">
                 </div>
-
             <div class="input-group input-group-sm col-sm-3">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Categoría&nbsp;</button>
                   </span>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" readonly="">
                 </div>
 
                 <div class="input-group input-group-sm col-sm-3">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">Total ventas</button>
                   </span>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" id="ventas_uno" readonly="">
                 </div>
 
                 <div class="input-group input-group-sm col-sm-3">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Comisión&nbsp;&nbsp;</button>
                   </span>
-                  <input type="text" class="form-control">
+                  <input type="text" class="form-control" id="com_uno" readonly="">
                 </div>
             </div>
         </div>
 
-  <h4 style="text-align: center;font-size: 14px">DETALLE DE VENTAS JUNIO</h4>
+  <h4 style="text-align: center;font-size: 14px">DETALLE DE VENTAS <span>.</span></h4>
    <table id="data_comisiones" width="100%" style="text-align: center;text-align:center;font-family: Helvetica, Arial, sans-serif" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
       <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 12px" class="bg-info">
           <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 12px">
@@ -120,7 +118,7 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
  
  <?php require_once("footer.php"); ?>
  <input type="hidden" id="name_pag" value="COMISIONES">
- <script type="text/javascript" src="js/comisiones.js"></script>
+ <script type="text/javascript" src="js/empleados.js"></script>
    <script type="text/javascript">
     var title = document.getElementById("name_pag").value;
     document.getElementById("title_mod").innerHTML=" "+ title;
@@ -130,13 +128,7 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
  $(function () {
     /// Date range picker /// 
     $('#fecha_comision').daterangepicker();
-        //Timepicker
-   /* $('#fecha_comision').datetimepicker({
-        minDate: 0,
-        maxDate: '+1M',
-        numberOfMonths:1
-    }) */
-        $('#fecha_comision').daterangepicker({
+    $('#fecha_comision').daterangepicker({
     startDate: start,
     endDate: end,
     ranges: {
