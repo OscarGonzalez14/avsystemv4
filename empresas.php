@@ -4,7 +4,7 @@ require_once("config/conexion.php");
 if(isset($_SESSION["usuario"])){
 
 require_once('header_dos.php');
-require_once('modals/empresa.php');
+require_once('proof.php');
  ?>
 
 

@@ -94,7 +94,7 @@ require_once("modals/modal_prima_oid.php");
                       <select class="form-control input-dark" id="tipo_paciente" required="">
                         <option value=''>Seleccionar...</option>
                         <option value='Normal'>Normal</option>
-                        <option value='Referido'>Referido</option>
+                        <!--<option value='Referido'>Referido</option>-->
                       </select>
                   </div>
 
@@ -118,11 +118,17 @@ require_once("modals/modal_prima_oid.php");
                     </div>
 
                     <div class="col-sm-1 invoice-col form-group" style="margin: 0px">
-                    <label>Paciente</label>
+                      <label>Paciente</label>
                       <button class="btn btn-primary btn-block" id="select_paciente_venta"><i class="fas fa-plus"></i></button>
                     </div>
 
-                    <div class="col-sm-3 invoice-col" id="paciente_refiere" style="margin:0px;display: none">
+                    <div class="col-sm-1 invoice-col form-group" style="margin: 0px">
+                    <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+                      <option value="AL">Alabama</option>
+                      <option value="WY">Wyoming</option>
+                    </select>
+                    </div>
+                    <!--<div class="col-sm-3 invoice-col" id="paciente_refiere" style="margin:0px;display: none">
                     <label>Paciente refiere</label>
                       <input type="text" class="form-control" id="pac_refiere" readonly >
                     </div>
@@ -130,7 +136,7 @@ require_once("modals/modal_prima_oid.php");
                     <div class="col-sm-1 invoice-col form-group" style="margin: 0px;display: none" id="div_ref">
                     <label>Refiere</label>
                       <button class="btn btn-success btn-block" id="select_paciente_refiere"><i class="fas fa-plus"></i></button>
-                    </div>
+                    </div>-->
                 </div><!--/.row invoice-info datos Proveedor-->
 
            <div class="col-md-12">
@@ -291,7 +297,6 @@ require_once("modals/modal_prima_oid.php");
 <script type="text/javascript" src="js/recibos.js"></script>
 <script type="text/javascript" src="js/creditos.js"></script>
 <script type="text/javascript" src="js/empresas.js"></script>
-
 
 </div><!-- FIN CONTENIDO-->
 </div>
