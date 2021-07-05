@@ -37,7 +37,7 @@ if ($sucursal == "Metrocentro") {
     $correo = "opticaavplussantana@gmail.com";
 }
 
-$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_recibo"],$_GET["id_paciente"]);
+$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_orden"],$_GET["id_paciente"]);
 
 ?>
 <!DOCTYPE html>

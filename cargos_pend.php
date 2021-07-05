@@ -19,7 +19,9 @@ $reporteria = new Reporteria();
 
 <div class="content-wrapper">
 <input type="hidden" name="cat_user" id="cat_user" value="<?php echo $cat_user;?>"/>
-    <section class="content-header">
+
+
+  <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2" style="margin: 2px">
           <div class="col-sm-9">
@@ -39,15 +41,15 @@ $reporteria = new Reporteria();
 
     <div class="card" style="margin: 1px">
      
-    <!--ESTE DATATABLE SE RECARGA DESDE  credit-->
+    <!-- ESTE DATATABLE SE RECARGA DESDE  creditos -->
     <table id="cargos_pendientes" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
       <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="bg-info">
           <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 12px;text-align: center">
-            <td  style="text-align:center;">ID</td>
-            <td  style="text-align:center;"># Orden</td>
-            <td  style="text-align:center;">Titular</td>
-            <td  style="text-align:center;">Fecha creación</td>
-            <td  style="text-align:center;">Estado</td>
+            <td style="text-align:center;">ID</td>
+            <td style="text-align:center;"># Orden</td>
+            <td style="text-align:center;">Titular</td>
+            <td style="text-align:center;">Fecha creación</td>
+            <td style="text-align:center;">Estado</td>
             <td style="text-align:center;">Acciones</td>
             <td style="text-align:center;">Imprimir</td>
             <td style="text-align:center;">Eliminar</td>

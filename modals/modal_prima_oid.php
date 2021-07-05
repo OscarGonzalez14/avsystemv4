@@ -149,7 +149,7 @@
     </div>
 
     <div class="form-group col-md-12">
-      <input type="text" class="form-control" id="observaciones_rec_ini_oid" style="background: white" value="ABONO EN CONCEPTO DE PRIMA PARA CREDITO DESCUENTO EN PLANILLA">
+      <input type="text" class="form-control" id="observaciones_rec_ini_oid" style="background: white">
     </div>
 
   </div>

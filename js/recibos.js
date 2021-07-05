@@ -48,6 +48,10 @@ function get_correlativo_prima_oid(){
   let sucursal_correlativo = $("#sucursal").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
 
+  let tipo_pago = $("#tipo_pago").val();
+
+  $("#observaciones_rec_ini_oid").val("ABONO EN CONCEPTO DE PRIMA PARA CREDITO "+tipo_pago.toUpperCase());
+
   $.ajax({
     url:"ajax/recibos.php?op=get_numero_recibo",
     method:"POST",
@@ -386,12 +390,11 @@ function registrar_abono_oid(){
   let sucursal_usuario = $("#sucursal_usuario").val();
   let a_anteriores = "";
   let n_recibo = $("#n_recibo_oid").html();
-  let n_venta_recibo_ini = "PRIMA OID";
+  let n_venta_recibo_ini = $("#correlativo_orden").html();
   let monto = $("#monto_venta_rec_ini_oid").val();
   let fecha = "";
   let sucursal = $("#sucursal").val();
-  let id_paciente = $("#id_paciente").val();
-  let id_usuario = $("#usuario").val();
+  let id_paciente = $("#id_paciente").val();  
   let telefono_ini = $("#telefono_ini_oid").val();
   let recibi_rec_ini = $("#recibi_abono_oid").val();
   let empresa_ini = $("#empresa_ini_oid").val();
@@ -410,6 +413,8 @@ function registrar_abono_oid(){
   let servicio_rec_ini = $("#servicio_abono_oid").val();
   let numero_orden = $("#correlativo_orden").html();
   let tipo_recibo = "prima";
+  var id_user=$("#usuario").val();
+  let id_usuario = id_user.toString();
 
   if (forma_pago !="") {
 

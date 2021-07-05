@@ -388,12 +388,14 @@ public function agrega_detalle_prima($a_anteriores,$n_recibo,$n_venta_recibo_ini
 
 $conectar=parent::conexion();
 
+  date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
+
   $sql="insert into recibos values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1,$n_recibo);
-  $sql->bindValue(2,$n_recibo);
+  $sql->bindValue(2,$n_venta_recibo_ini);
   $sql->bindValue(3,$monto);
-  $sql->bindValue(4,$fecha);
+  $sql->bindValue(4,$hoy);
   $sql->bindValue(5,$sucursal);
   $sql->bindValue(6,$id_paciente);
   $sql->bindValue(7,$id_usuario);
@@ -421,20 +423,20 @@ $conectar=parent::conexion();
   $sql2=$conectar->prepare($sql2);
   $sql2->bindValue(1,$numero);
   $sql2->bindValue(2,$forma_pago);
-  $sql2->bindValue(3,$fecha);
+  $sql2->bindValue(3,$hoy);
   $sql2->bindValue(4,$id_paciente);
   $sql2->bindValue(5,$id_usuario);
   $sql2->bindValue(6,$n_recibo);
   $sql2->bindValue(7,$n_venta_recibo_ini);
   $sql2->bindValue(8,$sucursal);
   $sql2->execute();  
-  date_default_timezone_set('America/El_Salvador');$hoy = date("d-m-Y");
+  
   $tipo_ingreso = "Recuperado";
   $factura = "";
-  $tipo_venta="Credito";
-  $tipo_pago = "Descuento en Planilla";
+  $tipo_venta="Contado";
+  //$tipo_pago = "Descuento en Planilla";
   $abono_ant ="0";
-  $suma_res ="0";
+  $suma_res ="1";
   $sql17="insert into corte_diario values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
   $sql17=$conectar->prepare($sql17);
   $sql17->bindValue(1,$hoy);
@@ -448,7 +450,7 @@ $conectar=parent::conexion();
   $sql17->bindValue(9,$numero);
   $sql17->bindValue(10,$saldo);
   $sql17->bindValue(11,$tipo_venta);
-  $sql17->bindValue(12,$tipo_pago);
+  $sql17->bindValue(12,$forma_pago);
   $sql17->bindValue(13,$id_usuario);
   $sql17->bindValue(14,$abono_ant);
   $sql17->bindValue(15,$suma_res);
