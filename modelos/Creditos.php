@@ -6,7 +6,7 @@ require_once("../config/conexion.php");
 	
 	public function get_creditos_contado($sucursal){
     $conectar= parent::conexion();
-    $sql= "select c.numero_venta,p.nombres,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado
+    $sql= "select c.numero_venta,p.nombres,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado,c.cancelacion
 from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
 where c.tipo_credito='Contado' and p.sucursal=? order by c.id_credito DESC;";
     $sql=$conectar->prepare($sql);
@@ -29,7 +29,7 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
     public function get_creditos_cauto($sucursal){
     $conectar= parent::conexion();
     $suc = "%".$sucursal."%";
-    $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado
+    $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado,c.cancelacion
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
         where c.forma_pago='Cargo Automatico' and p.sucursal like ? order by c.id_credito DESC;";
     $sql=$conectar->prepare($sql);
@@ -41,7 +41,7 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
 //////////////////////LISTAR CREDITOS DE DESCUENTO EN PLANILLA
     public function get_creditos_oid($sucursal,$empresa){
     $conectar= parent::conexion();
-    $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado
+    $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion,v.evaluado
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
         where c.forma_pago='Descuento en Planilla' and p.sucursal=? and p.empresas=? order by c.id_credito DESC;";
 
@@ -55,7 +55,7 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
    //////////////////////LISTAR CREDITOS DE DESCUENTO EN PLANILLA EMPRESARIALES ////////////////
     public function get_creditos_oid_empresarial($sucursal,$empresa,$sucursal_usuario){
     $conectar= parent::conexion();
-    $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado
+    $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion,v.evaluado
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
         where c.forma_pago='Descuento en Planilla' and (p.sucursal=? or p.sucursal=?) and p.empresas=? order by c.id_credito DESC;";
     $sql=$conectar->prepare($sql);
@@ -235,13 +235,20 @@ public function registrar_impresion_factura($sucursal,$numero_venta,$id_usuario,
    // $sql->bindValue(7,$estado_correlativo);
     $sql->execute();
     
-    ////////////////////UPDATE EN CORTE DIARIO //////////
+    //////////////////// UPDATE EN CORTE DIARIO //////////
     $sql = "update corte_diario set n_factura = ? where n_venta =? and id_paciente=?;";
     $sql = $conectar->prepare($sql);
     $sql->bindValue(1,$correlativo_fac);
     $sql->bindValue(2,$numero_venta);
     $sql->bindValue(3,$id_paciente);
     $sql->execute();
+    ////////////////////// UPDATE CANCELACION FACTURA /////
+
+    $sql2 = "update creditos set cancelacion = '1' where numero_venta =? and id_paciente=?;";
+    $sql2 = $conectar->prepare($sql2);
+    $sql2->bindValue(1,$numero_venta);
+    $sql2->bindValue(2,$id_paciente);
+    $sql2->execute(); 
 
 }
 /************************************************************
@@ -536,11 +543,16 @@ public function aprobar_orden(){
        $sql6->bindValue(2,$nuevo_monto);
        $sql6->bindValue(3,$id_credito);
        $sql6->execute();
+       
+       ///////////////////////////UPDATE VENTA //////////////////
+
+       // $sql8 = "update ventas set monto";
+
     }else{
        $tipo_venta = "Credito";
        $plazo =12;
-
-       $sql7="insert into creditos values(null,?,?,?,?,?,?,?,?,?);";
+       $cancelacion = 0;
+       $sql7="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?);";
        $sql7= $conectar->prepare($sql7);
        $sql7->bindValue(1,$tipo_venta);
        $sql7->bindValue(2,$monto_total);
@@ -551,6 +563,8 @@ public function aprobar_orden(){
        $sql7->bindValue(7,$id_paciente);
        $sql7->bindValue(8,$id_usuario);
        $sql7->bindValue(9,$hoy);
+       $sql7->bindValue(9,$hoy);
+       $sql7->bindValue(10,$cancelacion);
 
        $sql7->execute();
     }

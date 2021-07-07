@@ -171,7 +171,7 @@ $conectar=parent::conexion();
       $fecha_ing = $row["fecha_ingreso"];
       
     }
-
+  ///////////////////////
   $fecha_ingr = substr($fecha_ing, 0,10);
   date_default_timezone_set('America/El_Salvador');$hoy = date("d-m-Y");
 

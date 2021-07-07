@@ -24,7 +24,7 @@ switch($_GET["op"]){
 				}
 			}
 
-        if ($total_ventas>1000) {
+        if ($total_ventas>1900) {
         	$comision = 100;
         	$data["total_ventas"] = number_format($total_ventas,2,".",",");
 		    $data["comision"] = number_format($comision,2,".",",");
@@ -132,10 +132,10 @@ switch($_GET["op"]){
 			if (is_array($datos) and count($datos)) {
 				foreach ($datos as $row) {
 					$total_ventas = $row["total"];					
-				}
 			}
+		}
 
-        if ($total_ventas>1000) {
+        if ($total_ventas>19000) {
         	$comision = 100;
         	$data["total_ventas"] = number_format($total_ventas,2,".",",");
 		    $data["comision"] = number_format($comision,2,".",",");

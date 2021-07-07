@@ -195,9 +195,9 @@ public function agrega_detalle_venta(){
  
 
 }//FIN DEL FOREACH**************
-
+    $cancelacion = "0";
     ///////////////////////INSERTAR CREDITOS
-    $sql1="insert into creditos values(null,?,?,?,?,?,?,?,?,?);";
+    $sql1="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?);";
     $sql1=$conectar->prepare($sql1);          
     $sql1->bindValue(1,$tipo_venta);
     $sql1->bindValue(2,$monto_total);
@@ -208,6 +208,7 @@ public function agrega_detalle_venta(){
     $sql1->bindValue(7,$id_paciente);
     $sql1->bindValue(8,$id_usuario);
     $sql1->bindValue(9,$fecha_venta);
+    $sql1->bindValue(10,$cancelacion);
 
     $sql1->execute();
 

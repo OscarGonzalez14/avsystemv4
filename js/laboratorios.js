@@ -255,10 +255,10 @@ function get_data_tratamientos(codProd){
 
 function registrarEnvio(){
 
-	let paciente_orden = $("#paciente_orden").val();
-	let laboratorio_orden = $("#laboratorio_orden").val();
-	let id_pac_orden = $("#id_pac_orden").val();
-	let id_consulta_orden = $("#id_consulta_orden").val();
+    let paciente_orden = $("#paciente_orden").val();
+	  let laboratorio_orden = $("#laboratorio_orden").val();
+	  let id_pac_orden = $("#id_pac_orden").val();
+	  let id_consulta_orden = $("#id_consulta_orden").val();
     
     let  lente_orden =$("#lente_orden").val();    
     let  tratamiento_orden =$("#tratamiento_orden").val();

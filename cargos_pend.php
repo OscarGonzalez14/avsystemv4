@@ -17,7 +17,7 @@ $reporteria = new Reporteria();
 }
 </style>
 
-<div class="content-wrapper">
+<div  class="content-wrapper">
 <input type="hidden" name="cat_user" id="cat_user" value="<?php echo $cat_user;?>"/>
 
 

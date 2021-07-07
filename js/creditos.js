@@ -812,7 +812,7 @@ function print_facturas_ventas(){
 }
 
 function print_invoices(id_paciente,numero_venta){
- // console.log(numero_venta);return false;
+ //console.log("YY-***");return false;
  let sucursal = $("#sucursal").val();
  let sucursal_usuario = $("#sucursal_usuario").val();
  let id_usuario = $("#usuario").val();
@@ -852,6 +852,7 @@ function registrar_impresion(){
   let numero_venta = $("#n_venta_factura").val();
   let id_paciente = $("#id_paciente_venta_factura").val();
   $("#print_invoices").modal("hide");
+
   ///////////// REGISTRA CORRELATIVO EN BD ////////////////
   $.ajax({
     url:"ajax/creditos.php?op=save_correlativo_factura",
@@ -860,7 +861,12 @@ function registrar_impresion(){
     cache:false,
     dataType:"json",
     success:function(data){ 
-      console.log(data);  
+      console.log(data);
+      if(data=='ok'){
+        $('#creditos_de_contado').DataTable().ajax.reload();
+        $('#creditos_oid').DataTable().ajax.reload();
+        $('#creditos_cauto').DataTable().ajax.reload();
+      }  
 
     }
   })
@@ -1646,3 +1652,6 @@ function calcularMontoCcf(){
 }
 
 init();
+
+
+// console.log()

@@ -933,7 +933,8 @@ function guardar_oid(){
   }
 
   ///////////VALDAR SI EXISTE ABONO INICIAL
-}///////////FINALIZA GUARDAR OID ///////////////
+}
+///////////FINALIZA GUARDAR OID ///////////////
 
 
 $(document).on('keyup', '#tel_ref2', function(){

@@ -47,13 +47,20 @@ switch ($_GET["op"]){
     $event = "";
     $event_ccf ='';
 
-    if($row["saldo"] == 0){
+    if($row["saldo"] == 0 and $row["cancelacion"]==0){
         $icon="fas fa-print";
         $atrib = "btn btn-info";
         $txt = '';
         $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
         $event = 'print_invoices';
         $event_ccf ='emitir_ccf';
+    }elseif($row["saldo"] == 0 and $row["cancelacion"]==1){
+      $icon="fas fa-print";
+      $atrib = "btn btn-danger";
+      $txt = '';
+      $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
+      $event = 'print_invoices';
+      $event_ccf ='emitir_ccf';
     }elseif ($row["saldo"] > 0) {
         $icon=" fas fa-clock";
         $atrib = "btn btn-secondary";
@@ -105,12 +112,19 @@ switch ($_GET["op"]){
     $href="";
     $event = "";
 
-    if($row["saldo"] == 0){
+    if($row["saldo"] == 0  and $row["cancelacion"]==0){
         $icon="fas fa-print";
         $atrib = "btn btn-info";
         $txt = '';
         $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
         $event = 'print_invoices';
+    }elseif($row["saldo"] == 0 and $row["cancelacion"]==1){
+      $icon="fas fa-print";
+      $atrib = "btn btn-danger";
+      $txt = '';
+      $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
+      $event = 'print_invoices';
+      $event_ccf ='emitir_ccf';
     }elseif ($row["saldo"] > 0) {
         $icon=" fas fa-clock";
         $atrib = "btn btn-secondary";
@@ -164,9 +178,15 @@ switch ($_GET["op"]){
     $href = "";
     $event = "";
 
-    if($row["saldo"] == 0){
+    if($row["saldo"] == 0  and $row["cancelacion"]=="0"){
         $icon="fas fa-print";
         $atrib = "btn btn-info";
+        $txt = '';
+        $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
+        $event = 'print_invoices';
+    }elseif($row["saldo"] == 0  and $row["cancelacion"]=="1"){
+        $icon="fas fa-print";
+        $atrib = "btn btn-danger";
         $txt = '';
         $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
         $event = 'print_invoices';

@@ -166,10 +166,24 @@ $level_user = $_SESSION["id_user_emp"];
 
             ';
 
-        if($cat_user=="administrador"){
-          echo //$cat_user;
-          '<ul class="nav nav-treeview">
-          <li class="nav-item has-treeview">
+            //CONTROL LABORATORIOS 2-->
+            echo '
+            <li class="nav-item has-treeview">
+              <a href="laboratorios.php" class="nav-link">
+                <i class="fas fa-exchange-alt"></i>
+                <p>
+                  Envios a Lab.
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+  
+              ';
+            // FIN CONTROL LABORATORIOS 2-->
+
+            if($cat_user=="administrador"){
+              echo //$cat_user;
+              '<ul class="nav nav-treeview">
+            <li class="nav-item has-treeview">
             <a href="laboratorios.php" class="nav-link">
               <i class="fas fa-exchange-alt"></i>
               <p>
@@ -184,7 +198,7 @@ $level_user = $_SESSION["id_user_emp"];
                   <p>Pagos CFF Lab.</p>
                 </a>
               </li>
-          </ul>
+            </ul>
           </li>
           ';
         }
