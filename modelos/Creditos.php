@@ -43,7 +43,7 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
     $conectar= parent::conexion();
     $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion,v.evaluado
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
-        where c.forma_pago='Descuento en Planilla' and p.sucursal=? and p.empresas=? order by c.id_credito DESC;";
+        where c.forma_pago='Descuento en Planilla' and p.sucursal=? and p.empresas=? group by c.numero_venta order by c.id_credito DESC;";
 
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$sucursal);
@@ -57,7 +57,7 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
     $conectar= parent::conexion();
     $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion,v.evaluado
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
-        where c.forma_pago='Descuento en Planilla' and (p.sucursal=? or p.sucursal=?) and p.empresas=? order by c.id_credito DESC;";
+        where c.forma_pago='Descuento en Planilla' and (p.sucursal=? or p.sucursal=?) and p.empresas=? group by c.numero_venta order by c.id_credito DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$sucursal_usuario);
     $sql->bindValue(2,"Empresarial-".$sucursal_usuario);
@@ -369,6 +369,7 @@ public function aprobar_orden(){
     date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 
     $sucursal_usuario = $_POST["sucursal_usuario"];
+
     foreach ($beneficiarios_oid as $k => $v){///////////GET BENEFICIARIOS
         $estado = $v->estado;
         $evaluado = $v->evaluado;
@@ -379,61 +380,77 @@ public function aprobar_orden(){
         $numero_orden = $v->numero_orden;
         $sucursal = $v->sucursal;
 
-    if ($estado=="Ok"){
-    /////////// GET NUMERO DE VENTA ////////
-        require_once("Ventas.php");
-        $ventas = new Ventas();
-        $correlativo = $ventas->get_numero_venta($sucursal);
-        $prefijo = "";
-        if ($sucursal=="Metrocentro") {
-            $prefijo="AV";
-            $sufijo="ME";
-        }elseif ($sucursal=="Santa Ana") {
-            $prefijo="AV";
-            $sufijo="SA";
-        }elseif ($sucursal=="San Miguel") {
-            $prefijo="AV";
-            $sufijo="ME";    
-        }elseif ($sucursal=="Empresarial-Santa Ana") {/////////////////CORRELATIVOS EMPRESARIALES
-            $prefijo="EM";
-            $sufijo="SA";
-        }elseif ($sucursal=="Empresarial-San Miguel") {
-            $prefijo="EM";
-            $sufijo="SM";
-        }elseif ($sucursal=="Empresarial-Metrocentro") {
-            $prefijo="EM";
-            $sufijo="MT";
-        }
+        if ($estado=="Ok"){
+
+        //////////////////////VERIFICAR SI EXISTE N ORDEN EN VENTAS 
+        $sql11 = "select numero_venta FROM ventas where id_paciente= ? and n_orden = ?;";
+        $sql11=$conectar->prepare($sql11);
+        $sql11->bindValue(1,$id_paciente);
+        $sql11->bindValue(2,$numero_orden);
+        $sql11->execute();
+
+        $data_venta = $sql11->fetchAll(PDO::FETCH_ASSOC);
+
+        if(is_array($data_venta) and count($data_venta)){
+            foreach($data_venta as $row){
+                $num_venta =$row["numero_venta"];
+            }
+        }else{
+            /////////// GET NUMERO DE VENTA ////////
+            require_once("Ventas.php");
+            $ventas = new Ventas();
+            $correlativo = $ventas->get_numero_venta($sucursal);
+            $prefijo = "";
+            if ($sucursal=="Metrocentro") {
+                $prefijo="AV";
+                $sufijo="ME";
+            }elseif ($sucursal=="Santa Ana") {
+                $prefijo="AV";
+                $sufijo="SA";
+            }elseif ($sucursal=="San Miguel") {
+                $prefijo="AV";
+                $sufijo="SM";    
+            }elseif ($sucursal=="Empresarial-Santa Ana") {/////////////////CORRELATIVOS EMPRESARIALES
+                $prefijo="EM";
+                $sufijo="SA";
+            }elseif ($sucursal=="Empresarial-San Miguel") {
+                $prefijo="EM";
+                $sufijo="SM";
+            }elseif ($sucursal=="Empresarial-Metrocentro") {
+                $prefijo="EM";
+                $sufijo="MT";
+            }
 
        
-        if(is_array($correlativo)==true and count($correlativo)>0){
-            foreach($correlativo as $row){                  
-                $codigo=$row["numero_venta"];
-                $cod=(substr($codigo,5,11))+1;
-                $num_venta =$prefijo.$sufijo."-".$cod;
-            }///FIN FOREACH             
-        }else{
+            if(is_array($correlativo)==true and count($correlativo)>0){
+                foreach($correlativo as $row){                  
+                    $codigo=$row["numero_venta"];
+                    $cod=(substr($codigo,5,11))+1;
+                    $num_venta =$prefijo.$sufijo."-".$cod;
+                }///FIN FOREACH             
+            }else{
             $num_venta = $prefijo.$sufijo."-1";
+            }
         }
-    //////////GET ITEMS DE VENTAS FLOTANTES POR BENEFICIARIO   
-    $sql = "select*from detalle_ventas_flotantes where numero_orden=? and beneficiario=?;";
-    $sql=$conectar->prepare($sql);
-    $sql->bindValue(1,$numero_orden);
-    $sql->bindValue(2,$evaluado);
-    $sql->execute();
-    $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
+        //////////GET ITEMS DE VENTAS FLOTANTES POR BENEFICIARIO   
+        $sql = "select*from detalle_ventas_flotantes where numero_orden=? and beneficiario=?;";
+        $sql=$conectar->prepare($sql);
+        $sql->bindValue(1,$numero_orden);
+        $sql->bindValue(2,$evaluado);
+        $sql->execute();
+        $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($resultados as $v => $row) {//Recorrer detalle ventas flotantes
-       $id_producto = $row["id_producto"];
-       $producto = $row["producto"];
-       $precio_venta = $row["precio_venta"];
-       $cantidad_venta = $row["cantidad_venta"];
-       $descuento = $row["descuento"];
-       $precio_final = $row["precio_final"];
-       $fecha_venta = $row["fecha_venta"];
-       $id_usuario = $row["id_usuario"];
-       $id_paciente = $row["id_paciente"];
-       $beneficiario = $row["beneficiario"];
+       foreach ($resultados as $v => $row) {//Recorrer detalle ventas flotantes
+         $id_producto = $row["id_producto"];
+         $producto = $row["producto"];
+         $precio_venta = $row["precio_venta"];
+         $cantidad_venta = $row["cantidad_venta"];
+         $descuento = $row["descuento"];
+         $precio_final = $row["precio_final"];
+         $fecha_venta = $row["fecha_venta"];
+         $id_usuario = $row["id_usuario"];
+         $id_paciente = $row["id_paciente"];
+         $beneficiario = $row["beneficiario"];
 
         //////////OBETENER LA DESCRIPCION DEL PRODUCTO /////////////
         $sqlp = "select*from productos where id_producto=?;";
@@ -493,9 +510,9 @@ public function aprobar_orden(){
         $evaluado = $row["evaluado"];
         $optometra = $row["optometra"];
         $estado = $row["estado"];        
-    }
+       }
     
-    $sql2 = "insert into ventas values(null,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql2 = "insert into ventas values(null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $sql2=$conectar->prepare($sql2);
     $sql2->bindValue(1,$hoy);
     $sql2->bindValue(2,$num_venta);
@@ -509,6 +526,7 @@ public function aprobar_orden(){
     $sql2->bindValue(10,$sucursal);
     $sql2->bindValue(11,$evaluado);
     $sql2->bindValue(12,$optometra);
+    $sql2->bindValue(13,$numero_orden);
     $sql2->execute();
 
     $sql3="update ventas_flotantes set estado='1' where numero_orden=? and evaluado=?;";
@@ -522,9 +540,10 @@ public function aprobar_orden(){
     $sql4->bindValue(1,$numero_orden);
     $sql4->execute();
 
-    $sql5 = "select saldo,id_credito,monto from creditos where id_paciente=? and forma_pago='Descuento en Planilla' order by id_credito DESC limit 1;";
+    $sql5 = "select saldo,id_credito,monto from creditos where id_paciente=? and forma_pago='Descuento en Planilla' and numero_orden = ? order by id_credito DESC limit 1;";
     $sql5= $conectar->prepare($sql5);
     $sql5->bindValue(1, $id_paciente);
+    $sql5->bindValue(2, $numero_orden);
     $sql5->execute();
     $saldos = $sql5->fetchAll(PDO::FETCH_ASSOC);
 
@@ -552,7 +571,7 @@ public function aprobar_orden(){
        $tipo_venta = "Credito";
        $plazo =12;
        $cancelacion = 0;
-       $sql7="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?);";
+       $sql7="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?,?);";
        $sql7= $conectar->prepare($sql7);
        $sql7->bindValue(1,$tipo_venta);
        $sql7->bindValue(2,$monto_total);
@@ -563,8 +582,8 @@ public function aprobar_orden(){
        $sql7->bindValue(7,$id_paciente);
        $sql7->bindValue(8,$id_usuario);
        $sql7->bindValue(9,$hoy);
-       $sql7->bindValue(9,$hoy);
        $sql7->bindValue(10,$cancelacion);
+       $sql7->bindValue(11,$numero_orden);
 
        $sql7->execute();
     }
@@ -757,7 +776,7 @@ $sql5="insert into ventas_flotantes values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 public function get_beneficiarios($id_paciente,$numero_orden){
    $conectar= parent::conexion();
-  $sql= "select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,v.estado,o.id_orden,o.sucursal,v.evaluado,v.monto_total from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join ventas_flotantes as v on o.numero_orden=v.numero_orden  where v.id_paciente=? and v.numero_orden=? group by v.evaluado; ";
+  $sql= "select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,v.estado,o.id_orden,o.sucursal,v.evaluado,v.monto_total,o.tipo_orden from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join ventas_flotantes as v on o.numero_orden=v.numero_orden  where v.id_paciente=? and v.numero_orden=? group by v.evaluado; ";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1, $id_paciente);
   $sql->bindValue(2, $numero_orden);

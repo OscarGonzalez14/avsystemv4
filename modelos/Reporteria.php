@@ -89,7 +89,7 @@ public function get_datos_factura_paciente($id_paciente){
 public function get_datos_factura_venta($n_venta,$id_paciente){
 	$conectar= parent::conexion();
 	parent::set_names();
-	$sql="select *from ventas where numero_venta=? and id_paciente=?";
+	$sql="select *from ventas where numero_venta=? and id_paciente=? group by numero_venta";
 	$sql=$conectar->prepare($sql);
 	$sql->bindValue(1,$n_venta);
     $sql->bindValue(2,$id_paciente);
@@ -121,7 +121,7 @@ public function get_datos_ventas_empresarial($fecha,$sucursal){
 	parent::set_names();
  
 	$fecha_corte = $fecha."%";
-	$sql="select c.fecha_ingreso, c.n_factura,c.n_recibo,p.nombres,p.empresas,u.usuario,c.forma_cobro,c.monto_cobrado,c.total_factura,c.saldo_credito,c.abonos_realizados from corte_diario as c inner join usuarios as u on u.id_usuario=c.id_usuario inner join pacientes as p on p.id_paciente=c.id_paciente where c.fecha_ingreso like ? and c.abonos_realizados='0' and c.tipo_pago='Descuento en Planilla' and (sucursal_venta=? or sucursal_cobro=?);";
+	$sql="select c.fecha_ingreso, c.n_factura,c.n_recibo,p.nombres,p.empresas,u.usuario,c.forma_cobro,c.monto_cobrado,sum(c.total_factura) as total_factura,c.saldo_credito,c.abonos_realizados from corte_diario as c inner join usuarios as u on u.id_usuario=c.id_usuario inner join pacientes as p on p.id_paciente=c.id_paciente where c.fecha_ingreso like ? and c.abonos_realizados='0' and c.tipo_pago='Descuento en Planilla' and (sucursal_venta=? or sucursal_cobro=?) group by c.n_venta;";
 	$sql=$conectar->prepare($sql);
 	$sql->bindValue(1,$fecha_corte);
 	$sql->bindValue(2,$sucursal);

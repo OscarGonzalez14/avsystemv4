@@ -53,7 +53,7 @@ public function buscar_servicios_ventas($id_producto){
 
 public function get_numero_venta($sucursal_correlativo){
   $conectar= parent::conexion();
-  $sql= "select numero_venta from ventas where sucursal=? order by id_ventas DESC limit 1;";
+  $sql= "select numero_venta from correlativo_ventas where sucursal=? order by id_correlativo DESC limit 1;";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1, $sucursal_correlativo);
   $sql->execute();
@@ -64,7 +64,7 @@ public function get_numero_venta($sucursal_correlativo){
 public function valida_existencia_venta($numero_venta){
   $conectar= parent::conexion();
   parent::set_names();
-  $sql="select numero_venta from ventas where numero_venta=?";
+  $sql="select numero_venta from correlativo_ventas where numero_venta=?";
   $sql= $conectar->prepare($sql);
   $sql->bindValue(1, $numero_venta);
   //$sql->bindValue(2, $id_paciente);
@@ -196,8 +196,9 @@ public function agrega_detalle_venta(){
 
 }//FIN DEL FOREACH**************
     $cancelacion = "0";
+    $n_orden = '0';
     ///////////////////////INSERTAR CREDITOS
-    $sql1="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?);";
+    $sql1="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?,?);";
     $sql1=$conectar->prepare($sql1);          
     $sql1->bindValue(1,$tipo_venta);
     $sql1->bindValue(2,$monto_total);
@@ -209,11 +210,21 @@ public function agrega_detalle_venta(){
     $sql1->bindValue(8,$id_usuario);
     $sql1->bindValue(9,$fecha_venta);
     $sql1->bindValue(10,$cancelacion);
+    $sql1->bindValue(11,$n_orden);
 
     $sql1->execute();
 
+    /////////////////////  insert into correlativo ventas
 
-    $sql2="insert into ventas values(null,?,?,?,?,?,?,?,?,?,?,?,?);";
+    $id = "replace correlativo_ventas set numero_venta = ?, sucursal=?;";
+    $id = $conectar->prepare($id);
+    $id->bindValue(1,$numero_venta);
+    $id->bindValue(2,$sucursal_act);
+    $id->execute();
+
+
+    $n_orden = '0';
+    $sql2="insert into ventas values(null,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     $sql2=$conectar->prepare($sql2);
           
     $sql2->bindValue(1,$fecha_venta);
@@ -228,6 +239,7 @@ public function agrega_detalle_venta(){
     $sql2->bindValue(10,$sucursal_act);
     $sql2->bindValue(11,$evaluado);
     $sql2->bindValue(12,$optometra);
+    $sql2->bindValue(13,$n_orden);
     $sql2->execute();
 
     if ($id_ref != "") {
@@ -640,18 +652,19 @@ public function get_detalle_aros_rec_ini($id_paciente,$numero_venta){
 }
 
 ////////////////DETALLE DE VENTAS
-public function get_detalle_ventas_paciente($numero_venta,$id_paciente){
+public function get_detalle_ventas_paciente($numero_venta,$evaluado,$id_paciente){
 
   $conectar=parent::conexion();
   parent::set_names();
   $moneda="$";   
 
-  $sql="select producto,cantidad_venta,precio_venta,descuento,precio_final from detalle_ventas where numero_venta=? and id_paciente=?";
+  $sql="select producto,cantidad_venta,precio_venta,descuento,precio_final from detalle_ventas where numero_venta=? and id_paciente=? and beneficiario=?";
 
   $sql=$conectar->prepare($sql);            
 
   $sql->bindValue(1,$numero_venta);
   $sql->bindValue(2,$id_paciente);
+  $sql->bindValue(3,$evaluado);
   $sql->execute();
   $resultado=$sql->fetchAll(PDO::FETCH_ASSOC);
 

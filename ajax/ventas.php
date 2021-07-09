@@ -403,7 +403,7 @@ if (isset($errors)){
     $sub_array[] = $row["tipo_pago"];
     $sub_array[] = $row["sucursal"];
     $sub_array[] = "$".number_format($row["monto_total"],2,".",",");        
-    $sub_array[] = '<i class="fas fa-eye fa-2x" style="border-radius:0px;color:blue" data-toggle="modal" data-target="#detalle_ventas" onClick="detalleVentas(\''.$row["numero_venta"].'\','.$row["id_paciente"].')"></i>';
+    $sub_array[] = '<i class="fas fa-eye fa-2x" style="border-radius:0px;color:blue" data-toggle="modal" data-target="#detalle_ventas" onClick="detalleVentas(\''.$row["numero_venta"].'\',\''.$row["evaluado"].'\','.$row["id_paciente"].')"></i>';
     $data[] = $sub_array;
   }
 
@@ -416,7 +416,7 @@ if (isset($errors)){
   break;
     /// FIN LISTAR TODAS LAS VENTAS
   case "ver_detalle_venta":
-  $datos= $ventas->get_detalle_ventas_paciente($_POST["numero_venta"],$_POST["id_paciente"]);
+  $datos= $ventas->get_detalle_ventas_paciente($_POST["numero_venta"],$_POST['evaluado'],$_POST["id_paciente"]);
   break;
     //////////////////// GET DATA PACIENTE PARA MODAL CREDITOS EN VENTAS.PHP
   case 'show_datos_paciente':    

@@ -539,7 +539,7 @@ function registrar_abono(){
           Swal.fire('Recibo registrado exitosamente!','','success')
           $('#creditos_de_contado').DataTable().ajax.reload();
           $('#creditos_oid').DataTable().ajax.reload();
-
+          $('#creditos_cauto').DataTable().ajax.reload();
         }
 
       }
@@ -1074,6 +1074,7 @@ function get_finaliza(){
   var detalle_venta_flotante = [];
   var venta_flotante = [];
   var beneficiarios_orden = [];
+
   function acciones_oid(numero_orden,id_paciente,estado){
   detalle_venta_flotante = [];
   venta_flotante = [];
@@ -1147,7 +1148,8 @@ function get_finaliza(){
       id_orden : data[i].id_orden,
       sucursal : data[i].sucursal,
       evaluado : data[i].evaluado,
-      monto_total : data[i].monto_total
+      monto_total : data[i].monto_total,
+      tipo_orden : data[i].tipo_orden
     };//FIN OBJ
       beneficiarios_orden.push(obj);
      // console.log(beneficiarios_orden);

@@ -774,12 +774,10 @@ function add_beneficiario_oid(){
   let n_orden_add = $("#n_orden_add").val();
   var fecha_venta = $("#fecha").val();  
   var numero_venta = $("#n_venta").val();
-  var paciente = $("#titular_cuenta").val();
-  var vendedor = $("#usuario").val();
+  var paciente = $("#titular_cuenta").val();  
   var monto_total = $("#total_venta").html();
   var tipo_pago = $("#tipo_pago").val();
-  var tipo_venta = $("#tipo_venta").val();
-  var id_usuario = $("#usuario").val();
+  var tipo_venta = $("#tipo_venta").val();  
   var id_paciente = $("#id_paciente").val();
   var sucursal = $("#sucursal").val();
   var evaluado = $("#evaluado").val();
@@ -787,6 +785,9 @@ function add_beneficiario_oid(){
   var plazo = $("#plazo").val();
   var id_ref = $("#id_refererido").val();
   var nuevo_saldo_add = $("#nuevo_saldo_add").html();
+  var id_user= $("#usuario").val();
+  let id_usuario = id_user.toString();
+  var vendedor = id_user.toString();;
 
   let plazo_orden = $("#plazo_acts").val();
 
@@ -1234,12 +1235,12 @@ function reporte_ventas_gral(){
 }
 
 
-function detalleVentas(numero_venta,id_paciente){
+function detalleVentas(numero_venta,evaluado,id_paciente){
 //console.log(numero_venta+id_paciente);
     $.ajax({
       url:"ajax/ventas.php?op=ver_detalle_venta",
       method:"POST",
-      data:{numero_venta:numero_venta,id_paciente:id_paciente},
+      data:{numero_venta:numero_venta,id_paciente:id_paciente,evaluado:evaluado},
       cache:false,
       //dataType:"json",
       success:function(data)

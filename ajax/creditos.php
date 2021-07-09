@@ -658,6 +658,7 @@ $datos=$creditos->get_det_orden($_POST["n_orden_add"],$_POST["id_paciente"]);
         $output["sucursal"] = $row["sucursal"];
         $output["evaluado"] = $row["evaluado"];
         $output["monto_total"] = strtoupper($row["monto_total"]);
+        $output["tipo_orden"] = $row["tipo_orden"];
         $data[] = $output;                    
       }      
 

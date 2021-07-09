@@ -10,12 +10,9 @@ switch($_GET["op"]){
 
   case "get_consultas":
 
-  $sucursal = $_POST["sucursal"];
-  if ($sucursal=="Empresarial"){
-    $datos=$ordenes->get_consultas_orden_emp($_POST["sucursal_usuario"]);
-  }else{
-	  $datos=$ordenes->get_consultas_orden($_POST["sucursal"]);
-  }
+
+	  $datos=$ordenes->get_consultas_orden($_POST["sucursal_usuario"]);
+
 
  	$data= Array();
     foreach($datos as $row){
