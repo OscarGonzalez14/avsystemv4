@@ -93,7 +93,7 @@ $level_user = $_SESSION["id_user_emp"];
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-         <li class="nav-item has-treeview">
+         <li class="nav-item has-treeview li_1">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
@@ -118,6 +118,8 @@ $level_user = $_SESSION["id_user_emp"];
 
             </ul>
           </li>
+
+
           <li class="nav-item">
             <a href="empresas.php" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
@@ -152,44 +154,40 @@ $level_user = $_SESSION["id_user_emp"];
             </a>
           </li>
 
-          <?php if ($_SESSION["EnviosLab"]) {
-
-           echo '
-          <li class="nav-item has-treeview">
-            <a href="laboratorios.php" class="nav-link">
-              <i class="fas fa-exchange-alt"></i>
+          <li class="nav-item has-treeview li_1">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
               <p>
-                Envios a Lab.
-                <i class="right fas fa-angle-left"></i>
+                Envios Lab.
+                <i class="fas fa-angle-left right"></i>
+                <span class="badge badge-danger right">.</span>
               </p>
             </a>
-
-            ';
-
-            //CONTROL LABORATORIOS 2-->
-            echo '
-            <li class="nav-item has-treeview">
-              <a href="laboratorios.php" class="nav-link">
-                <i class="fas fa-exchange-alt"></i>
-                <p>
-                  Envios a Lab.
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-  
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="laboratorios.php" class="nav-link">
+                  <i class="far fa-file"></i>
+                  <p>Envios lab.</p>
+                </a>
+              </li>
+              <?php if ($_SESSION["EnviosLab"]) {
+                echo '
+              <li class="nav-item">
+                <a href="control_labs.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Control Ordenes</p>
+                </a>
+              </li>
               ';
-            // FIN CONTROL LABORATORIOS 2-->
+            }
+            ?>
+            </li>
 
-            if($cat_user=="administrador"){
-              echo //$cat_user;
-              '<ul class="nav nav-treeview">
-            <li class="nav-item has-treeview">
-            <a href="laboratorios.php" class="nav-link">
-              <i class="fas fa-exchange-alt"></i>
-              <p>
-                Envios a Lab.
-                <i class="right fas fa-angle-left"></i>
-              </p>
+            </ul>
+          </li>
+          
+            
+          <!---CREDITOS FISCALES LABORATORIOS
             </a>
             </li>
               <li class="nav-item">
@@ -200,9 +198,7 @@ $level_user = $_SESSION["id_user_emp"];
               </li>
             </ul>
           </li>
-          ';
-        }
-        }?>   
+        -->
           
           <li class="nav-item">
             <a href="ventas.php" class="nav-link">

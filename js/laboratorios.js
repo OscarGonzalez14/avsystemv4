@@ -1,4 +1,3 @@
-
 function init(){
 	get_correlativo_orden();
 	listado_general_envios();

@@ -46,7 +46,7 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
               </select>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 select2-purple">
               <label for="">Empleado</label>
                 <select class="select2 form-control" id="emp_comision" multiple="multiple" data-placeholder="Seleccionar vendedor" data-dropdown-css-class="select2-purple" style="width: 100%;color:black">              
                 <option value="0" style="width: 100%;color:black">Seleccionar empleado</option>
