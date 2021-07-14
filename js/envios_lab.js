@@ -21,6 +21,25 @@ function get_numero_orden(){
 
 function registrarEnvioLab(){
 
+    var clase = document.getElementsByClassName("validate");
+
+    for(i=0;i<clase.length;i++){
+      let val_element = clase[i].value;
+      let id_element = clase[i].id;
+
+      if(val_element==""){
+        let elemento = document.getElementById(id_element);
+        elemento.className += " is-invalid";
+        alerts("warning");
+        return false
+      }else{
+        let elemento = document.getElementById(id_element);
+        document.getElementById(id_element).classList.remove('is-invalid');
+        elemento.className += " is-valid";
+      }
+    }
+
+
   let cod_orden = $("#correlativo_envio_lab").html();
   let paciente = $("#paciente_orden_lab").val();
   let empresa = $("#empresa_lab").val();
@@ -48,11 +67,111 @@ function registrarEnvioLab(){
        if(data == 'ok'){
         Swal.fire('Se ha registrado una orden a la lista de pendientes por enviar!','','success');
         $("#nueva_orden_lab_dos").modal('hide');
-       }      
+        listar_ordenes_creadas();
+       }else{
+        Swal.fire('Código ya registrado, Actualizar el navegador!','','success');
+       }     
       }
     });
+}
+
+$(document).on('keyup', '.is-invalid', function(){
+let id  = $(this).attr("id");
+document.getElementById(id).classList.remove('is-invalid');
+document.getElementById(id).classList.add('is-valid');
+
+});
+$(document).on('click', '.is-valid', function(){
+let id  = $(this).attr("value");
+console.log(id)
+if (id!="") {
+  document.getElementById(id).classList.remove('is-invalid');
+  document.getElementById(id).classList.add('is-valid');
+}
 
 
+});
+
+function alerts(alert){
+    Swal.fire('Existen Campos obligatorios vacios!','',alert);
+}
+
+/////////////////////LISTAR ORDENES CREADAS - PENDIENTES
+function listar_ordenes_creadas(){
+
+tabla_envios_gral=$('#data_orders_lab').dataTable(
+  {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+            buttons: [
+                'excelHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/laboratorios.php?op=get_ordenes_creadas',
+          type : "post",
+          dataType : "json",
+          //data:{},
+          error: function(e){
+            console.log(e.responseText);
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 25,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+      "language": {
+
+          "sProcessing":     "Procesando...",
+
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+
+          "sZeroRecords":    "No se encontraron resultados",
+
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+          "sInfoPostFix":    "",
+
+          "sSearch":         "Buscar:",
+
+          "sUrl":            "",
+
+          "sInfoThousands":  ",",
+
+          "sLoadingRecords": "Cargando...",
+
+          "oPaginate": {
+
+              "sFirst":    "Primero",
+
+              "sLast":     "Último",
+
+              "sNext":     "Siguiente",
+
+              "sPrevious": "Anterior"
+
+          },
+
+          "oAria": {
+
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+          }
+
+         }//cerrando language
+
+  }).DataTable();
 }
 
  init();

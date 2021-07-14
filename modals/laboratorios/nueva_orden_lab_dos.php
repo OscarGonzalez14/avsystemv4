@@ -59,7 +59,7 @@
     <div class="form-group col-sm-7">
       <label for="inlineFormInputGroup">Paciente</label>
       <div class="input-group">
-        <input type="text" class="form-control clear_orden_i" id="paciente_orden_lab">
+        <input type="text" class="form-control clear_orden_i validate" id="paciente_orden_lab">
       <div class="input-group-prepend" onClick="get_data_orden();">
             <div class="input-group-text"><i class="fas fa-search" style="color: blue"></i></div>
           </div>
@@ -75,7 +75,7 @@
 
     <div class="form-group col-sm-4">
       <label for="inputPassword4">Laboratorio</label>
-      <select class="form-control clear_orden_i" id="laboratorio_orden_lab" required>
+      <select class="form-control clear_orden_i validate" id="laboratorio_orden_lab" required>
         <option value="">Seleccionar Laboratorio...</option>
         <option value="Lomed">Lomed</option>
         <option value="Lenti">Lenti</option>
@@ -88,7 +88,7 @@
 
     <div class="form-group col-sm-4">
       <label for="inputPassword4">Sucursal</label>
-      <select class="form-control clear_orden_i" id="sucursal_orden_lab" required>
+      <select class="form-control clear_orden_i validate" id="sucursal_orden_lab" required>
         <option value="">Seleccionar sucursal...</option>
         <option value="Metrocentro">Metrocentro</option>
         <option value="Arce">Arce</option>
@@ -97,7 +97,7 @@
 
     <div class="form-group col-sm-4">
       <label for="inputPassword4">Proridad</label>
-      <select class="form-control clear_orden_i" id="prioridad_orden_lab" required>
+      <select class="form-control clear_orden_i validate" id="prioridad_orden_lab">
         <option value="">Seleccionar Prioridad...</option>
         <option value="5">5 dia (Normal)</option>
         <option value="3">3 dias (Intermedio)</option>
@@ -118,7 +118,7 @@
         <div class="input-group-prepend">
           <div class="input-group-text">LENTE</i></div>
         </div>
-        <input type="text" class="form-control clear_orden_i" id="lente_orden_lab">
+        <input type="text" class="form-control clear_orden_i validate" id="lente_orden_lab">
       </div>
     </div>
 
@@ -129,25 +129,26 @@
 <div class="eight">
   <h1>ARO</h1>
   <div class="form-row align-items-center row" style="margin: 4px">
+
+    <div class="form-group col-sm-3">
+      <label for="">Marca</label>
+      <input type="text" class="form-control clear_orden_i validate" id="marca_aro_lab">
+    </div>
+
     <div class="form-group col-sm-3">
       <label for="">Modelo</label>
       <input type="text" class="form-control clear_orden_i" id="modelo_aro_lab">
     </div>
 
     <div class="form-group col-sm-3">
-      <label for="">Marca</label>
-      <input type="text" class="form-control clear_orden_i" id="marca_aro_lab">
-    </div>
-
-      <div class="form-group col-sm-3">
       <label for="">Color</label>
       <input type="text" class="form-control clear_orden_i" id="color_aro_lab">
     </div>
 
     <div class="form-group col-sm-3 select2-purple">
       <label for="">Usuario</label>
-      <select class="select2 form-control" id="usuario_orden" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
-      <option value="0">Seleccionar usuario</option>
+      <select class="select2 form-control validate" id="usuario_orden" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+      <option value="">Seleccionar usuario</option>
       <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
         <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
       <?php  } ?>              

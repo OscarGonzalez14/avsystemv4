@@ -37,7 +37,7 @@ $alerts = new Reporteria();
                   <i class="fas fa-plus" style="color:#008080"></i> NUEVA ORDEN
                 </button>
 
-                <a class="btn btn-app" onClick="listado_general_envios();">
+                <a class="btn btn-app" onClick="listar_ordenes_creadas();">
                   <span class="badge bg-warning" id="alert_creadas"></span>
                   <i class="fas fa-history"></i> PENDIENTES
                 </a>
@@ -64,23 +64,20 @@ $alerts = new Reporteria();
 
             </div>
     <section>
-    <table id="data_envios_lab" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
+    <table id="data_orders_lab" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
       <thead style="color:white;background-color:#001f4f;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="">
           <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 15px">
             <td style="text-align:center;width: 5%">ID</td>
             <td style="text-align:center;width: 10%"><span id="acciones_orden"></span></td>
-            <td style="text-align:center;width: 10%">Paciente</td>
-            <td style="text-align:center;width: 15%">#Orden</td>
-            <td style="text-align:center;width: 15%"><span id="fecha_ord">Creación</span></td>
-            <td style="text-align:center;width: 15%"><span id="dias_orden">Usuario</span></td>
+            <td style="text-align:center;width: 15%">Paciente</td>
+            <td style="text-align:center;width: 5%">#Orden</td>
+            <td style="text-align:center;width: 10%"><span id="fecha_ord">Creación</span></td>
+            <td style="text-align:center;width: 10%"><span id="lab">Laboratorio</span></td>
+            <td style="text-align:center;width: 10%">Sucursal</td>
             <td style="text-align:center;width: 10%">Estado</td>
             <td style="text-align:center;width: 10%">Detalles</td>
-            <?php if($cat_user=="administrador"){
-            echo '
-            <td style="text-align:center;width: 10%">Acciones</td>';
-          }
-            ?>
-         </tr>
+            <td style="text-align:center;width: 10%">Acciones</td>
+          </tr>
         </thead>
         <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 12px;text-align: center;">                                        
         </tbody>

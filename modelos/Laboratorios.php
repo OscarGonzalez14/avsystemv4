@@ -14,7 +14,7 @@ public function get_correlativo_orden($fecha){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function valida_existe_orden($cod_orden){
+public function valida_existe_orden($cod_orden){
   	$conectar = parent::conexion();
 
   	$sql = "select*from ordenes_lab where cod_orden=?;";
@@ -24,7 +24,7 @@ public function get_correlativo_orden($fecha){
     return $resultado=$sql->fetchAll();
   }
 
-  public function registrarEnvioLab($cod_orden,$paciente,$empresa,$laboratorio,$lente,$modelo_aro,$marca_aro,$color_aro,$diseno_aro,$usuario,$sucursal,$prioridad,$observaciones){
+public function registrarEnvioLab($cod_orden,$paciente,$empresa,$laboratorio,$lente,$modelo_aro,$marca_aro,$color_aro,$diseno_aro,$usuario,$sucursal,$prioridad,$observaciones){
 
   	$conectar = parent::conexion();
   	date_default_timezone_set('America/El_Salvador');$hoy = date("d-m-Y H:i:s");
@@ -51,6 +51,12 @@ public function get_correlativo_orden($fecha){
 
   }
 
-}////////FIN DE LA CLASE
+public function get_ordenes_creadas(){
+	$conectar = parent::conexion();
+	$sql = "select*from ordenes_lab where estado=0 order by id_orden_lab DESC;";
+	$sql = $conectar->prepare($sql);
+	$sql->execute();    
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
- ?>
+}////////FIN DE LA CLASE
