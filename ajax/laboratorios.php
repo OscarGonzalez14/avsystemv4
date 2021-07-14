@@ -53,7 +53,7 @@ switch ($_GET["op"]){
 
         $sub_array = array();
         $sub_array[] = $row["id_orden_lab"];
-        $sub_array[] = '<input type="checkbox" class="form-check-input paciente" value="'.$row["cod_orden"].'" name="'.$row["paciente"].'" id="send_lab'.$i.'">Enviar';
+        $sub_array[] = '<input type="checkbox" class="form-check-input envio_orden_labs" value="'.$row["cod_orden"].'" name="'.$row["paciente"].'" id="orden_env'.$i.'">Enviar';
         $sub_array[] = ucwords(strtolower($row["paciente"]));
         $sub_array[] = $row["cod_orden"];
         $sub_array[] = $row["fecha_creacion"];

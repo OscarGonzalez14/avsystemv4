@@ -88,7 +88,7 @@ $alerts = new Reporteria();
         </tfoot>-->
       </table>
     </section>
-    <button type="button" class="btn btn-block send_orden" onClick="send_orden_lab();" id="btn_enviar_lab" style="color: white;background: #0f1f37"><i class="fas fa-share-square"></i> ENVIAR A LABORATORIO</button>
+    <button type="button" class="btn btn-block send_orden" onClick="enviar_ordenes_lab();" id="btn_enviar_lab" style="color: white;background: #0f1f37"><i class="fas fa-share-square"></i> ENVIAR A LABORATORIO</button>
      <button type="button" class="btn btn-info btn-block" id="btn_recibir_lab" onClick="recibir_orden_lab();"><i class="fas fa-share-square"></i> RECIBIR</button>
     </div>
     </div>
@@ -133,6 +133,34 @@ $alerts = new Reporteria();
   </div>
   
 </div>
+
+  <div class="modal fade" id="confirm-envio">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirmación de envío</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Desea enviar los siguientes trabajos</p>
+              <div class="dropdown-divider"></div>
+              <div>
+                
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default">Cancelar</button>
+              <button type="button" class="btn btn-primary">Aceptar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
 
  <script type="text/javascript" src="js/envios_lab.js"></script>
  <script type="text/javascript" src="js/consultas.js"></script>

@@ -178,7 +178,7 @@ switch($_GET["op"]){
 
           $sub_array = array();
           $sub_array[] = $row["id_envio"];
-          $sub_array[] = '<input type="checkbox" class="form-check-input send_orden" value="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" id="send_lab'.$i.'">Enviar';          
+          $sub_array[] = '<input type="checkbox" class="form-check-input send_orden" value="'.$row["id_paciente"].'" name="'.$row["numero_orden"].'" id="env_lab'.$i.'">Enviar';          
           $sub_array[] = $row["evaluado"];
           $sub_array[] = $row["numero_orden"];
           $sub_array[] = $row["fecha_creacion"];

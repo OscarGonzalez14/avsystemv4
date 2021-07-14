@@ -173,5 +173,38 @@ tabla_envios_gral=$('#data_orders_lab').dataTable(
 
   }).DataTable();
 }
+////////////////CREATE ARRAY SEND ORDENES //////
+let items_envios_ord = [];
+
+$(document).on('click', '.envio_orden_labs', function(){
+ //console.log('Holaaa');
+  let codigo = $(this).attr("value");
+  let paciente = $(this).attr("name");
+  let id_item = $(this).attr("id");
+
+  var checkbox = document.getElementById(id_item);
+  let check_state = checkbox.checked;
+
+  if (check_state == true) {
+        let obj = {
+         codigo : codigo,
+         paciente : paciente 
+       }
+       items_envios_ord.push(obj);
+  }else if(check_state == false){
+  let index = items_envios_ord.findIndex(x => x.cod==codigo)
+  console.log(index)
+  items_envios_ord.splice(index, 1)
+  }
+  
+});
+
+//////////////////// REGISTRAR ENVIO ///////////////
+function enviar_ordenes_lab(id_paciente){
+    
+  
+}
+
+
 
  init();
