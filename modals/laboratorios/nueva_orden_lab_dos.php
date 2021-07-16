@@ -147,7 +147,7 @@
 
     <div class="form-group col-sm-3 select2-purple">
       <label for="">Usuario</label>
-      <select class="select2 form-control validate" id="usuario_orden" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+      <select class="select2 form-control" id="usuario_orden" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
       <option value="">Seleccionar usuario</option>
       <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
         <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>

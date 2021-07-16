@@ -63,13 +63,15 @@ $emp = $users->get_usuarios_comision($_SESSION["sucursal"]);
           </div><!--FIN FORM row-->
 
           <div class="row" style="margin-top: 3px">
+            
               <div class="input-group input-group-sm col-sm-3">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Sucursal  &nbsp;&nbsp;</button>
                   </span>
                   <input type="text" class="form-control" value="<?php echo $_SESSION["sucursal"];?>" readonly="">
                 </div>
-            <div class="input-group input-group-sm col-sm-3">
+
+                <div class="input-group input-group-sm col-sm-3">
                   <span class="input-group-append">
                     <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Categoría&nbsp;</button>
                   </span>

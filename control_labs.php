@@ -38,12 +38,12 @@ $alerts = new Reporteria();
                 </button>
 
                 <a class="btn btn-app" onClick="listar_ordenes_creadas();">
-                  <span class="badge bg-warning" id="alert_creadas"></span>
+                  <span class="badge bg-warning" id="alert_creadas_ord"></span>
                   <i class="fas fa-history"></i> PENDIENTES
                 </a>
 
-                <a class="btn btn-app" onClick="listado_ordenes_enviadas();">
-                  <span class="badge bg-info" id="alert_enviadas"></span>
+                <a class="btn btn-app" onClick="listar_ordenes_enviadas();">
+                  <span class="badge bg-info" id="alert_enviadas_ord"></span>
                   <i class="fas fa-share"></i> ENVIADOS
                 </a>
 
@@ -58,7 +58,7 @@ $alerts = new Reporteria();
                 </a>
 
                 <a class="btn btn-app">
-                  <span class="badge bg-primary">0</span>
+                  <span class="badge bg-primary"></span>
                   <i class="far fa-thumbs-up"></i> ENTREGADOS
                 </a>
 
@@ -66,17 +66,20 @@ $alerts = new Reporteria();
     <section>
     <table id="data_orders_lab" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
       <thead style="color:white;background-color:#001f4f;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="">
+          <tr>
+            <th style="background:#C0C0C0;color:black;margin:solid 1px black;font-family: Helvetica, Arial, sans-serif;font-size: 13px;text-align: center" colspan="100" id="head_th"><span id="header_title"></span></th>
+          </tr>
           <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 15px">
             <td style="text-align:center;width: 5%">ID</td>
             <td style="text-align:center;width: 10%"><span id="acciones_orden"></span></td>
             <td style="text-align:center;width: 15%">Paciente</td>
             <td style="text-align:center;width: 5%">#Orden</td>
-            <td style="text-align:center;width: 10%"><span id="fecha_ord">Creación</span></td>
+            <td style="text-align:center;width: 10%"><span id="col_seis">Creación</span></td>
             <td style="text-align:center;width: 10%"><span id="lab">Laboratorio</span></td>
             <td style="text-align:center;width: 10%">Sucursal</td>
             <td style="text-align:center;width: 10%">Estado</td>
             <td style="text-align:center;width: 10%">Detalles</td>
-            <td style="text-align:center;width: 10%">Acciones</td>
+            <td style="text-align:center;width: 10%" id="col_diez">Acciones</td>
           </tr>
         </thead>
         <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 12px;text-align: center;">                                        
@@ -88,8 +91,8 @@ $alerts = new Reporteria();
         </tfoot>-->
       </table>
     </section>
-    <button type="button" class="btn btn-block send_orden" onClick="enviar_ordenes_lab();" id="btn_enviar_lab" style="color: white;background: #0f1f37"><i class="fas fa-share-square"></i> ENVIAR A LABORATORIO</button>
-     <button type="button" class="btn btn-info btn-block" id="btn_recibir_lab" onClick="recibir_orden_lab();"><i class="fas fa-share-square"></i> RECIBIR</button>
+    <button type="button" class="btn btn-block send_orden" id="btn_send_lab" onClick="enviar_ordenes_lab();" style="color: white;background: #0f1f37"><i class="fas fa-share-square"></i> ENVIAR A LABORATORIO</button>
+     <button type="button" class="btn btn-info btn-block" id="btn_receive_lab" onClick="recibir_ordenes_lab();"><i class="fas fa-share-square"></i> RECIBIR</button>
     </div>
     </div>
           <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
@@ -119,7 +122,7 @@ $alerts = new Reporteria();
             <td style="text-align:center;width: 10%">Acciones</td>
          </tr>
         </thead>
-        <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;">                                        
+        <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;">                                      
         </tbody>
         </table>
         </div>        
@@ -133,7 +136,7 @@ $alerts = new Reporteria();
   </div>
   
 </div>
-
+<!--MODAL CONFIRMAR ENVIO-->
   <div class="modal fade" id="confirm-envio">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
@@ -144,15 +147,56 @@ $alerts = new Reporteria();
               </button>
             </div>
             <div class="modal-body">
-              <p>Desea enviar los siguientes trabajos</p>
+              <h5 style="font-family: Helvetica, Arial, sans-serif;font-size: 18px;text-align: center;"><b>Confirmar el envío de <span id="n_trabajos" style="color: red"></span>&nbsp;trabajos</b></h5>
               <div class="dropdown-divider"></div>
               <div>
-                
+              <div class="form-group col-sm-5 select2-purple" style="margin: auto">
+                <select class="select2 form-control" id="usuario_envio" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+                <option value="">Seleccionar usuario</option>
+                  <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
+                    <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
+                  <?php  } ?>              
+                </select>   
+              </div>
               </div>
             </div>
             <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default">Cancelar</button>
-              <button type="button" class="btn btn-primary">Aceptar</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" onClick="registrarEnvio()">Aceptar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+<!--FIN MODAL CONFIRMAR ENVIO-->
+  <div class="modal fade" id="confirm-receive">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirmación de recibido</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h5 style="font-family: Helvetica, Arial, sans-serif;font-size: 18px;text-align: center;"><b>Confirmar recibo de <span id="n_trabajos" style="color: red"></span>&nbsp;trabajos</b></h5>
+              <div class="dropdown-divider"></div>
+              <div>
+              <div class="form-group col-sm-5 select2-purple" style="margin: auto">
+                <select class="select2 form-control" id="usuario_recibe" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+                <option value="">Seleccionar usuario</option>
+                  <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
+                    <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
+                  <?php  } ?>              
+                </select>   
+              </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onClick="recibirOrdenes()">Aceptar</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -161,6 +205,9 @@ $alerts = new Reporteria();
       </div>
       <!-- /.modal -->
 
+<!--MODAL CONFIRMAR RECIBIDO-->
+
+<!--FIN MODAL CONFIRMAR RECIBIDO-->
 
  <script type="text/javascript" src="js/envios_lab.js"></script>
  <script type="text/javascript" src="js/consultas.js"></script>

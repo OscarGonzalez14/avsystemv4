@@ -26,8 +26,7 @@ function guardarCategoria(){
         setTimeout ("Swal.fire('Esta categoría ya existe','','error')", 100);
         return false;
      }
-     }
-    
+     }   
 
 	});
 	}

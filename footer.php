@@ -13,8 +13,7 @@
 </script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables -->
-<!--<script src="plugins/sweetalert2/sweetalert2.min.js"></script>-->
-<script src="../plugins/select2/js/select2.full.min.js"></script>
+<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="plugins/toastr/toastr.min.js"></script>
 <script src="plugins/datatables/jquery.dataTables.js"></script>

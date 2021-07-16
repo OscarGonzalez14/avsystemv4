@@ -69,7 +69,7 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
   <td colspan="30" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 65%"><strong>CLIENTE: INSTITUTO ADMINISTRADOR DE LOS BENEFICIOS DE LOS VETERANOS Y EXCOMBATIENTES</strong></td>
 
     <td colspan="18" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 18%"><strong>TELEFONO:</strong></td>
-    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo $hoy;?></td>
+    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo "13/07/2021";?></td>
     <?php
   }
 ?>
@@ -167,9 +167,9 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
   <td colspan="10" class="stilot1" style="height:8px"></td>
 </tr>
 <tr>
-  <td colspan="20" class="stilot1" style="font-size:8px">(-)IVA RETENIDO</td>
+  <td colspan="20" class="stilot1" style="font-size:8px">(1%)IVA RETENIDO</td>
   <td colspan="10" class="stilot1"></td>
-  <td colspan="10" class="stilot1"></td>
+  <td colspan="10" class="stilot1" style="font-size:8px">$109.00</td>
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px">VENTA NO SUJETA</td>
@@ -178,7 +178,7 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px"><strong>TOTAL</strong></td>
-  <td colspan="20" class="stilot1"><strong><?php echo "$12,317.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
+  <td colspan="20" class="stilot1"><strong><?php echo "$12,208.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
 </tr>
 </table>
 <?php
@@ -203,7 +203,7 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
   <td colspan="30" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 65%"><strong>CLIENTE: INSTITUTO ADMINISTRADOR DE LOS BENEFICIOS DE LOS VETERANOS Y EXCOMBATIENTES</strong></td>
 
     <td colspan="18" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 18%"><strong>TELEFONO:</strong></td>
-    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo $hoy;?></td>
+    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo "13/07/2021";?></td>
     <?php
   }
 ?>
@@ -301,9 +301,9 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
   <td colspan="10" class="stilot1" style="height:8px"></td>
 </tr>
 <tr>
-  <td colspan="20" class="stilot1" style="font-size:8px">(-)IVA RETENIDO</td>
+  <td colspan="20" class="stilot1" style="font-size:8px">(1%)IVA RETENIDO</td>
   <td colspan="10" class="stilot1"></td>
-  <td colspan="10" class="stilot1"></td>
+  <td colspan="10" class="stilot1" style="font-size:8px">$109.00</td>
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px">VENTA NO SUJETA</td>
@@ -312,7 +312,7 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px"><strong>TOTAL</strong></td>
-  <td colspan="20" class="stilot1"><strong><?php echo "$12,317.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
+  <td colspan="20" class="stilot1"><strong><?php echo "$12,208.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
 </tr>
 </table>
 <?php

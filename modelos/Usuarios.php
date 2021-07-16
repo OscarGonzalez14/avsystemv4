@@ -61,7 +61,8 @@ public function login(){
       in_array(5,$valores)?$_SESSION['Ventas']=1:$_SESSION['Ventas']=0;
       in_array(6,$valores)?$_SESSION['Creditos&Cobros']=1:$_SESSION['Creditos&Cobros']=0;
       in_array(7,$valores)?$_SESSION['Caja Chica']=1:$_SESSION['Caja Chica']=0;
-      in_array(8,$valores)?$_SESSION['EnviosLab']=1:$_SESSION['EnviosLab']=0;    
+      in_array(8,$valores)?$_SESSION['EnviosLab']=1:$_SESSION['EnviosLab']=0;
+      in_array(9,$valores)?$_SESSION['Control_labs']=1:$_SESSION['Control_labs']=0;    
         
       header("Location:home.php");
       exit();

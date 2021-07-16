@@ -170,7 +170,7 @@ $level_user = $_SESSION["id_user_emp"];
                   <p>Envios lab.</p>
                 </a>
               </li>
-              <?php if ($_SESSION["EnviosLab"]) {
+              <?php if ($_SESSION["Control_labs"]) {
                 echo '
               <li class="nav-item">
                 <a href="control_labs.php" class="nav-link">
