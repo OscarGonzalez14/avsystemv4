@@ -529,6 +529,12 @@ public function aprobar_orden(){
     $sql2->bindValue(13,$numero_orden);
     $sql2->execute();
 
+    $id = "replace correlativo_ventas set id_correlativo=0,numero_venta = ?, sucursal=?;";
+    $id = $conectar->prepare($id);
+    $id->bindValue(1,$num_venta);
+    $id->bindValue(2,$sucursal);
+    $id->execute();
+
     $sql3="update ventas_flotantes set estado='1' where numero_orden=? and evaluado=?;";
     $sql3=$conectar->prepare($sql3);
     $sql3->bindValue(1,$numero_orden);

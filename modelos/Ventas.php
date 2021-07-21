@@ -216,7 +216,7 @@ public function agrega_detalle_venta(){
 
     /////////////////////  insert into correlativo ventas
 
-    $id = "replace correlativo_ventas set numero_venta = ?, sucursal=?;";
+    $id = "replace correlativo_ventas set id_correlativo=0,numero_venta = ?, sucursal=?;";
     $id = $conectar->prepare($id);
     $id->bindValue(1,$numero_venta);
     $id->bindValue(2,$sucursal_act);

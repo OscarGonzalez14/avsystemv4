@@ -174,7 +174,7 @@ $level_user = $_SESSION["id_user_emp"];
                 echo '
               <li class="nav-item">
                 <a href="control_labs.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-circle text-danger nav-icon"></i>
                   <p>Control Ordenes</p>
                 </a>
               </li>
@@ -184,8 +184,7 @@ $level_user = $_SESSION["id_user_emp"];
             </li>
 
             </ul>
-          </li>
-          
+          </li>          
             
           <!---CREDITOS FISCALES LABORATORIOS
             </a>

@@ -53,7 +53,6 @@ require_once("modals/modal_cargo_automatico.php");
                         <option value=''>Seleccionar tipo Venta</option>
                         <option value='Contado'>Contado</option>
                         <option value='Credito'>Credito</option>
-                        <option value='Credito Fiscal'>Credito Fiscal</option>
                       </select>
                     </div>  
 

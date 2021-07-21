@@ -103,6 +103,16 @@
         <option value="3">3 dias (Intermedio)</option>
         <option value="2">2 dias (Intermedio)</option>
         <option value="1">1 dias(Urgente)</option>
+        <option value="6">6 dias</option>
+        <option value="7">7 dias</option>
+        <option value="8">8 dias</option>
+        <option value="9">9 dias</option>
+        <option value="10">10 dias</option>
+        <option value="12">12 dias</option>
+        <option value="13">13 dias</option>
+        <option value="14">14 dias</option>
+        <option value="15">15 dias</option>
+
     </select>
     </div>
 

@@ -14,7 +14,7 @@
 
 	  for(i=0;i<id.length;i++){
        console.log(id[i].value);
-       console.log(id[i].id);
+       console.log(id[i].id );
 	  }
 	}
 

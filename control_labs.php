@@ -30,8 +30,8 @@ $alerts = new Reporteria();
       <div style="margin-left: 1px;display: flex; justify-content: center;">&nbsp;&nbsp;
 
       </div>
-            <div class="card" style="margin: 1px">
-              <div class="card-body">
+            <div class="card">
+              <div class="card-body" style="margin: 1px solid red">
 
                 <button class="btn btn-app clear_orden"  data-toggle="modal" data-target="#nueva_orden_lab_dos" data-backdrop="static" data-keyboard="false" onClick="get_numero_orden();">
                   <i class="fas fa-plus" style="color:#008080"></i> NUEVA ORDEN
@@ -48,18 +48,18 @@ $alerts = new Reporteria();
                 </a>
 
                 <a class="btn btn-app" onClick="listado_ordenes_recibidas();">
-                  <span class="badge bg-success" id="alert_recibidos"></span>
+                  <span class="badge bg-success" id="alert_recibidos_ord"></span>
                   <i class="fas fa-file-import"></i> RECIBIDOS
                 </a>
 
-                <a class="btn btn-app" onClick="listado_ordenes_enviadas();">
-                  <span class="badge bg-danger" id="alert_retrasados"></span>
-                  <i class="far fa-frown"></i> RETRASOS
+                <a class="btn btn-app" onClick="get_ordenes_entregadas();">
+                  <span class="badge bg-primary" id="alert_entregados_ord"></span>
+                  <i class="far fa-thumbs-up"></i> ENTREGADOS
                 </a>
 
-                <a class="btn btn-app">
-                  <span class="badge bg-primary"></span>
-                  <i class="far fa-thumbs-up"></i> ENTREGADOS
+                <a class="btn btn-app" onClick="get_ordenes_retrasadas();">
+                  <span class="badge bg-danger" id="alert_retrasados_ord"></span>
+                  <i class="far fa-frown"></i> RETRASOS
                 </a>
 
             </div>
@@ -73,26 +73,23 @@ $alerts = new Reporteria();
             <td style="text-align:center;width: 5%">ID</td>
             <td style="text-align:center;width: 10%"><span id="acciones_orden"></span></td>
             <td style="text-align:center;width: 15%">Paciente</td>
-            <td style="text-align:center;width: 5%">#Orden</td>
+            <td style="text-align:center;width: 5%"><span id="col_cinco">#Orden</span></td>
             <td style="text-align:center;width: 10%"><span id="col_seis">Creación</span></td>
             <td style="text-align:center;width: 10%"><span id="lab">Laboratorio</span></td>
             <td style="text-align:center;width: 10%">Sucursal</td>
-            <td style="text-align:center;width: 10%">Estado</td>
+            <td style="text-align:center;width: 10%"><span id="col_ocho">Estado</span></td>
             <td style="text-align:center;width: 10%">Detalles</td>
             <td style="text-align:center;width: 10%" id="col_diez">Acciones</td>
           </tr>
         </thead>
-        <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 12px;text-align: center;">                                        
-        </tbody>
-        <!--<tfoot>
-          <tr>
-            <td colspan="100">Hola</td>
-          </tr>
-        </tfoot>-->
+        <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 12px;text-align: center;"></tbody>
       </table>
     </section>
     <button type="button" class="btn btn-block send_orden" id="btn_send_lab" onClick="enviar_ordenes_lab();" style="color: white;background: #0f1f37"><i class="fas fa-share-square"></i> ENVIAR A LABORATORIO</button>
      <button type="button" class="btn btn-info btn-block" id="btn_receive_lab" onClick="recibir_ordenes_lab();"><i class="fas fa-share-square"></i> RECIBIR</button>
+
+     <button type="button" class="btn btn-primary btn-block" id="btn_entregar_lab" onClick="entregar_ordenes_lab();"><i class="fas fa-share-square"></i> ENTREGAR</button>
+    </div>
     </div>
     </div>
           <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
@@ -181,7 +178,7 @@ $alerts = new Reporteria();
               </button>
             </div>
             <div class="modal-body">
-              <h5 style="font-family: Helvetica, Arial, sans-serif;font-size: 18px;text-align: center;"><b>Confirmar recibo de <span id="n_trabajos" style="color: red"></span>&nbsp;trabajos</b></h5>
+              <h5 style="font-family: Helvetica, Arial, sans-serif;font-size: 18px;text-align: center;"><b>Confirmar recibo de <span id="n_trabajos_r" style="color: red"></span>&nbsp;trabajos</b></h5>
               <div class="dropdown-divider"></div>
               <div>
               <div class="form-group col-sm-5 select2-purple" style="margin: auto">
@@ -196,7 +193,7 @@ $alerts = new Reporteria();
             </div>
             <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" onClick="recibirOrdenes()">Aceptar</button>
+            <button type="button" class="btn btn-primary" onClick="recibirOrdenes();">Aceptar</button>
             </div>
           </div>
           <!-- /.modal-content -->
@@ -205,9 +202,74 @@ $alerts = new Reporteria();
       </div>
       <!-- /.modal -->
 
-<!--MODAL CONFIRMAR RECIBIDO-->
+<!--MODAL CONTROL DE CALIDAD-->      
+<div id="modal_ccalidad" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="max-width: 70%">
+   <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Control de calidad</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div class="modal-body">
+      <b><p style="color:blue;font-family: Helvetica, Arial, sans-serif;font-size: 14px;">Paciente: <span id="paciente_orden_cc" style="color:black"></span></p></b>
+      <div class="form-group col-md-12">
+        <label for="inputPassword4">Observaciones</label>
+        <textarea id="justificacion_calidad" class="form-control" rows="3"></textarea>
+      </div>
+      <div class="form-group col-sm-5 select2-purple" style="margin: auto">
+          <select class="select2 form-control" id="usuario_cc" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">           
+          <option value="">Seleccionar usuario</option>
+            <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
+              <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
+            <?php  } ?>              
+          </select>   
+      </div>
+      </div>
+      <input type="hidden" name="" id="cod_orden_cc">
+      <input type="hidden" name="" id="id_orden_cc">
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-danger" onClick="ccalidadOrden('Reenviado');">Reenviar</button>
+        <button type="button" class="btn btn-primary" onClick="ccalidadOrden('Aprobado');">Aceptar</button>
+      </div>
+    </div>
 
-<!--FIN MODAL CONFIRMAR RECIBIDO-->
+  </div>
+</div><!-- FIN MODAL CONTROL DE CALIDAD-->
+
+
+<!--MODAL CONTROL DE ENTREGAS-->
+<div id="modal_entregas" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="max-width: 70%">
+   <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Orden de entrega</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div class="modal-body">
+      <h5 style="font-family: Helvetica, Arial, sans-serif;font-size: 18px;text-align: center;"><b>Confirmar Entrega de <span id="n_trabajos_entregar" style="color: red"></span>&nbsp;trabajos</b></h5>
+      <div class="dropdown-divider"></div>
+      <div class="form-group col-sm-5 select2-purple" style="margin: auto">
+          <select class="select2 form-control" id="usuario_entrega" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">           
+          <option value="">Seleccionar usuario</option>
+            <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
+              <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
+            <?php  } ?>              
+          </select>   
+      </div>
+      </div>
+      <div class="modal-footer justify-content-between" >
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onClick="entregarOrdenes();">Entregado</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--FIN MODAL CONTROL DE ENTREGAS-->
 
  <script type="text/javascript" src="js/envios_lab.js"></script>
  <script type="text/javascript" src="js/consultas.js"></script>

@@ -1232,12 +1232,8 @@ function get_finaliza(){
     dataType : "json",
     success:function(data){
       for(var i in data){
-      console.log(data[i].evaluado)
       let flotante_benf = data[i].evaluado;
       let flotante_b = flotante_benf.toString();
-       console.log(flotante_b);
-       console.log(numero_orden);
-       console.log(id_paciente);
        get_det_f_ben(id_paciente,numero_orden,flotante_b);
       //GET DETALLE DE VENTA FLOTANTE POR PACIENTE      
 ////FIN DETALLE DE VENTA FLOTANTE POR PACIENTE
@@ -1261,8 +1257,7 @@ function get_det_f_ben(id_paciente,numero_orden){
       cache:false,
       //dataType:"json",
       success:function(data)
-      { 
-        console.log(data)      
+      {          
         $("#beneficiarios_productos_vf").html(data);
    
       }
@@ -1366,7 +1361,7 @@ function aprobar_od_planilla(){
   },     
   success:function(data){
     console.log(data);
-    $('#ordenes_desc_pendientes').DataTable().ajax.reload();
+    $('#data_orden_aprob').DataTable().ajax.reload();
   }
 })
  Swal.fire('Orden de descuento registrado!','','success');
