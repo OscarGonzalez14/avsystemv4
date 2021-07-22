@@ -1,12 +1,18 @@
 
 function init(){
-get_ordenes_retrasadas();
- get_numero_orden();
- count_states_orders();
- document.getElementById("btn_send_lab").style.display = "none";
- document.getElementById("btn_receive_lab").style.display = "none";
- document.getElementById("btn_entregar_lab").style.display = "none";
+  get_ordenes_retrasadas();
+  get_numero_orden();
+  count_states_orders();
 }
+$(document).ready(ocultar_btns);
+
+function ocultar_btns(){
+  document.getElementById("btn_send_lab").style.display = "none";
+  document.getElementById("btn_receive_lab").style.display = "none";
+  document.getElementById("btn_entregar_lab").style.display = "none";
+  document.getElementById("section_acciones").style.display = "none";
+}
+
 function get_numero_orden(){
  console.log('Hello World')
   $.ajax({
@@ -870,6 +876,8 @@ function ccalidadOrden(accion){
 }
 
 function detOrdenes(id_orden,cod_orden){
+  document.getElementById("btn_new_order").style.display = "none";
+  document.getElementById("section_acciones").style.display = "block";
   $("#nueva_orden_lab_dos").modal('show');
     $.ajax({
     url:"ajax/laboratorios.php?op=get_data_orden",
@@ -892,8 +900,50 @@ function detOrdenes(id_orden,cod_orden){
       
     }     
   });
+  get_actions_orders(id_orden,cod_orden);
+}
+
+var lista_acciones_orden =[];
+function get_actions_orders(id_orden,cod_orden){
+
+  lista_acciones_orden =[];
+  $.ajax({
+  url:"ajax/laboratorios.php?op=get_actions_orders",
+  method:"POST",
+  data:{id_orden:id_orden,cod_orden:cod_orden},
+  cache: false,
+  dataType:"json",
+  success:function(data){
+  console.log(data);
+
+  for(let i in data){
+    let obj ={
+     fecha:data[i].fecha,
+     tipo_accion:data[i].tipo_accion,
+     nick:data[i].nick,
+     observaciones:data[i].observaciones
+    }
+
+    lista_acciones_orden.push(obj);
+  }
+    listar_historial_orden();
+  }//fin success
+  });//fin de ajax
 
 }
 
+function listar_historial_orden(){
+    $('#det_acciones_ordenes').html('');
+    var filas = "";
+
+    for(var i=0; i<lista_acciones_orden.length; i++){
+      var filas = filas + "<tr id='fila"+i+"'><td colspan='15' style='width: 15%'>"+lista_acciones_orden[i].fecha+"</td>"+
+      "<td colspan='35' style='width: 35%'>"+lista_acciones_orden[i].tipo_accion+"</td>"+
+      "<td colspan='35' style='width: 35%'>"+lista_acciones_orden[i].observaciones+"</td>"+
+      "<td colspan='15' style='width: 15%'>"+lista_acciones_orden[i].nick+"</td>"+"</tr>";
+    }
+    
+    $('#det_acciones_ordenes').html(filas);
+}
 
  init();

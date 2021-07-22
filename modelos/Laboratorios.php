@@ -290,4 +290,16 @@ public function get_data_orden($id_orden,$cod_orden){
 
 }
 
+public function get_actions_orders($id_orden,$cod_orden){
+    $conectar=parent::conexion();
+    parent::set_names();
+    $sql="select u.nick,a.fecha,a.tipo_accion,a.observaciones from usuarios as u inner join acciones_ordenes_envios as a on a.usuario=u.id_usuario where a.cod_orden=? and a.id_orden_lab=?;";
+        $sql=$conectar->prepare($sql);
+        $sql->bindValue(1, $cod_orden);
+        $sql->bindValue(2, $id_orden);
+        $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 }////////FIN DE LA CLASE

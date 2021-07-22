@@ -42,34 +42,30 @@ require_once("header_dos.php");
       </select>
     </div>
 
-    <div style="margin-left:5px;margin-right:5px" class="form-group col-sm-2">
-        <label for="fecha_fin">Mostrar</label>
-        <div class="input-group-prepend" onClick="show_ccf();">
-          <span class="input-group-text" id="basic-addon1" style="background:#001a57;color: white">&nbsp;&nbsp;<i class="fas fa-search">&nbsp;&nbsp;</i></span>
+<div style="margin-left:5px;margin-right:5px" class="form-group col-sm-2">
+    <label for="fecha_fin">Mostrar</label>
+    <div class="input-group-prepend" onClick="show_ccf();">
+        <span class="input-group-text" id="basic-addon1" style="background:#001a57;color: white">&nbsp;&nbsp;<i class="fas fa-search">&nbsp;&nbsp;</i></span>
        </div>
     </div>
 </div><!--Fin row 1-->
 
-
-
-
-
-      <table id="data_pagos_ccf" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered">
-        <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="bg-info">
-          <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 15px">
-            <th style="text-align:center">ID</th>
-            <th style="text-align:center">Fecha</th>
-            <th style="text-align:center">Laboratorio</th>
-            <th style="text-align:center">Paciente</th>
-            <th style="text-align:center">Monto</th>
-            <th style="text-align:center">IVA</th>
-            <th style="text-align:center">Totales</th>
-          </tr>
-        </thead>
-        <tbody style="text-align:center;color: black">                                        
-        </tbody>
-      </table>  
-     </div>     
+<table id="data_pagos_ccf" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered">
+    <thead style="color:black;min-height:10px;border-radius: 2px;font-style: normal;font-size: 15px" class="bg-info">
+      <tr style="min-height:10px;border-radius: 3px;font-style: normal;font-size: 15px">
+        <th style="text-align:center">ID</th>
+        <th style="text-align:center">Fecha</th>
+        <th style="text-align:center">Laboratorio</th>
+        <th style="text-align:center">Paciente</th>
+        <th style="text-align:center">Monto</th>
+        <th style="text-align:center">IVA</th>
+        <th style="text-align:center">Totales</th>
+      </tr>
+    </thead>
+    <tbody style="text-align:center;color: black">                                        
+    </tbody>
+  </table>  
+  </div>     
          
 </div><!-- /.content-wrapper -->
 

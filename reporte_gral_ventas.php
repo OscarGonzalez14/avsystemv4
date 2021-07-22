@@ -46,11 +46,7 @@ date_default_timezone_set('America/El_Salvador'); $hoy = date("Y-m-d");;
              </ul>
            </div>
           </div>
-      </div>
-
-
-        
-        
+      </div>       
 
     </div><br>
 

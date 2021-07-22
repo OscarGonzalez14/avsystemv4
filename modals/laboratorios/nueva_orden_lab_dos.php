@@ -172,7 +172,21 @@
   </div>
 
 </div>
-<button type="button" class="btn btn-primary btn-block btn-flat" onClick="registrarEnvioLab();">CREAR ORDEN</button>
+
+<div class="card-body p-0" id="section_acciones">
+  <table  id="tabla_det_acciones" width="100%" class="table-hover table-bordered">
+    <thead style="background: #00001a;color:white;width: 100%;font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;">
+      <tr>
+        <th style="text-align:center;width: 15%" colspan="15%">Fecha</th>
+        <th style="text-align:center;width: 35%" colspan="35%">Accion
+        <th style="text-align:center;width: 35%" colspan="35%">Observaciones
+        <th style="text-align:center;width: 15%" colspan="15%">Usuario</th>
+      </tr>
+    </thead>
+    <tbody id="det_acciones_ordenes" style="width: 100%;;font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;"></tbody>        
+   </table>
+</div>
+<button type="button" id="btn_new_order" class="btn btn-primary btn-block btn-flat" onClick="registrarEnvioLab();">CREAR ORDEN</button>
 </div><!--Fin Card-->
 </div>
   </div><!-- /.card-body -->  

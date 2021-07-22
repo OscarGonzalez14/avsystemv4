@@ -478,6 +478,37 @@ case 'listar_ordenes_entregadas':
     }
   break;
 
+  case 'get_actions_orders':
+    
+    $datos = $laboratorios->get_actions_orders($_POST["id_orden"],$_POST["cod_orden"]);
+      if(is_array($datos)==true and count($datos)>0){
+      $data= Array();
+
+      foreach ($datos as $value){
+        $accion = $value["tipo_accion"];
+
+        if ($accion=="Envio"){
+           $tipo_accion = "Enviado";
+        }elseif($accion=="Reenvio"){
+          $tipo_accion = "Reeviado";
+        }elseif($accion=="Entregar"){
+          $tipo_accion = "Entregado";
+        }elseif($accion=="Aprobado"){
+          $tipo_accion = "Aprobado";
+        }elseif($accion=="Recibir"){
+          $tipo_accion = "Recibido";
+        }
+
+        $output["fecha"] = $value["fecha"];
+        $output["tipo_accion"] = ucwords(strtolower($tipo_accion));
+        $output["nick"] = ucfirst(strtolower($value["nick"]));
+        $output["observaciones"] = ucwords(strtolower($value["observaciones"]));
+        $data[] = $output;
+       }
+     }
+  echo json_encode($data);     
+  break;
+
 
 }
  ?>
