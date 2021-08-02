@@ -52,8 +52,8 @@ if(isset($_SESSION["usuario"])){
                 <td  style="text-align:center;">Fecha creación</td>
                 <td  style="text-align:center;">Estado</td>
                 <td style="text-align:center;">Ver detalles</td>
-                <td style="text-align:center;">Imprimir</td>
-                <td style="text-align:center;">Eliminar</td>
+                <td style="text-align:center;">Orden</td>
+                <td style="text-align:center;">Pagaré</td>
               </tr>
             </thead>
             <tbody style="text-align:center;color: black;font-family: Helvetica, Arial, sans-serif;font-size: 12px;text-align: center">                                        
