@@ -1169,7 +1169,7 @@ function get_finaliza(){
     cache : false,
     dataType : "json",
     success:function(data){
-      //console.log(data);
+      console.log(data);
 
     for(var i in data){
      //var total = parseInt(total) + parseInt(data[i].precio_final);
@@ -1231,6 +1231,7 @@ function get_finaliza(){
     cache : false,
     dataType : "json",
     success:function(data){
+      console.log(data)
       for(var i in data){
       let flotante_benf = data[i].evaluado;
       let flotante_b = flotante_benf.toString();
@@ -1257,7 +1258,8 @@ function get_det_f_ben(id_paciente,numero_orden){
       cache:false,
       //dataType:"json",
       success:function(data)
-      {          
+      { 
+
         $("#beneficiarios_productos_vf").html(data);
    
       }
@@ -1265,13 +1267,12 @@ function get_det_f_ben(id_paciente,numero_orden){
 
 }
 
-
 function listar_beneficiarios_productos(){
 
   $('#beneficiarios_productos_vf').html('');
   var filas = "";
   for(var i=0; i<det_ventas_flotantes.length; i++){
-   var filas = filas +"<tr>"+
+  var filas = filas +"<tr>"+
       "<td style='text-align:center;width: 10% !important'>"+det_ventas_flotantes[i].cantidad_venta+"</td>"+
       "<td style='text-align:center;width: 65% !important'>"+det_ventas_flotantes[i].producto+"</td>"+
       "<td style='text-align:center;width: 15% !important'>"+"$"+det_ventas_flotantes[i].precio_final+"</td>"

@@ -52,9 +52,14 @@ $alerts = new Reporteria();
                   <i class="fas fa-file-import"></i> RECIBIDOS
                 </a>
 
+                <a class="btn btn-app" onClick="get_ordenes_aprobadas();">
+                  <span class="badge bg-primary" id="alert_aprobados_ord"></span>
+                  <i class="far fa-thumbs-up"></i> APROBADOS
+                </a>
+
                 <a class="btn btn-app" onClick="get_ordenes_entregadas();">
                   <span class="badge bg-primary" id="alert_entregados_ord"></span>
-                  <i class="far fa-thumbs-up"></i> ENTREGADOS
+                  <i class="far fa-check-circle" style="color:green"></i> ENTREGADOS
                 </a>
 
                 <a class="btn btn-app" onClick="get_ordenes_retrasadas();">
@@ -78,7 +83,7 @@ $alerts = new Reporteria();
             <td style="text-align:center;width: 10%"><span id="lab">Laboratorio</span></td>
             <td style="text-align:center;width: 10%">Sucursal</td>
             <td style="text-align:center;width: 10%"><span id="col_ocho">Estado</span></td>
-            <td style="text-align:center;width: 10%">Detalles</td>
+            <td style="text-align:center;width: 10%" id="col_nueve">Detalles</td>
             <td style="text-align:center;width: 10%" id="col_diez">Acciones</td>
           </tr>
         </thead>

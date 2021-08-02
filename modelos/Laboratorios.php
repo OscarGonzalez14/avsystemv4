@@ -62,7 +62,7 @@ public function get_ordenes_creadas(){
 /////////////////////////////////  ORDENES ENVIADAS  ////////////////////
 public function get_ordenes_enviadas(){
 	$conectar = parent::conexion();
-	$sql = "select a.id_accion,a.fecha as fecha_envio,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.fecha_creacion,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='1' and a.tipo_accion='Envio';";
+	$sql = "select a.id_accion,a.fecha as fecha_envio,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.fecha_creacion,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='1' or estado = '6'and a.tipo_accion='Envio';";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -70,7 +70,16 @@ public function get_ordenes_enviadas(){
 //////////ORDENES RECIBIDAS
 public function get_ordenes_recibidas(){
 	$conectar = parent::conexion();
-	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='2' or o.estado='3' group by o.cod_orden; ";
+	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='2' group by o.cod_orden; ";
+	$sql = $conectar->prepare($sql);
+	$sql->execute();    
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+//////////ORDENES RECIBIDAS
+public function get_ordenes_aprobadas(){
+	$conectar = parent::conexion();
+	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='3' group by o.cod_orden; ";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -98,8 +107,9 @@ public function registrarOrdenEnvio(){
 	date_default_timezone_set('America/El_Salvador');$hoy = date("d-m-Y H:i:s");
 
 	foreach ($detalle_envio as $k => $v) {
-		$codigo = $v->codigo;
+		$codigo = $v->cod;
 		$paciente = $v->paciente;
+		$estado = $v->state;
 
 		$sql = "select id_orden_lab from ordenes_lab where cod_orden=? and paciente=?;";
 		$sql = $conectar->prepare($sql);
@@ -111,6 +121,12 @@ public function registrarOrdenEnvio(){
 
 		foreach ($resultado as $key => $v) {
 			$id_orden_lab = $v["id_orden_lab"];
+		}
+
+		if ($estado=="4") {
+			$val = 6;
+		}elseif($estado=="0"){
+			$val = 1;
 		}
 
 		///////////INSERTAR EN TABLA ACCIONES //////////
@@ -126,11 +142,12 @@ public function registrarOrdenEnvio(){
 		$sql2->bindValue(7,$id_orden_lab);
         $sql2->execute();
 
-        $sql3 = "update ordenes_lab set estado='1' where id_orden_lab=? and cod_orden=? and paciente=?;";
+        $sql3 = "update ordenes_lab set estado=? where id_orden_lab=? and cod_orden=? and paciente=?;";
         $sql3=$conectar->prepare($sql3);
-		$sql3->bindValue(1,$id_orden_lab);
-		$sql3->bindValue(2,$codigo);
-		$sql3->bindValue(3,$paciente);
+        $sql3->bindValue(1,$val);
+		$sql3->bindValue(2,$id_orden_lab);
+		$sql3->bindValue(3,$codigo);
+		$sql3->bindValue(4,$paciente);
 		$sql3->execute();
 
 
@@ -301,5 +318,16 @@ public function get_actions_orders($id_orden,$cod_orden){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
+public function state_order($codigo){
+	$conectar=parent::conexion();
+    parent::set_names();
+
+    $sql="select estado from ordenes_lab where cod_orden=?;";
+    $sql= $conectar->prepare($sql);
+    $sql->bindValue(1, $codigo);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+
+}
 
 }////////FIN DE LA CLASE

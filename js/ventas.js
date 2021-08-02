@@ -843,7 +843,7 @@ function guardar_oid(){
       return false;
     }else if(prima_oid == 'Si'){
       Swal.fire('Debe realizar un abono inicial obligatoriamente!','','warning');
-      document.getElementById("iprima_oid").style.display = "inline";
+     // document.getElementById("iprima_oid").style.display = "inline";
     }else if(prima_oid == 'Si' && observaciones_oid==""){
       Swal.fire('El campo observaciones debe contener una descripcion!','','warning');
       return false;
@@ -919,9 +919,11 @@ function guardar_oid(){
     document.getElementById("print_pagare").href='imprimir_pagare_pdf.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
     if(tipo_pago=="Descuento en Planilla"){
           document.getElementById("print_orden_descplanilla").href='print_oid_v.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
+          document.getElementById("iprima_oid").style.display = "inline";
     
     }else if(tipo_pago=="Cargo Automatico"){
          document.getElementById("print_orden_descplanilla").href='print_cauto.php?n_orden='+codigo+'&'+'n_venta='+numero_venta+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+sucursal_usuario;
+         document.getElementById("iprima_oid").style.display = "inline";
     }
 
     setTimeout("show_btn_print_oid();",1500);

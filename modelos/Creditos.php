@@ -574,6 +574,17 @@ public function aprobar_orden(){
        // $sql8 = "update ventas set monto";
 
     }else{
+
+    $sql7 = "select plazo from orden_credito where numero_orden=?;";
+    $sql7=$conectar->prepare($sql7);
+    $sql7->bindValue(1,$numero_orden);
+    $sql7->execute();
+    $plazo_res = $sql7->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($plazo_res as $key => $value) {
+        $plazo_orden = $value["plazo"];
+    }
+
        $tipo_venta = "Credito";
        $plazo =12;
        $cancelacion = 0;
@@ -581,7 +592,7 @@ public function aprobar_orden(){
        $sql7= $conectar->prepare($sql7);
        $sql7->bindValue(1,$tipo_venta);
        $sql7->bindValue(2,$monto_total);
-       $sql7->bindValue(3,$plazo);
+       $sql7->bindValue(3,$plazo_orden);
        $sql7->bindValue(4,$monto_total);
        $sql7->bindValue(5,$tipo_pago);
        $sql7->bindValue(6,$num_venta);
