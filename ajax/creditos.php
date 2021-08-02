@@ -472,7 +472,7 @@ switch ($_GET["op"]){
         $sub_array[] = $estado;  
         $sub_array[] = '<i class="fas fa-cog" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
         //$sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><i class="fal fa-print" style="border-radius:0px;color:blue"></i>';
-        $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-infos btn-md"><i class="glyphicon glyphicon-edit"></i> Imprimir</button></a>';
+        $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:blue"></i></button></a>';
         $sub_array[] = '<i class="fas fa-trash" style="border-radius:0px;color:red" data-toggle="modal" data-target="#detalle_ventas" onClick="detalleVentas(\''.$row["numero_orden"].'\','.$row["id_paciente"].')"></i>';
         $data[] = $sub_array;
       }
@@ -514,8 +514,8 @@ switch ($_GET["op"]){
         $sub_array[] = $row["fecha_registro"];
         $sub_array[] = $estado;  
         $sub_array[] = '<i class="fas fa-cog" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
-        $sub_array[] = '<a href="print_cauto.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-infos btn-md"><i class="glyphicon glyphicon-edit"></i> Imprimir</button></a>';
-        $sub_array[] = '<i class="fas fa-trash" style="border-radius:0px;color:red" data-toggle="modal" data-target="#detalle_ventas" onClick="detalleVentas(\''.$row["numero_orden"].'\','.$row["id_paciente"].')"></i>';
+        $sub_array[] = '<a href="print_cauto.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
+        $sub_array[] = '<a href="imprimir_pagare_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
         $data[] = $sub_array;
       }
 
@@ -820,7 +820,7 @@ if ($_POST['sucursal']=="Empresarial") {
         $sub_array[] = $row["fecha_registro"];
         $sub_array[] = $estado;  
         $sub_array[] = '<i class="fas fa-eye ocultar_btns_oid" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
-        $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button" class="btn btn-link btn-md"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
+        $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button" class="btn btn-link btn-md"><i class="fa fa-print" aria-hidden="true" style="color:blue"></i></button></a>';
         $sub_array[] = '<button type="button"  class="btn btn-md bg-light" onClick="eliminar_oid('.$row["id_orden"].',\''.$row["numero_orden"].'\','.$row["id_paciente"].')"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></button>';
         $data[] = $sub_array;
       }
@@ -852,6 +852,49 @@ if ($_POST['sucursal']=="Empresarial") {
   case "get_det_ventas_flotantes":
   $datos = $creditos->get_det_ventas_flotantes($_POST["id_paciente"],$_POST["numero_orden"]);  
   break;
+
+/************************************************************
+    *****************APROBACION CARGOS AUTOMATICOS************
+    *************************************************************/
+    case 'listar_cautos_aprob':    
+
+    if ($_POST["sucursal"]=="Empresarial") {
+      $datos=$creditos->get_cautos_aprob($_POST["sucursal_usuario"]);
+    }else{
+      $datos=$creditos->get_cautos_empresarial($_POST["sucursal"]);
+    }
+   
+    //Vamos a declarar un array
+    $data= Array();
+
+    foreach($datos as $row){
+
+      $sub_array = array();
+        if ($row['estado']==1){
+          $estado = 'Aprobado';
+        }
+
+        $sub_array = array();
+        $sub_array[] = $row["id_orden"];
+        $sub_array[] = $row["numero_orden"];
+        $sub_array[] = $row["nombres"];
+        $sub_array[] = $row["fecha_registro"];
+        $sub_array[] = $estado;  
+        $sub_array[] = '<i class="fas fa-cog" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
+        $sub_array[] = '<a href="print_cauto.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
+        $sub_array[] = '<a href="imprimir_pagare_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
+        $data[] = $sub_array;
+      }
+
+      $results = array(
+      "sEcho"=>1, //Información para el datatables
+      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+      "aaData"=>$data);
+      echo json_encode($results);
+      //echo json_encode("salida prueba: ".$sucursal_usuario);      
+    break;   
+
 
 }//Fin case
 
