@@ -93,7 +93,10 @@ function registrarEnvioLab(){
         count_states_orders();
         listar_ordenes_creadas();
        }else{
-        Swal.fire('Código ya registrado, Actualizar el navegador!','','success');
+        Swal.fire('Orden ha sido modificada!','','success');
+        $("#nueva_orden_lab_dos").modal('hide');
+        count_states_orders();
+        listar_ordenes_creadas();
        }     
       }
     });
@@ -977,7 +980,7 @@ function ccalidadOrden(accion){
 }
 
 function detOrdenes(id_orden,cod_orden){
-  document.getElementById("btn_new_order").style.display = "none";
+  document.getElementById("btn_new_order").style.display = "block";
   document.getElementById("section_acciones").style.display = "block";
   $("#nueva_orden_lab_dos").modal('show');
     $.ajax({
@@ -1001,6 +1004,7 @@ function detOrdenes(id_orden,cod_orden){
       
     }     
   });
+  $("#edit_orden").html('Guardar Cambios')
   get_actions_orders(id_orden,cod_orden);
 }
 
