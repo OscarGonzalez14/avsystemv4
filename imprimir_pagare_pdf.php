@@ -10,10 +10,10 @@ if(isset($_SESSION["usuario"])){
 require_once("modelos/Reporteria.php");
 $reporteria=new Reporteria();
   $id_paciente =$_GET["id_paciente"];
-  $n_venta =$_GET["n_venta"];
+  //$n_venta =$_GET["n_venta"];
   $n_orden =$_GET["n_orden"];
   $sucursal = $_GET["sucursal"];
-//echo $id_paciente.$n_venta.$n_orden;
+  //echo $id_paciente.$n_venta.$n_orden;
 if ($sucursal == "Metrocentro") {
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";

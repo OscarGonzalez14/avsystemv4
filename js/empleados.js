@@ -139,6 +139,7 @@ function get_comision_cat_tres(id_empleado){
       console.log(z);
     },     
     success:function(data){
+      console.log("E"+data)
       let total_ventas = data.total_ventas;
       let comision = data.comision;
       $("#ventas_uno").val("$"+total_ventas);
@@ -153,7 +154,7 @@ function get_comision_cat_tres(id_empleado){
 
 function data_comisiones_cat_uno(sucursal,year,mes){
   tabla_comisiones = $('#data_comisiones').DataTable({      
-    "aProcessing": true,//Activamos el procesamiento del datatables
+    "aProcessing": true,//Activamos el procesamiento del datatablescom_uno
     "aServerSide": true,//Paginación y filtrado realizados por el servidor
     dom: 'Bfrtip',//Definimos los elementos del control de tabla
     buttons: [   
