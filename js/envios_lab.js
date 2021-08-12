@@ -28,9 +28,11 @@ function get_numero_orden(){
   document.getElementById("section_acciones").style.display = "none";
   document.getElementById("btn_new_order").style.display = "block";
   clear_form_orden();
+
 }
 
 function clear_form_orden(){
+  
   var element = document.getElementsByClassName("clear_orden_i");
 
     for(i=0;i<element.length;i++){
