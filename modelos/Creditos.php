@@ -112,7 +112,7 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
     //////LISTAR DETALLE DE ABONOS
      public function get_detalle_abonos($id_paciente,$numero_venta){
     $conectar= parent::conexion();
-    $sql= "select a.fecha_abono,a.forma_pago,a.n_recibo,a.monto_abono,a.sucursal,u.usuario,c.monto,p.nombres,p.empresas from abonos as a inner join creditos as c on c.numero_venta=a.numero_venta inner join usuarios as u on a.id_usuario=u.id_usuario inner join pacientes as p on p.id_paciente=a.id_paciente where a.id_paciente=? and a.numero_venta=?;";
+    $sql= "select a.fecha_abono,a.forma_pago,a.n_recibo,a.monto_abono,a.sucursal,u.usuario,c.monto,p.nombres,p.empresas from abonos as a inner join creditos as c on c.numero_venta=a.numero_venta inner join usuarios as u on a.id_usuario=u.id_usuario inner join pacientes as p on p.id_paciente=a.id_paciente where a.id_paciente=?and a.numero_venta=? group by a.n_recibo order by a.id_abono DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $id_paciente);
     $sql->bindValue(2, $numero_venta);

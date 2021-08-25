@@ -66,10 +66,10 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
   for($i=0;$i<sizeof($datos_factura_paciente);$i++){
 
 ?>
-  <td colspan="30" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 65%"><strong>CLIENTE: ACOFINGES de R.L.</strong></td>
+  <td colspan="30" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 65%"><strong>EDWIN ARMANDO CLAROS NAVARRO.</strong></td>
 
     <td colspan="18" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 18%"><strong>TELEFONO:</strong></td>
-    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo "10/08/2021";?></td>
+    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo "19/08/2021";?></td>
     <?php
   }
 ?>
@@ -87,29 +87,21 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 
 <tr style="height:50px;">
   <td colspan="10" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 10px;text-align: center;margin:20px;height: 95px">
- <?php 
-    for ($i=0; $i < sizeof($datos_factura_cantidad); $i++) {
-     ?><span style="margin-left: 0px !important"><?php echo "1";?></span><br>
-     <?php } ?>     
+ 
+     <span style="margin-left: 0px !important">1</span><br>
+     <span style="margin-left: 0px !important">1</span><br>
+    
   </td>
  
   <td colspan="50" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 10px;text-align: left;margin:20px;text-transform: uppercase;
   ">
-     <?php 
-    for ($i=0; $i < sizeof($datos_factura_producto); $i++) {
-      echo "JORNADA VISUAL, SERVICIO COMPLETO DE LENTES";
-     ?><br>
-     <?php } ?>    
+   <span style="margin-left: 0px !important">ARO ANDVAS MOD. A2036 COLOR C3</span><br>
+   <span style="margin-left: 0px !important">LENTE VISIÓN SENCILLA BLANCO POLY AR GREEN</span><br>
   </td>
  
   <td colspan="10" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size:10px;text-align: center;margin:20px">
 
-    <?php 
-    for ($i=0; $i < sizeof($datos_factura_precio_u); $i++) {
-      echo "$4,445.00";
-     ?><br>
-     <?php } ?> 
-    
+     
   </td>
   <td colspan="10" style="border: 1px solid black">
       
@@ -118,25 +110,17 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
       
   </td>
   <td colspan="10" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size:10px;text-align: center;margin:20px">
-
-    <?php 
-    $subtotal=0;
-    for ($i=0; $i < sizeof($datos_factura_subtotal); $i++) {
-      $subtotal=$subtotal+$datos_factura_subtotal[$i]["subtotal"];
-      echo "$4,445.00";
-     //echo "$".number_format(($datos_factura_subtotal[$i]["subtotal"]),2,".",",");?><br>
-
-     <?php } ?>
-   
+     <span style="margin-left: 0px !important">$30.00</span><br>
+     <span style="margin-left: 0px !important">$70.00</span><br>
   </td>
 </tr>
 
 <tr>
-  <td colspan="60" rowspan="2" class="stilot1" style="width: 60%;text-align: left"><b>SON</b>: <?php echo "CUATRO MIL CUATROCIENTOS CUATENTA Y CINCO DOLARES. 00/100"//echo numletras(number_format($subtotal,2,".",","),$_moneda);?></td>
+  <td colspan="60" rowspan="2" class="stilot1" style="width: 60%;text-align: left"><b>SON</b>: <?php echo "CUARENTA DOLARES. 00/100"//echo numletras(number_format($subtotal,2,".",","),$_moneda);?></td>
   <td colspan="10" class="stilot1" style="font-size:8px">SUMAS</td>
   <td colspan="10" class="stilot1"></td>
   <td colspan="10" class="stilot1"></td>
-  <td colspan="10" class="stilot1" style="font-size:8px"><?php echo "$4,445.00";//echo "$".number_format($subtotal,2,".",","); ?></td>
+  <td colspan="10" class="stilot1" style="font-size:8px"><?php echo "$60.00";//echo "$".number_format($subtotal,2,".",","); ?></td>
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px">VENTA EXENTA</td>
@@ -178,7 +162,7 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px"><strong>TOTAL</strong></td>
-  <td colspan="20" class="stilot1"><strong><?php echo "$4,445.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
+  <td colspan="20" class="stilot1"><strong><?php echo "$60.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
 </tr>
 </table>
 <?php
@@ -200,10 +184,10 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
   for($i=0;$i<sizeof($datos_factura_paciente);$i++){
 
 ?>
-  <td colspan="30" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 65%"><strong>CLIENTE: ACOFINGES de R.L.</strong></td>
+  <td colspan="30" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 65%"><strong>EDWIN ARMANDO CLAROS NAVARRO.</strong></td>
 
     <td colspan="18" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 18%"><strong>TELEFONO:</strong></td>
-    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo "10/08/2021";?></td>
+    <td colspan="17" style="color:black;font-size:9px;border: 1px solid white;font-family: Helvetica, Arial, sans-serif;width: 17%"><strong>FECHA:</strong> <?php echo "19/08/2021";?></td>
     <?php
   }
 ?>
@@ -221,29 +205,21 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 
 <tr style="height:50px;">
   <td colspan="10" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 10px;text-align: center;margin:20px;height: 95px">
- <?php 
-    for ($i=0; $i < sizeof($datos_factura_cantidad); $i++) {
-     ?><span style="margin-left: 0px !important"><?php echo "1";?></span><br>
-     <?php } ?>     
+ 
+     <span style="margin-left: 0px !important">1</span><br>
+     <span style="margin-left: 0px !important">1</span><br>
+    
   </td>
  
   <td colspan="50" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 10px;text-align: left;margin:20px;text-transform: uppercase;
   ">
-     <?php 
-    for ($i=0; $i < sizeof($datos_factura_producto); $i++) {
-      echo "JORNADA VISUAL, SERVICIO COMPLETO DE LENTES";
-     ?><br>
-     <?php } ?>    
+   <span style="margin-left: 0px !important">ARO ANDVAS MOD. A2036 COLOR C3</span><br>
+   <span style="margin-left: 0px !important">LENTE VISIÓN SENCILLA BLANCO POLY AR GREEN</span><br>
   </td>
  
   <td colspan="10" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size:10px;text-align: center;margin:20px">
 
-    <?php 
-    for ($i=0; $i < sizeof($datos_factura_precio_u); $i++) {
-      echo "$4,445.00";
-     ?><br>
-     <?php } ?> 
-    
+     
   </td>
   <td colspan="10" style="border: 1px solid black">
       
@@ -252,25 +228,17 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
       
   </td>
   <td colspan="10" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size:10px;text-align: center;margin:20px">
-
-    <?php 
-    $subtotal=0;
-    for ($i=0; $i < sizeof($datos_factura_subtotal); $i++) {
-      $subtotal=$subtotal+$datos_factura_subtotal[$i]["subtotal"];
-      echo "$4,445.00";
-     //echo "$".number_format(($datos_factura_subtotal[$i]["subtotal"]),2,".",",");?><br>
-
-     <?php } ?>
-   
+     <span style="margin-left: 0px !important">$30.00</span><br>
+     <span style="margin-left: 0px !important">$70.00</span><br>
   </td>
 </tr>
 
 <tr>
-  <td colspan="60" rowspan="2" class="stilot1" style="width: 60%;text-align: left"><b>SON</b>: <?php echo "CUATRO MIL CUATROCIENTOS CUATENTA Y CINCO DOLARES. 00/100"//echo numletras(number_format($subtotal,2,".",","),$_moneda);?></td>
+  <td colspan="60" rowspan="2" class="stilot1" style="width: 60%;text-align: left"><b>SON</b>: <?php echo "CUARENTA DOLARES. 00/100"//echo numletras(number_format($subtotal,2,".",","),$_moneda);?></td>
   <td colspan="10" class="stilot1" style="font-size:8px">SUMAS</td>
   <td colspan="10" class="stilot1"></td>
   <td colspan="10" class="stilot1"></td>
-  <td colspan="10" class="stilot1" style="font-size:8px"><?php echo "$4,445.00";//echo "$".number_format($subtotal,2,".",","); ?></td>
+  <td colspan="10" class="stilot1" style="font-size:8px"><?php echo "$60.00";//echo "$".number_format($subtotal,2,".",","); ?></td>
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px">VENTA EXENTA</td>
@@ -312,7 +280,7 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 </tr>
 <tr>
   <td colspan="20" class="stilot1" style="font-size:8px"><strong>TOTAL</strong></td>
-  <td colspan="20" class="stilot1"><strong><?php echo "$4,445.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
+  <td colspan="20" class="stilot1"><strong><?php echo "$60.00"; //echo "$".number_format($subtotal,2,".",",");?></strong></td>
 </tr>
 </table>
 <?php

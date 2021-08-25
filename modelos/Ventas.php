@@ -50,7 +50,6 @@ public function buscar_servicios_ventas($id_producto){
 
 }
 
-
 public function get_numero_venta($sucursal_correlativo){
   $conectar= parent::conexion();
   $sql= "select numero_venta from correlativo_ventas where sucursal=? order by id_correlativo DESC limit 1;";

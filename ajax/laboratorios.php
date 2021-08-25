@@ -33,8 +33,9 @@ switch ($_GET["op"]){
     $mensaje = "ok";
   }else{
     $laboratorios->editarEnvioLab($_POST["cod_orden"],$_POST["paciente"],$_POST["empresa"],$_POST["laboratorio"],$_POST["lente"],$_POST["modelo_aro"],$_POST["marca_aro"],$_POST["color_aro"],$_POST["diseno_aro"],$_POST["usuario"],$_POST["sucursal"],$_POST["prioridad"],$_POST["observaciones"]);
-    $messages[]="editado";
+    $mensaje="editado";
     }
+
     echo json_encode($mensaje);
     break;
 
