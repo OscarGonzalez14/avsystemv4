@@ -175,7 +175,8 @@ switch ($_GET["op"]) {
         $sub_array[] = $row["nombres"];
         $sub_array[] = $row["servicio_para"];
         $sub_array[] = '<button type="button"  class="btn btn-md bg-light" onClick="editar_recibo('.$row["id_recibo"].',\''.$row["numero_recibo"].'\',\''.$row["numero_venta"].'\','.$row["nombres"].')"><i class="fa fa-edit" aria-hidden="true" style="color:green"></i></button>';
-        $sub_array[] = '<a href="imprimir_recibo_pdf.php?n_recibo='.$row["numero_recibo"].'&'."nombres=".$row["nombres"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button" class="btn btn-link btn-md imprimir_recibo"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
+
+        $sub_array[] = '<a href="imprimir_recibo_pdf.php?n_venta='.$row["numero_venta"].'&'."n_recibo=".$row["numero_recibo"].'&'."sucursal=".$row["sucursal"].'&'."id_paciente=".$row["id_paciente"].'" method="POST" target="_blank"><button type="button" class="btn btn-link btn-md imprimir_recibo"><i class="fa fa-print" aria-hidden="true" style="color:green"></i></button></a>';
         $data[] = $sub_array;
       }
 

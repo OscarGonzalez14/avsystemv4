@@ -131,7 +131,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <tr style="font-size:12px" class="even_row">
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><?php echo $datos_recibo[$i]["recibi_de"];?></td>
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><span class=""><?php echo $datos_recibo[$i]["servicio_para"];?></span></td>
-    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s"); echo $hoy; ?></span></td>   
+    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php echo $datos_recibo[$i]["fecha"]?></span></td>   
 
 </tr>
 </table>
@@ -308,7 +308,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <tr style="font-size:12px" class="even_row">
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><?php echo $datos_recibo[$i]["recibi_de"];?></td>
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><span class=""><?php echo $datos_recibo[$i]["servicio_para"];?></span></td>
-    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s"); echo $hoy; ?></span></td>   
+    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php echo $datos_recibo[$i]["fecha"]?></span></td>   
 
 </tr>
 </table>
