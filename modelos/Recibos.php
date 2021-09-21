@@ -295,7 +295,6 @@ public function saldo_venta($n_venta,$id_paciente){
 public function get_recibos_emitidos($sucursal){
     $conectar=parent::conexion();
     parent::set_names();
-
     $sql="select r.id_recibo,r.sucursal,r.numero_recibo,r.numero_venta,p.id_paciente,p.nombres,r.servicio_para from recibos as r inner join pacientes as p on p.id_paciente = r.id_paciente where r.sucursal=? order by r.id_recibo DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $sucursal);
