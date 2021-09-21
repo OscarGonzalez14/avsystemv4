@@ -28,9 +28,11 @@ function get_numero_orden(){
   document.getElementById("section_acciones").style.display = "none";
   document.getElementById("btn_new_order").style.display = "block";
   clear_form_orden();
+
 }
 
 function clear_form_orden(){
+  
   var element = document.getElementsByClassName("clear_orden_i");
 
     for(i=0;i<element.length;i++){
@@ -93,7 +95,10 @@ function registrarEnvioLab(){
         count_states_orders();
         listar_ordenes_creadas();
        }else{
-        Swal.fire('Código ya registrado, Actualizar el navegador!','','success');
+        Swal.fire('Orden ha sido modificada!','','success');
+        $("#nueva_orden_lab_dos").modal('hide');
+        count_states_orders();
+        listar_ordenes_creadas();
        }     
       }
     });
@@ -659,6 +664,7 @@ $(document).on('click', '.envio_orden_labs', function(){
     let indice = items_envios_ord.findIndex((objeto, indice, items_envios_ord) =>{
       return objeto.cod == codigo
     });
+
     items_envios_ord.splice(indice, 1)
 
   }
@@ -697,7 +703,6 @@ $(document).on('click', '.receive_ordenes_lab', function(){
 
 var item_entregar_ordenes = [];
 $(document).on('click', '.entregar_ordenes_lab', function(){
-
   let codigo = $(this).attr("value");
   let paciente = $(this).attr("name");
   let id_item = $(this).attr("id");
@@ -977,7 +982,7 @@ function ccalidadOrden(accion){
 }
 
 function detOrdenes(id_orden,cod_orden){
-  document.getElementById("btn_new_order").style.display = "none";
+  document.getElementById("btn_new_order").style.display = "block";
   document.getElementById("section_acciones").style.display = "block";
   $("#nueva_orden_lab_dos").modal('show');
     $.ajax({
@@ -1001,10 +1006,12 @@ function detOrdenes(id_orden,cod_orden){
       
     }     
   });
+  $("#edit_orden").html('Guardar Cambios')
   get_actions_orders(id_orden,cod_orden);
 }
 
 var lista_acciones_orden =[];
+
 function get_actions_orders(id_orden,cod_orden){
 
   lista_acciones_orden =[];

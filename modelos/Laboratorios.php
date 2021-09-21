@@ -14,7 +14,7 @@ public function get_correlativo_orden($fecha){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
   }
 
-public function valida_existe_orden($cod_orden){
+public function valida_existencia_orden($cod_orden){
   	$conectar = parent::conexion();
 
   	$sql = "select*from ordenes_lab where cod_orden=?;";
@@ -50,6 +50,31 @@ public function registrarEnvioLab($cod_orden,$paciente,$empresa,$laboratorio,$le
     $sql->execute();
 
   }
+
+public function editarEnvioLab($cod_orden,$paciente,$empresa,$laboratorio,$lente,$modelo_aro,$marca_aro,$color_aro,$diseno_aro,$usuario,$sucursal,$prioridad,$observaciones){
+
+  	$conectar = parent::conexion();
+  	$estado = 0;
+
+  	$edit_envio= "update ordenes_lab set paciente = ?, empresa = ?, laboratorio = ?, lente = ?, modelo_aro = ?, marca_aro = ?, color_aro = ?, diseno_aro = ?, usuario = ?, sucursal = ?, prioridad = ?,observaciones = ? where cod_orden = ?;";
+
+  	$edit_envio = $conectar->prepare($edit_envio);
+    $edit_envio->bindValue(1,$paciente);
+    $edit_envio->bindValue(2,$empresa);
+    $edit_envio->bindValue(3,$laboratorio);
+    $edit_envio->bindValue(4,$lente);
+    $edit_envio->bindValue(5,$modelo_aro);
+    $edit_envio->bindValue(6,$marca_aro);
+    $edit_envio->bindValue(7,$color_aro);
+    $edit_envio->bindValue(8,$diseno_aro);
+    $edit_envio->bindValue(9,$usuario);
+    $edit_envio->bindValue(10,$sucursal);
+    $edit_envio->bindValue(11,$prioridad);
+    $edit_envio->bindValue(12,$observaciones);
+    $edit_envio->bindValue(13,$cod_orden);
+    $edit_envio->execute();
+
+  }   
 
 public function get_ordenes_creadas(){
 	$conectar = parent::conexion();

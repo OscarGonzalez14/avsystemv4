@@ -20,9 +20,9 @@ switch($_GET["op"]){
  		$sub_array[] = $row["id_consulta"];		
 		$sub_array[] = $row["nombres"];
 		$sub_array[] = $row["p_evaluado"];
-        $sub_array[] = $row["empresas"];
-        $sub_array[] = $row["fecha_consulta"];
-        $sub_array[] = '<button type="button"  class="btn btn-outline-secondary btn-xs asigna_datos_orden" onClick="agregaConsultaOrden('.$row["id_paciente"].','.$row["id_consulta"].',\''.$row["p_evaluado"].'\');"><i class="fas fa-plus-circle" style="color: green"></i> Seleccionar</button>';                                 
+    $sub_array[] = $row["empresas"];
+    $sub_array[] = $row["fecha_consulta"];
+    $sub_array[] = '<button type="button"  class="btn btn-outline-secondary btn-xs asigna_datos_orden" onClick="agregaConsultaOrden('.$row["id_paciente"].','.$row["id_consulta"].',\''.$row["p_evaluado"].'\');"><i class="fas fa-plus-circle" style="color: green"></i> Seleccionar</button>';                                 
 		$data[] = $sub_array;
 	}
         $results = array(

@@ -77,7 +77,7 @@ function agregarDetalleVenta(id_producto,id_ingreso){
   success:function(data){
     console.log(data);
 
-    var obj = {
+    var obj = { 
       cantidad : 1,
       codProd  : id_producto,
       id_ingreso   : id_ingreso,
@@ -92,7 +92,7 @@ function agregarDetalleVenta(id_producto,id_ingreso){
     };//Fin objeto
     detalles.push(obj);
     listarDetallesVentas();
-   $('#listar_aros_ventas').modal("hide");
+    $('#listar_aros_ventas').modal("hide");
     console.log(detalles);
     }//fin success
   });//fin de ajax
@@ -256,30 +256,29 @@ function setCantidad(event, obj, idx){
     recalcular(idx);
 }
 
-function recalcular(idx){
-
-    console.log(detalles[idx].cantidad);
-    console.log((detalles[idx].cantidad * detalles[idx].precio_venta));
-    var subtotal =detalles[idx].subtotal = detalles[idx].cantidad * detalles[idx].precio_venta;
-    console.log(subtotal.toFixed(2));
-    subtotal = detalles[idx].subtotal = (detalles[idx].subtotal - detalles[idx].descuento);
+function recalcular(idx,desc){
+    let importe = detalles[idx].cantidad * detalles[idx].precio_venta;
+    let descuento = detalles[idx].descuento;
+    detalles[idx].subtotal = parseFloat(importe)-parseFloat(descuento);
+    let subtotal = parseFloat(detalles[idx].subtotal);
+    
     subtotalFinal = subtotal.toFixed(2);
     $('#subtotal'+idx).html(subtotalFinal);
-  calcularTotales();
+    calcularTotales();
   }
 
 function setDescuento(event, obj, idx){
     event.preventDefault();
-    var desc = document.getElementById("descuento"+idx).value;
-    var desc_n = parseInt(desc);
-     if(desc_n>200){
-      Swal.fire('Error!, Ha excedido el limite de descuento autorizado','','error')
-      document.getElementById("descuento"+idx).value="";
-      document.getElementById("descuento"+idx).style.border='solid 1px red';
-     }else if(desc_n<=200){
-    detalles[idx].descuento = parseFloat(obj.value);
-    document.getElementById("descuento"+idx).style.border='solid 1px green';
-    recalcular(idx);
+    let desc = document.getElementById("descuento"+idx).value;
+    let desc_n = parseInt(desc);
+    if(desc_n>200){
+        Swal.fire('Error!, Ha excedido el limite de descuento autorizado','','error')
+        document.getElementById("descuento"+idx).value="";
+        document.getElementById("descuento"+idx).style.border='solid 1px red';
+    }else if(desc_n<=200){
+        detalles[idx].descuento = desc_n;
+        document.getElementById("descuento"+idx).style.border='solid 1px green';
+      recalcular(idx);
   }
 }
 
@@ -697,10 +696,13 @@ function buscar_existe_oid(){
     })
       }
     }
-})     
+}) 
+    
 }
 
+
 function data_cargo_form(){
+
     $("#oid").modal("show");
     let id_paciente = $("#id_paciente").val();    
     let tipo_pago = $("#tipo_pago").val();
@@ -726,6 +728,7 @@ function data_cargo_form(){
     }
     })
 }
+
 
 function get_plazo_orden(n_orden_add,id_paciente){    
   ///////////GET PLAZO ACTUAL DE ORDEN CREDITO //////

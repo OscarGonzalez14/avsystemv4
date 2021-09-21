@@ -186,7 +186,7 @@
     <tbody id="det_acciones_ordenes" style="width: 100%;;font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;"></tbody>        
    </table>
 </div>
-<button type="button" id="btn_new_order" class="btn btn-primary btn-block btn-flat" onClick="registrarEnvioLab();">CREAR ORDEN</button>
+<button type="button" id="btn_new_order" class="btn btn-primary btn-block btn-flat" onClick="registrarEnvioLab();"><span id="edit_orden">CREAR ORDEN</span></button>
 </div><!--Fin Card-->
 </div>
   </div><!-- /.card-body -->  
