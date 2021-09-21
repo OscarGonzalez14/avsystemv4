@@ -49,7 +49,7 @@ function listar_creditos_sucursal(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "iDisplayLength": 10,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -572,6 +572,7 @@ function registrar_abono(){
     n_recibo+'&'+'n_venta='+n_venta_recibo_ini+'&'+'id_paciente='+id_paciente+'&'+'sucursal='+suc;
 
   });
+
   /////////////////LISTAR DETALLE DE ABONOS
   function verDetAbonos(id_paciente,numero_venta){
     $("#detalle_abonos").modal("show");
@@ -589,7 +590,7 @@ function registrar_abono(){
           //dataType : "json",
           data:{id_paciente:id_paciente,numero_venta:numero_venta},
           error: function(e){
-            console.log(e.responseText);
+          console.log(e.responseText);
           }
         },
         "bDestroy": true,

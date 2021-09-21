@@ -389,7 +389,7 @@ public function agrega_detalle_prima($a_anteriores,$n_recibo,$n_venta_recibo_ini
 $conectar=parent::conexion();
 
   date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
-
+  $obs = "Abono en concepto de prima/adelanto de credito";
   $sql="insert into recibos values(null,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
   $sql=$conectar->prepare($sql);
   $sql->bindValue(1,$n_recibo);
@@ -413,11 +413,11 @@ $conectar=parent::conexion();
   $sql->bindValue(19,$lente_rec_ini);
   $sql->bindValue(20,$ar_rec_ini);
   $sql->bindValue(21,$photo_rec_ini);
-  $sql->bindValue(22,$observaciones_rec_ini);
+  $sql->bindValue(22,$obs);
   $sql->bindValue(23,$pr_abono);
   $sql->bindValue(24,$servicio_rec_ini);  
   $sql->execute();
-
+  $obs_prima='(prima/adelanto)';
   ///////////////REGISTRA ABONOS
   $sql2="insert into abonos values(null,?,?,?,?,?,?,?,?);";
   $sql2=$conectar->prepare($sql2);
@@ -428,7 +428,7 @@ $conectar=parent::conexion();
   $sql2->bindValue(5,$id_usuario);
   $sql2->bindValue(6,$n_recibo);
   $sql2->bindValue(7,$n_venta_recibo_ini);
-  $sql2->bindValue(8,$sucursal);
+  $sql2->bindValue(8,$sucursal.$obs_prima);
   $sql2->execute();  
   
   $tipo_ingreso = "Recuperado";
@@ -460,11 +460,14 @@ $conectar=parent::conexion();
   $sql17->bindValue(19,$tipo_ingreso);
   $sql17->execute();
 
-  $sql8 ="update orden_credito set monto=? where id_paciente=? and numero_orden=?";
+  $obs_orden = "Paciente realizó abono de: $".number_format($numero,2,".",",")." en concepto de prima/adelanto";
+
+  $sql8 ="update orden_credito set monto=?,observaciones=? where id_paciente=? and numero_orden=?";
   $sql8 = $conectar->prepare($sql8);
   $sql8->bindValue(1,$saldo);
-  $sql8->bindValue(2,$id_paciente);
-  $sql8->bindValue(3,$numero_orden);
+  $sql8->bindValue(2,$obs_orden);
+  $sql8->bindValue(3,$id_paciente);
+  $sql8->bindValue(4,$numero_orden);
   $sql8->execute();
 
   $sql10 ="update ventas_flotantes set monto_total=? where id_paciente=? and numero_orden=?";

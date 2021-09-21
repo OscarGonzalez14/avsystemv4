@@ -22,11 +22,10 @@
     <div class="modal-content">
      <div class="modal-header bg-secondary" id="head_det_abonos" style="justify-content:space-between">
        <span><i class="fas fa-plus-square"></i> DETALLE DE ABONOS</span>
-        <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+       <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
      </div>
 
           <div class="card-body p-0" style="margin:7px">
-
             <table class="table table-bordered table-sm">
               <thead style="text-align: center" class="bg-info">
                 <tr>
@@ -46,8 +45,8 @@
               </tbody>
             </table><br>
 
-            <table id="lista_det_abonos" width="100%" class ="table-hover">
-              <thead style="background:#034f84;color:white;text-align: center;">
+            <table id="lista_det_abonos" width="100%" class ="table-hover table-bordered">
+              <thead style="background:#034f84;color:white;text-align: center;font-size: 14px;font-family: Helvetica, Arial, sans-serif;">
                 <tr>
                 <th>Fecha Abono</th>
                 <th>Paciente</th>
@@ -58,7 +57,7 @@
                 <th>Monto</th> 
                 </tr>
               </thead>
-              <tbody style="text-align:center">                                  
+              <tbody style="text-align:center;font-size: 12px;font-family: Helvetica, Arial, sans-serif;">                                  
               </tbody>
             </table>
           </div>

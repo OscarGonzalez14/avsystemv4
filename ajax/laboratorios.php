@@ -73,7 +73,7 @@ switch ($_GET["op"]){
         $sub_array[] = '<span class="right badge badge-'.$badge.'"><i class=" fas '.$icon.'" style="color:'.$badge.'"></i><span> '.$estado.'</span>';
         $sub_array[] = '<button type="button" class="btn btn-md btn-outline-secondary btn-sm" onClick="detOrdenes('.$row["id_orden_lab"].',\''.$row["cod_orden"].'\');"><i class="fas fa-eye" aria-hidden="true" style="color:blue"></i></button>';
         $sub_array[] = '<button type="button" class="btn btn-md btn-outline-secondary btn-sm"><i class="fas fa-trash" aria-hidden="true" style="color:red"></i></button>';
-       // $sub_array[] = '<button type="button" class="btn btn-md btn-outline-secondary btn-sm"><i class="fas fa-trash" aria-hidden="true" style="color:red"></i></button>';        
+       
         $data[] = $sub_array;
         $i++;
       }

@@ -664,6 +664,7 @@ $(document).on('click', '.envio_orden_labs', function(){
     let indice = items_envios_ord.findIndex((objeto, indice, items_envios_ord) =>{
       return objeto.cod == codigo
     });
+
     items_envios_ord.splice(indice, 1)
 
   }
@@ -702,7 +703,6 @@ $(document).on('click', '.receive_ordenes_lab', function(){
 
 var item_entregar_ordenes = [];
 $(document).on('click', '.entregar_ordenes_lab', function(){
-
   let codigo = $(this).attr("value");
   let paciente = $(this).attr("name");
   let id_item = $(this).attr("id");
@@ -1011,6 +1011,7 @@ function detOrdenes(id_orden,cod_orden){
 }
 
 var lista_acciones_orden =[];
+
 function get_actions_orders(id_orden,cod_orden){
 
   lista_acciones_orden =[];
