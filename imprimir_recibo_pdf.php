@@ -21,16 +21,22 @@ $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],
 
 
 if ($sucursal == "Metrocentro") {
+  $giro = "OTROS SERVICIO RELACIONADOS CON LA SALUD";
+  $encabezado = "OPTICA AV PLUS S.A de C.V.";
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";
   $wha = "7469-2542";
   $correo = "metrocentro@opticaavplussv.com";
 }elseif ($sucursal == "San Miguel") {
+  $giro = "Venta al por mayor de artículos de óptica";
+  $encabezado = "OPTICA AV PLUS";
   $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
   $telefono = "2661 7549";
   $wha = "7946-0464";
   $correo = "opticaavplussanmiguel@gmail.com";
 }elseif ($sucursal == "Santa Ana"){
+  $giro = "OTROS SERVICIO RELACIONADOS CON LA SALUD";
+    $encabezado = "OPTICA AV PLUS S.A de C.V.";
     $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
     $telefono = "2445 3150";
     $wha = "-";
@@ -85,11 +91,11 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado;?></strong></td>
   </tr>
 
   <tr>
-    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: </strong>OTROS SERVICIO RELACIONADOS CON LA SALUD</td>
+    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: <?php echo $giro; ?> </strong></td>
   </tr>
   <tr>
     <td style="text-align:center; font-size:11px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
@@ -262,11 +268,11 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado;?></strong></td>
   </tr>
 
   <tr>
-    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: </strong>OTROS SERVICIO RELACIONADOS CON LA SALUD</td>
+    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: </strong> <?php echo $giro; ?></td>
   </tr>
   <tr>
     <td style="text-align:center; font-size:11px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
