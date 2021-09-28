@@ -250,7 +250,7 @@ case 'listar_ordenes_retrasadas':
 
         $sub_array = array();
           $sub_array[] = $row["id_accion"];
-          $sub_array[] = $row["cod_orden"];;
+          $sub_array[] = '<input type="checkbox" class="form-check-input aprobar_ordenes_lab" value="'.$row["cod_orden"].'" name="'.$row["paciente"].'" id="env_lab'.$i.'">Aprobar';
           $sub_array[] = ucwords(strtolower($row["paciente"]));          
           $sub_array[] = $row["empresa"];
           $sub_array[] = $row["fecha_recibido"];
@@ -372,6 +372,53 @@ case 'listar_ordenes_entregadas':
       break;
 /////////////////////// FIN ORDENES ENTREGADAS ////////////
 
+///*******LISTAR ORDENES EN GENERAL ******°°°|||
+case 'listar_ordenes_general':
+ 
+  $datos = $laboratorios->get_ordenes_general();
+      $data = Array();
+      $estado = "";
+
+      foreach ($datos as $row) {
+
+        if ($row["estado"]==0) {
+          $estado="Pendiente";
+        }elseif($row["estado"]==1){
+          $estado="Enviado";
+        }elseif($row["estado"]==2){
+          $estado="Recibido";
+        }elseif($row["estado"]==3){
+          $estado="Aprobado";
+        }elseif($row["estado"]==4){
+          $estado="Rechazado";
+        }elseif($row["estado"]==5){
+          $estado="Rechazado";
+        }elseif($row["estado"]==6){
+          $estado="Reenviado";
+        }
+
+        $sub_array = array();
+        $sub_array[] = $row["id_orden_lab"];
+        $sub_array[] = $row["cod_orden"];
+        $sub_array[] = ucwords(strtolower($row["paciente"]));
+        $sub_array[] = $row["empresa"];
+        $sub_array[] = $row["fecha_creacion"];
+        $sub_array[] = $row["laboratorio"];
+        $sub_array[] = $row["sucursal"];
+        $sub_array[] = $estado;
+        $sub_array[] = '<button type="button" class="btn btn-md btn-outline-secondary btn-sm" onClick="detOrdenes('.$row["id_orden_lab"].',\''.$row["cod_orden"].'\');"><i class="fas fa-eye" aria-hidden="true" style="color:blue"></i></button>';
+        $sub_array[] = $sub_array[] = '<button type="button"  class="btn btn-md bg-light" onClick="eliminar_orden_lab('.$row["id_orden_lab"].')"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></button>';    
+        $data[] = $sub_array;
+      }
+
+      $results = array(
+      "sEcho"=>1, //Información para el datatables
+      "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+      "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+      "aaData"=>$data);
+       echo json_encode($results);
+      break;
+
   case 'registrar_envio':
     $laboratorios->registrarOrdenEnvio();
     $messages[]='ok';
@@ -424,6 +471,34 @@ case 'listar_ordenes_entregadas':
    <?php
    }
   break;
+
+////APROBAR ORDEN ////°°
+  case 'aprobar_ordenes':
+    $laboratorios->aprobar_ordenes();
+    $messages[]='ok';
+    if (isset($messages)){
+     ?>
+       <?php
+         foreach ($messages as $message) {
+             echo json_encode($message);
+           }
+         ?>
+   <?php
+ }
+    //mensaje error
+      if (isset($errors)){
+
+   ?>
+
+         <?php
+           foreach ($errors as $error) {
+               echo json_encode($error);
+             }
+           ?>
+   <?php
+   }
+  break;
+
 
   ////////////////////////ACEPTAR ORDEN ////////////
   case 'aceptar_orden':
@@ -605,6 +680,11 @@ case 'listar_ordenes_entregadas':
     }
     echo json_encode($state);
     break;
+
+  case "eliminar_paciente":
+  $datos=$laboratorios->eliminar_orden_lab($_POST["id_orden"]);
+    $messages[]="ok";
+  break;
 
 
 }

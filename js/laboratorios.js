@@ -302,7 +302,7 @@ function registrarEnvio(){
  	}
 })
 }else{
-Swal.fire('LLEnar los campos obligatorios correctamente!','','error');	
+Swal.fire('Llenar los campos obligatorios correctamente!','','error');	
 }
 }
 

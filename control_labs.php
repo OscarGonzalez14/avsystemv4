@@ -67,6 +67,11 @@ $alerts = new Reporteria();
                   <i class="far fa-frown"></i> RETRASOS
                 </a>
 
+                <a class="btn btn-app" onClick="get_ordenes_general();">
+                  <span class="badge bg-danger" id=""></span>
+                  <i class="fas fa-clipboard-list"></i> GENERAL
+                </a>
+
             </div>
     <section>
     <table id="data_orders_lab" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">
@@ -91,7 +96,10 @@ $alerts = new Reporteria();
       </table>
     </section>
     <button type="button" class="btn btn-block send_orden" id="btn_send_lab" onClick="enviar_ordenes_lab();" style="color: white;background: #0f1f37"><i class="fas fa-share-square"></i> ENVIAR A LABORATORIO</button>
+
      <button type="button" class="btn btn-info btn-block" id="btn_receive_lab" onClick="recibir_ordenes_lab();"><i class="fas fa-share-square"></i> RECIBIR</button>
+
+     <button type="button" class="btn btn-info btn-block" id="btn_aprobar_lab" onClick="aprobar_ordenes_lab();"><i class="fas fa-share-square"></i>APROBAR</button>
 
      <button type="button" class="btn btn-primary btn-block" id="btn_entregar_lab" onClick="entregar_ordenes_lab();"><i class="fas fa-share-square"></i> ENTREGAR</button>
     </div>
@@ -242,6 +250,42 @@ $alerts = new Reporteria();
 
   </div>
 </div><!-- FIN MODAL CONTROL DE CALIDAD-->
+
+<!--°°°°°°°°°°INICIO MODAL DE APROBADOS°°°°°-->
+<div class="modal fade" id="confirm_aprob">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Confirmación de aprobado</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h5 style="font-family: Helvetica, Arial, sans-serif;font-size: 18px;text-align: center;"><b>Confirmar aprobación de <span id="n_trabajos_aprob" style="color: red"></span>&nbsp;trabajos</b></h5>
+              <div class="dropdown-divider"></div>
+              <div>
+              <div class="form-group col-sm-5 select2-purple" style="margin: auto">
+                <select class="select2 form-control" id="usuario_aprueba" multiple="multiple" data-placeholder="Seleccionar usuario" data-dropdown-css-class="select2-purple" style="width: 100%;height: ">              
+                <option value="">Seleccionar usuario</option>
+                  <?php for ($i=0; $i < sizeof($opto); $i++) { ?>
+                    <option value="<?php echo $opto[$i]["id_usuario"]?>"><?php echo strtoupper($opto[$i]["nick"]);?></option>
+                  <?php  } ?>              
+                </select>   
+              </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onClick="aprobarOrdenes();">APROBAR</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+<!------FIN MODAL APROBACION DE LAB-->
 
 
 <!--MODAL CONTROL DE ENTREGAS-->

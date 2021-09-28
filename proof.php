@@ -1,42 +1,18 @@
-<!DOCTYPE html>
-<html>
-	<body>
-	   <input type='text' id=“hid_id” class='hid_id' value='1' />
-	   <input type='text' id=“hid_id_dos” class='hid_id' value='2' />
-	   <button onclick="myFunction()">Click me</button>
 
-	<script>
-	function myFunction() {
-	var id = document.getElementsByClassName("hid_id");
-	  //if (id.length > 0) {
-	//	  console.log(id[0].value);
-	 // }
+<?php
+$frutas = array("manzana","pera","piña","jocote","pepino");
 
-	  for(i=0;i<id.length;i++){
-       console.log(id[i].value);
-       console.log(id[i].id );
-	  }
-	}
+/*for ($i=0; $i < sizeof($frutas) ; $i++) { 
+  echo $frutas[$i]."<br>";
+}*/
 
- // Ejercicio 172: Buscar el índice de un objeto en un arreglo a partir del valor de una propiedad.
+/*foreach ($frutas as $value) {
+  echo $value."<br>";
+}*/
 
-let daniela = {nombre: 'Daniela', email: 'daniela@mail.com', edad: 23};
-let german = {nombre: 'Germán', email: 'german@mail.com', edad: 29};
-let edward = {nombre: 'Edward', email: 'edward@mail.com', edad: 33};
+/*var_dump($frutas);
 
-let personas = [daniela, german, edward];
+print_r($frutas);*/
 
-console.log(personas);
+?>
 
-console.log();
-
-let indice = personas.findIndex((objeto, indice, personas) => {
-    return objeto.nombre == 'Daniela';
-});
-
-console.log(indice);
-
-	</script>
-
-	</body>
-</html>

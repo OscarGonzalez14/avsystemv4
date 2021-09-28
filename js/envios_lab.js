@@ -1,6 +1,6 @@
 
 function init(){
-  get_ordenes_retrasadas();
+  get_ordenes_general();
   get_numero_orden();
   count_states_orders();
 }
@@ -9,8 +9,9 @@ $(document).ready(ocultar_btns);
 function ocultar_btns(){
   document.getElementById("btn_send_lab").style.display = "none";
   document.getElementById("btn_receive_lab").style.display = "none";
+  document.getElementById("btn_aprobar_lab").style.display = "none";
   document.getElementById("btn_entregar_lab").style.display = "none";
-  document.getElementById("section_acciones").style.display = "none";
+  document.getElementById("section_acciones").style.display = "block";
 }
 
 function get_numero_orden(){
@@ -145,12 +146,14 @@ function listar_ordenes_enviadas(){
   document.getElementById("head_th").style.background = "#0275d8";
   document.getElementById("header_title").style.color = "white";
   //let tabla = 'data_orders_lab';
+  $("#acciones_orden").html("Acción");
   $("#col_cinco").html("Empresa");
   $("#col_diez").html("Tiempo transc.");
   $("#col_seis").html("Fecha Envío");
   document.getElementById("btn_send_lab").style.display = "none";
   document.getElementById("btn_entregar_lab").style.display = "none";
   document.getElementById("btn_receive_lab").style.display = "block";
+  document.getElementById("btn_aprobar_lab").style.display = "none";
   get_ordenes_enviadas_data(tabla);
 }
 
@@ -159,15 +162,44 @@ function listado_ordenes_recibidas(){
   $("#header_title").html("ORDENES RECIBIDAS");
   document.getElementById("head_th").style.background = "#007E93";
   document.getElementById("header_title").style.color = "white";
-  $("#acciones_orden").html("Cod. orden");
+  $("#acciones_orden").html("Acción");
   $("#col_cinco").html("Empresa");
   $("#col_seis").html("Fecha Recibido");
   $("#col_diez").html("Acciones");
   $("#col_nueve").html("Detalles");
   document.getElementById("btn_send_lab").style.display = "none";
   document.getElementById("btn_receive_lab").style.display = "none";
-  document.getElementById("btn_entregar_lab").style.display = "block";
+  document.getElementById("btn_aprobar_lab").style.display = "block";
+  document.getElementById("btn_entregar_lab").style.display = "none";
   get_ordenes_recibidas_data();
+}
+
+function get_ordenes_aprobadas(){
+  let estado = "Aprobados";
+  $("#header_title").html("ORDENES APROBADAS");
+  document.getElementById("head_th").style.background = "#007E93";
+  document.getElementById("header_title").style.color = "white";
+  $("#acciones_orden").html("Acción");
+  $("#col_cinco").html("Empresa");
+  $("#col_diez").html("Acciones");
+  $("#col_seis").html("Fecha Recibido");
+  document.getElementById("btn_send_lab").style.display = "none";
+  document.getElementById("btn_receive_lab").style.display = "none";
+  document.getElementById("btn_aprobar_lab").style.display = "none";
+  document.getElementById("btn_entregar_lab").style.display = "block";
+  get_ordenes_aprobadas_data();
+}
+
+function get_ordenes_entregadas(){
+  $("#header_title").html("ORDENES ENTREGADAS");
+  document.getElementById("head_th").style.background = "#00758F";
+  document.getElementById("header_title").style.color = "white";
+  $("#acciones_orden").html("# Orden");
+  $("#col_cinco").html("Empresa");
+  $("#col_seis").html("Fecha Entrega");
+  $("#col_diez").html("Acciones");
+  $("#col_nueve").html("Detalles");
+  get_ordenes_entregadas_data();
 }
 
 function get_ordenes_retrasadas(){
@@ -188,33 +220,19 @@ function get_ordenes_retrasadas(){
   count_states_orders();
 }
 
-function get_ordenes_entregadas(){
-  $("#header_title").html("ORDENES ENTREGADAS");
+function get_ordenes_general(){
+  $("#header_title").html("ORDENES GENERAL");
   document.getElementById("head_th").style.background = "#00758F";
   document.getElementById("header_title").style.color = "white";
   $("#acciones_orden").html("# Orden");
   $("#col_cinco").html("Empresa");
-  $("#col_seis").html("Fecha Entrega");
-  $("#col_diez").html("Acciones");
+  $("#col_seis").html("Fecha Creación");
+  $("#col_diez").html("Eliminar");
   $("#col_nueve").html("Detalles");
-  get_ordenes_entregadas_data();
+ get_ordenes_general_data();
 }
 
 
-function get_ordenes_aprobadas(){
-  let estado = "Recibidas";
-  $("#header_title").html("ORDENES APROBADAS");
-  document.getElementById("head_th").style.background = "#007E93";
-  document.getElementById("header_title").style.color = "white";
-  $("#acciones_orden").html("");
-  $("#col_cinco").html("Empresa");
-  $("#col_diez").html("Acciones");
-  $("#col_seis").html("Fecha Recibido");
-  document.getElementById("btn_send_lab").style.display = "none";
-  document.getElementById("btn_receive_lab").style.display = "none";
-  document.getElementById("btn_entregar_lab").style.display = "block";
-  get_ordenes_aprobadas_data();
-}
 /////////////////////LISTAR ORDENES CREADAS - PENDIENTES
 function listar_ordenes(tabla,estado,titulo){
 
@@ -634,6 +652,83 @@ function get_ordenes_aprobadas_data(){
   }).DataTable();
 }
 
+/////////////////////   LISTAR ORDENES EN GENERAL ///////////////
+function get_ordenes_general_data(){
+  tabla_envios_gral=$('#data_orders_lab').dataTable(
+  {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+            buttons: [
+                'excelHtml5'
+            ],
+    "ajax":
+        {
+          url: 'ajax/laboratorios.php?op=listar_ordenes_general',
+          type : "post",
+          dataType : "json",
+          //data:{estado:estado},
+          error: function(e){
+            console.log(e.responseText);
+          }
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 25,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+      "language": {
+
+          "sProcessing":     "Procesando...",
+
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+
+          "sZeroRecords":    "No se encontraron resultados",
+
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+
+          "sInfoPostFix":    "",
+
+          "sSearch":         "Buscar:",
+
+          "sUrl":            "",
+
+          "sInfoThousands":  ",",
+
+          "sLoadingRecords": "Cargando...",
+
+          "oPaginate": {
+
+              "sFirst":    "Primero",
+
+              "sLast":     "Último",
+
+              "sNext":     "Siguiente",
+
+              "sPrevious": "Anterior"
+
+          },
+
+          "oAria": {
+
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+          }
+
+         }//cerrando language
+
+  }).DataTable();
+}
+
 ////////////////CREATE ARRAY SEND ORDENES //////
 let items_envios_ord = [];
 
@@ -701,6 +796,30 @@ $(document).on('click', '.receive_ordenes_lab', function(){
   
 });
 
+///ARRAY ORDENES APROBADAS°°
+let items_aprob_ord = [];
+$(document).on('click', '.aprobar_ordenes_lab', function(){
+  let codigo = $(this).attr("value");
+  let paciente = $(this).attr("name");
+  let id_item = $(this).attr("id");
+
+  var checkbox = document.getElementById(id_item);
+  let check_state = checkbox.checked;
+
+  if (check_state == true) {
+        let obj = {
+         codigo : codigo,
+         paciente : paciente 
+       }
+       items_aprob_ord.push(obj);
+  }else if(check_state == false){
+  let index = items_aprob_ord.findIndex(x => x.cod==codigo)
+  console.log(index)
+  items_aprob_ord.splice(index, 1)
+  }
+  
+});
+
 var item_entregar_ordenes = [];
 $(document).on('click', '.entregar_ordenes_lab', function(){
   let codigo = $(this).attr("value");
@@ -745,6 +864,18 @@ function recibir_ordenes_lab(){
   $("#confirm-receive").modal("show");
   $("#n_trabajos_r").html(cant_trabajos_r);  
 }
+
+///REGISTRAR APROBACION DE ORDENES°°°°°
+function aprobar_ordenes_lab(){  
+  let cant_trabajos_aprobar = items_aprob_ord.length;
+  if (cant_trabajos_aprobar<1){
+    Swal.fire('Debe agregar trabajos para aprobarlos!','','error');
+    return false;
+  }
+  $("#confirm_aprob").modal("show");
+  $("#n_trabajos_aprob").html(cant_trabajos_aprobar);  
+}
+
 
 function entregar_ordenes_lab(){  
   let cant_trabajos_entregar = item_entregar_ordenes.length;
@@ -826,6 +957,46 @@ function recibirOrdenes(){
       items_received_ord = [];
       items_envios_ord = [];
 
+    }
+    }
+
+    });//////FIN AJAX
+
+}
+
+/************CONFIRMAR APROBACION DE ORDENES BTN************/
+function aprobarOrdenes(){
+  let user_aprueba = $("#usuario_aprueba").val();
+  if (user_aprueba=="") {
+    Swal.fire('Seleccionar usuario!','','error');
+    return false;
+  }
+  
+  let usuario = user_aprueba.toString(); 
+  //let observaciones = $("#observaciones_envio").val();
+  $("#confirm_aprob").modal("hide");
+  $.ajax({
+    url:"ajax/laboratorios.php?op=aprobar_ordenes",
+    method:"POST",
+    data:{'arrayDetAprobar':JSON.stringify(items_aprob_ord),'usuario':usuario},
+    cache: false,
+    dataType:"json",
+    error:function(x,y,z){
+      d_pacole.log(x);
+      console.log(y);
+      console.log(z);
+    },     
+    success:function(data){
+    console.log(data);
+
+    if (data=='ok') {
+      Swal.fire('Las ordenes han sido aprobadas!','','success');
+      $('#data_orders_lab').DataTable().ajax.reload();
+      listado_ordenes_recibidas();
+      count_states_orders();
+      items_envios_ord = [];
+      tems_received_ord = [];
+      items_aprob_ord = [];
     }
     }
 
@@ -940,7 +1111,60 @@ function count_states_orders(){
     }     
   });
 
+
 }
+
+///APROBAR ORDENES DE LABORATORIO***
+var ordenes_aprobadas = [];
+$(document).on('click', '.aprobar_ordenes', function(){
+  let cod_orden = $(this).attr("value");
+  let paciente = $(this).attr("name");
+  let checkbox = document.getElementById(cod_orden);
+  let check_state = checkbox.checked;
+
+  if (check_state) {
+    let obj = {
+      cod_orden : cod_orden,
+      paciente : paciente,
+    }
+    aprobar_ordenes.push(obj);
+  }else{
+     let indice = aprobar_ordenes.findIndex((objeto, indice, aprobar_ordenes) =>{
+      return objeto.cod_orden == cod_orden
+    });
+    aprobar_ordenes.splice(indice,1)
+  }
+  console.log(aprobar_ordenes)
+});
+
+function aprobarOrden(){
+  let numero_orden = $("#cod_orden_cc").val();
+  let paciente = $("#paciente_orden_cc").val();
+  let user = $("#usuario_cc").val();
+  let usuario = dest.toString();
+  let id_orden = $("#id_orden_cc").val();
+  $.ajax({
+    url:"../ajax/laboratorios.php?op=aprobarOrden",
+    method:"POST",
+    data:{'arrayEnvio':JSON.stringify(aprobar_ordenes),'numero_orden':numero_orden,'paciente':paciente,'user':user,'usuario':usuario,'id_orden':id_orden},
+    cache: false,
+    dataType:"json", 
+
+    success:function(data){
+      Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: 'Aprobación realizada exitosamente',
+        showConfirmButton: true,
+        timer: 2500
+      });
+      $("#confirm_aprob").modal('hide');
+      $("#data_orders_lab").DataTable().ajax.reload();
+    
+    }
+  });//fin ajax
+}
+
 
 /////////////// 
 function controlCalidad(n_orden,paciente,id_orden){ 
@@ -982,6 +1206,7 @@ function ccalidadOrden(accion){
 }
 
 function detOrdenes(id_orden,cod_orden){
+  console.log('ok');
   document.getElementById("btn_new_order").style.display = "block";
   document.getElementById("section_acciones").style.display = "block";
   $("#nueva_orden_lab_dos").modal('show');
@@ -991,6 +1216,7 @@ function detOrdenes(id_orden,cod_orden){
     data:{id_orden:id_orden,cod_orden:cod_orden},
     dataType:"json",
     success:function(data){
+      console.log(data);
     $("#paciente_orden_lab").val(data.paciente);
     $("#empresa_lab").val(data.empresa);
     $("#laboratorio_orden_lab").val(data.laboratorio);
@@ -1013,7 +1239,7 @@ function detOrdenes(id_orden,cod_orden){
 var lista_acciones_orden =[];
 
 function get_actions_orders(id_orden,cod_orden){
-
+//console.log(id_orden,cod_orden);
   lista_acciones_orden =[];
   $.ajax({
   url:"ajax/laboratorios.php?op=get_actions_orders",
@@ -1022,9 +1248,10 @@ function get_actions_orders(id_orden,cod_orden){
   cache: false,
   dataType:"json",
   success:function(data){
-  console.log(data);
+  //console.log(data);
 
   for(let i in data){
+    console.log (i);
     let obj ={
      fecha:data[i].fecha,
      tipo_accion:data[i].tipo_accion,
@@ -1041,7 +1268,7 @@ function get_actions_orders(id_orden,cod_orden){
 }
 
 function listar_historial_orden(){
-    $('#det_acciones_ordenes').html('');
+    $("#det_acciones_ordenes").html('');
     var filas = "";
 
     for(var i=0; i<lista_acciones_orden.length; i++){
@@ -1052,6 +1279,35 @@ function listar_historial_orden(){
     }
     
     $('#det_acciones_ordenes').html(filas);
+}
+
+function eliminar_orden_lab(id_orden){
+    
+  bootbox.confirm("¿Está Seguro de eliminar esta Orden de Laboratorio?", function(result){
+    if(result){
+
+  $.ajax({
+    url:"ajax/laboratorios.php?op=eliminar_orden_lab",
+    method:"POST",
+    data:{id_orden:id_orden},
+    dataType:"json",
+    success:function(data)
+    {
+      console.log(data);
+      /*if(data=="ok"){
+        setTimeout ("Swal.fire('Orden de Laboratorio Eliminada Existosamente','','success')", 100);
+      }else if(data=="existe"){
+        setTimeout ("Swal.fire('El paciente posee una consulta','','error')", 100);
+      }           //alert(data);*/
+        setTimeout ("Swal.fire('Orden de Laboratorio Eliminada Existosamente','','success')", 100);
+      get_ordenes_general_data().DataTable().ajax.reload();
+      
+    }
+  });
+
+}
+});//bootbox
+
 }
 
  init();
