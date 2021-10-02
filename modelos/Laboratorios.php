@@ -87,7 +87,7 @@ public function get_ordenes_creadas(){
 /////////////////////////////////  ORDENES ENVIADAS  ////////////////////
 public function get_ordenes_enviadas(){
 	$conectar = parent::conexion();
-	$sql = "select a.id_accion,a.fecha as fecha_envio,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.fecha_creacion,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='1' or estado = '6'and a.tipo_accion='Envio' group by o.id_orden_lab;";
+	$sql = "select a.id_accion,a.fecha as fecha_envio,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.fecha_creacion,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='1' or estado = '6'and a.tipo_accion='Envio';";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -95,7 +95,7 @@ public function get_ordenes_enviadas(){
 //////////ORDENES RECIBIDAS
 public function get_ordenes_recibidas(){
 	$conectar = parent::conexion();
-	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='2' roup by o.id_orden_lab;";
+	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='2';";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -104,7 +104,7 @@ public function get_ordenes_recibidas(){
 //////////ORDENES RECIBIDAS
 public function get_ordenes_aprobadas(){
 	$conectar = parent::conexion();
-	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='3' group by o.id_orden_lab;";
+	$sql = "select a.id_accion,a.fecha as fecha_recibido,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='3';";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -113,7 +113,7 @@ public function get_ordenes_aprobadas(){
 ////////// ORDENES ENTREGADAS ////
 public function get_ordenes_entregadas(){
 	$conectar = parent::conexion();
-	$sql = "select a.id_accion,a.fecha as fecha_entregado,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='5' and a.tipo_accion='Entregar' roup by o.id_orden_lab;";
+	$sql = "select a.id_accion,a.fecha as fecha_entregado,o.cod_orden,o.estado,o.paciente,o.empresa,o.sucursal,o.prioridad,o.laboratorio,o.id_orden_lab from acciones_ordenes_envios as a inner join ordenes_lab as o on a.id_orden_lab=o.id_orden_lab where o.estado='5' and a.tipo_accion='Entregar';";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -122,7 +122,7 @@ public function get_ordenes_entregadas(){
 ////////// ORDENES EN GENERAL ////
 public function get_ordenes_general(){
 	$conectar = parent::conexion();
-	$sql = "select estado,paciente,empresa,sucursal,laboratorio,id_orden_lab,cod_orden,fecha_creacion from ordenes_lab group by id_orden_lab;";
+	$sql = "select estado,paciente,empresa,sucursal,laboratorio,id_orden_lab,cod_orden,fecha_creacion from ordenes_lab;";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);

@@ -160,7 +160,6 @@ case 'tipo_pago';
 
 if ($_POST['id_tipo']=='Contado' or $_POST['id_tipo']=='Credito Fiscal') {
   $html="
-  <option value='Contado'>Contado</option>
   <option value='Efectivo'>Efectivo</option>
   <option value='Tarjeta de Credito'>Tarjeta de Crédito</option>      
   <option value='Cheque'>Cheque</option>";
@@ -171,13 +170,14 @@ if ($_POST['id_tipo']=='Contado' or $_POST['id_tipo']=='Credito Fiscal') {
   $html= "
   <option value=''>Selecione</option>
   <option value='Descuento en Planilla'> Descuento en Planilla</option>
-  <option value='Cargo Automatico'>Cargo Automático</option>
-  <option value='Creditos Personales'>Créditos Personales</option>
-  <option value='Tarjeta de Credito'>Tarjeta de Crédito</option>
-  <option value='Tasa cero'>Tasa cero</option>
-  <option value='Cheque'>Cheque</option>";
-  
+  <option value='Cargo Automatico'>Cargo Automático</option>";
   echo $html;
+  //ESTAS OPCIONES SE SACARON DEL STRING TIPO PAGO = 'CREDITO'
+  //<option value='Creditos Personales'>Créditos Personales</option>
+  //<option value='Tarjeta de Credito'>Tarjeta de Crédito</option>
+  //<option value='Tasa cero'>Tasa cero</option>
+  //<option value='Cheque'>Cheque</option>
+
 }else{
 
   $html= "<option value=''>Seleccione</option>

@@ -51,7 +51,7 @@ if(isset($_SESSION["usuario"])){
                 <td  style="text-align:center;">Empresa</td>
                 <td  style="text-align:center;">Fecha creación</td>
                 <td  style="text-align:center;">Estado</td>
-                <td style="text-align:center;">Ver detalles</td>
+                <td style="text-align:center;">Detalles</td>
                 <td style="text-align:center;">Orden</td>
                 <td style="text-align:center;">Pagaré</td>
               </tr>

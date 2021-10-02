@@ -1,4 +1,21 @@
 
+<?php
+$frutas = array("manzana","pera","piña","jocote","pepino");
+
+/*for ($i=0; $i < sizeof($frutas) ; $i++) { 
+  echo $frutas[$i]."<br>";
+}*/
+
+/*foreach ($frutas as $value) {
+  echo $value."<br>";
+}*/
+
+/*var_dump($frutas);
+
+print_r($frutas);*/
+
+?>
+
 <?php ob_start();
 
 use Dompdf\Dompdf;
@@ -10,44 +27,66 @@ if(isset($_SESSION["usuario"])){
 require_once("modelos/Reporteria.php");
 $reporteria=new Reporteria();
   $id_paciente =$_GET["id_paciente"];
-  //$n_venta =$_GET["n_venta"];
+ // $n_venta =$_GET["n_venta"];
   $n_orden =$_GET["n_orden"];
   $sucursal = $_GET["sucursal"];
-  //echo $id_paciente.$n_venta.$n_orden;
-if ($sucursal == "Metrocentro") {
+if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
+  $encabezado = "OPTICA AV PLUS S.A de C.V.";
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";
   $wha = "7469-2542";
+  $correo = "metrocentro@opticaavplussv.com";
   $dir2="San Salvador";
-
-}elseif ($sucursal == "San Miguel") {
-  $direccion = "3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115 ";
-  $telefono = "2661 7549";
-  $wha = "7946-0464";
+  $info="";
+}elseif ($sucursal == "San Miguel" or $sucursal == "Empresarial-San Miguel") {
+  $encabezado = "
+  OPTICA AV PLUS";
+  $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
+  $telefono = "2661-7549";
+  $wha ="7946-0464";
   $dir2="San Miguel";
-}elseif ($sucursal == "Santa Ana"){
+  $info="<b>CARMEN ARELY VASQUEZ FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
+  <b>Giro:</b> Venta al por mayor de artículos de óptica";
+  $correo = "opticaavplussanmiguel@gmail.com";
+}elseif ($sucursal == "Santa Ana" or $sucursal == "Empresarial-Santa Ana"){
+    $encabezado = "
+    OPTICA AVPLUS S.A de C.V.";
     $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
     $telefono = "2445 3150";
     $wha = "-";
+    $correo = "opticaavplussantana@gmail.com";
     $dir2="Santa Ana";
+    $info="";
 }
 //$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_venta"],$_GET["id_paciente"]);
 date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 $datos_paciente = $reporteria->get_datos_factura_paciente($id_paciente);
 $data_orden_desc = $reporteria->get_data_orden_credito($id_paciente,$n_orden);
+$suma_monto_orden=0;
+
+ $evaluados_oid = $reporteria->beneficiarios_oid($id_paciente,$n_orden);
+
+  for ($i=0; $i <sizeof($evaluados_oid) ; $i++) {
+    $monto = $evaluados_oid[$i]["monto_total"];
+    $suma_monto_orden = $suma_monto_orden+number_format($monto,2,".",",");
+  }
+ //echo $suma_monto_orden;
+
 /////////////RECORRER DATA ORDEN DE DESCUENTO
 for ($i=0; $i <sizeof($data_orden_desc) ; $i++) { 
     $monto_orden = $data_orden_desc[$i]["monto"];
     $plazo_credito = $data_orden_desc[$i]["plazo"];
-    $cuotas_creditos = $monto_orden/$plazo_credito;
+    
     $inicio_credito = $data_orden_desc[$i]["fecha_inicio"];
     $fin_credito = $data_orden_desc[$i]["fecha_finalizacion"];
-
     $ref_uno = $data_orden_desc[$i]["ref_uno"];
     $tel_ref_uno = $data_orden_desc[$i]["tel_ref_uno"];
     $ref_dos = $data_orden_desc[$i]["ref_dos"];
     $tel_ref_dos = $data_orden_desc[$i]["tel_ref_dos"];
+    $observaciones_oid = $data_orden_desc[$i]["observaciones"];
 }
+
+$cuotas_creditos = $suma_monto_orden/$plazo_credito;
 ?>
 
 <!DOCTYPE html>
@@ -101,16 +140,21 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado; ?></strong></td>
   </tr>
   <tr>
     <td  style="text-align: center;margin-top: 0px;color:#0088b6;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><b>PAGARÉ SIN PROTESTO</b></td>
   </tr>
+    <tr>
+    <td style="text-align: center;margin-top: 0px;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><?php echo $info; ?>      
+    </td>
+  </tr>
   <tr>
     <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
   </tr>
+
   <tr>
-    <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;<br></span>E-mail: metrocentro@opticaavplussv.com</td>
+    <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;</span><br><b>E-mail:</b> <?php echo $correo;?></td>
   </tr>
 
 
@@ -129,7 +173,7 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
 </tr>
 </table>
 <p style="text-align: right;font-size:11px;font-family: Helvetica, Arial, sans-serif;" align="right"><?php echo $dir2.",&nbsp;".$hoy;?></p>
-<div style="width:100%;margin-top:0px;font-size:12px;font-family: Helvetica, Arial, sans-serif;height: 885px">
+<div style="width:100%;margin-top:0px;font-size:12px;font-family: Helvetica, Arial, sans-serif;height: 835px">
 <!--INICIO GET DATA PACIENTES-->
 <?php    
     for($j=0; $j<count($datos_paciente);$j++){
@@ -138,9 +182,9 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
      ?>
 
   <p style="font-size:15px;text-align:justify;font-family: Helvetica, Arial, sans-serif;">
-  Por: <strong>$<span><?php echo number_format($monto_orden,2,".",",");?></span></strong>
+  Por: <strong>$<span><?php echo number_format($suma_monto_orden,2,".",",");?></span></strong>
 <br><br><br>
-Por este pagaré, Yo:<strong><span>&nbsp;<?php echo $nombre_pac;?></span></strong>  de <strong><span>&nbsp;<?php echo $datos_paciente[$j]["edad"];?></span></strong>   años de edad; del domicilio de:<strong><span>&nbsp;<?php echo $datos_paciente[$j]["direccion"];?> </span></strong>   Departamento de: San Salvador  con Documento Único de Identidad número: <strong><span>&nbsp;<?php echo $datos_paciente[$j]["dui"];?></span></strong>(en adelante, “el Deudor”), prometo pagar incondicionalmente a Optica AV Plus S. A. de C. V. de este  domicilio,  con número de Identificación Tributaria No. 0614 191018 101 1 (Adelante, el “Acreedor”), la suma de &nbsp;<strong>$<span><?php echo number_format($monto_orden,2,".",",");?></span></strong>&nbsp;Dolares de Estados Unidos de America, moneda de curso legal, en dinero en efectivo, en caso de retraso el día sesenta.  El Deudor cancelará la presente obligación mediante un solo pago. El pago lo hará el Deudor en cualquiera de las sucursales de Optica AV Plus.<br><br><br>
+Por este pagaré, Yo:<strong><span>&nbsp;<?php echo $nombre_pac;?></span></strong>  de <strong><span>&nbsp;<?php echo $datos_paciente[$j]["edad"];?></span></strong>   años de edad; del domicilio de:<strong><span>&nbsp;<?php echo $datos_paciente[$j]["direccion"];?> </span></strong>   Departamento de: San Salvador  con Documento Único de Identidad número: <strong><span>&nbsp;<?php echo $datos_paciente[$j]["dui"];?></span></strong>(en adelante, “el Deudor”), prometo pagar incondicionalmente a Optica AV Plus S. A. de C. V. de este  domicilio,  con número de Identificación Tributaria No. 0614 191018 101 1 (Adelante, el “Acreedor”), la suma de &nbsp;<strong>$<span><?php echo number_format($suma_monto_orden,2,".",",");?></span></strong>&nbsp;Dolares de Estados Unidos de America, moneda de curso legal, en dinero en efectivo, en caso de retraso el día sesenta.  El Deudor cancelará la presente obligación mediante un solo pago. El pago lo hará el Deudor en cualquiera de las sucursales de Optica AV Plus.<br><br><br>
 
 <strong>La suma adeudada contenida en este pagaré, devengará los siguientes intereses:</strong><br>
 a)&nbsp;<u>De 30 a 60 días posteriores al plazo de pago, el cero por ciento de interés (5%) sobre monto total.</u><br>
@@ -189,3 +233,4 @@ $dompdf->stream('document', array('Attachment'=>'0'));
 
      header("Location: index.php");
   }?>
+  
