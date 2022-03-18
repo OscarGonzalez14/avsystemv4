@@ -958,6 +958,19 @@ public function get_cautos_aprob($sucursal_usuario){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+      //////////////FUNCION PARA ELIMINAR OID SIN APROBAR
+  public function eliminar_oid_p($numero_orden,$id_paciente,$estado){
+    $conectar=parent::conexion();
+    $sql="delete vf.id_paciente,dvf.numero_orden,oc.estado from ventas_flotantes as vf inner join detalle_ventas_flotantes as dvf on vf.id_paciente=dvf.id_paciente inner join orden_credito as oc on dvf.numero_orden=oc.numero_orden where dvf.numero_orden=? and id_paciente=? and oc.estado=0";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $numero_orden);
+    $sql->bindValue(2, $id_paciente);
+    $sql->execute();
+    return $resultado=$sql->fetch(PDO::FETCH_ASSOC);
+  }
+
+
+
 
 }/////FIN CLASS
 

@@ -102,85 +102,6 @@ function listar_creditos_sucursal(){
 
        }).DataTable();
 }
-///////////////LISTAR CREDITOS DE CARGO AUTOMATICO
-/*function listar_creditos_cauto(){
-  let sucursal= $("#sucursal").val();
-  let sucursal_usuario = $("#sucursal_usuario").val();
-  tabla_creditos_cauto=$('#creditos_cauto').dataTable(
-  {
-    "aProcessing": true,//Activamos el procesamiento del datatables
-      "aServerSide": true,//Paginación y filtrado realizados por el servidor
-      dom: 'Bfrtip',//Definimos los elementos del control de tabla
-      buttons: [
-      'excelHtml5'
-      ],
-      "ajax":
-      {
-        url: 'ajax/creditos.php?op=listar_creditos_cauto',
-        type : "post",
-        dataType : "json",
-        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
-        error: function(e){
-          console.log(e.responseText);
-        }
-      },
-      "bDestroy": true,
-      "responsive": true,
-      "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
-      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
-
-      "language": {
-
-        "sProcessing":     "Procesando...",
-
-        "sLengthMenu":     "Mostrar _MENU_ registros",
-
-        "sZeroRecords":    "No se encontraron resultados",
-
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-
-        "sInfo":           "Mostrando un total de _TOTAL_ registros",
-
-        "sInfoEmpty":      "Mostrando un total de 0 registros",
-
-        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-
-        "sInfoPostFix":    "",
-
-        "sSearch":         "Buscar:",
-
-        "sUrl":            "",
-
-        "sInfoThousands":  ",",
-
-        "sLoadingRecords": "Cargando...",
-
-        "oPaginate": {
-
-          "sFirst":    "Primero",
-
-          "sLast":     "Último",
-
-          "sNext":     "Siguiente",
-
-          "sPrevious": "Anterior"
-
-        },
-
-        "oAria": {
-
-          "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-
-          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-
-        }
-
-         }//cerrando language
-
-       }).DataTable();
-}*/
-
 
 /////////////RELLENAR LA EMPRESA DE PACIENTE EMPRESARIAL
 function agregar_empresa_pac(id_empresa){      
@@ -1582,20 +1503,19 @@ function listar_oid_aprobadas(){
 
 //////Eliminar oid solo para administradores
 
-
-function eliminar_oid(id_orden, numero_orden, id_paciente){
+function eliminar_oid_p(numero_orden,id_paciente,estado){
 
   let cat_user = $("#cat_user").val();
   console.log(cat_user);
   if (cat_user=="administrador"){
 
-    bootbox.confirm("¿Está Seguro de eliminar OID aprobada?", function(result){
+    bootbox.confirm("¿Está Seguro de eliminar OID pendiente de aprobación?", function(result){
       if(result){
 
         $.ajax({
-          url:"ajax/creditos.php?op=eliminar_oid",
+          url:"ajax/creditos.php?op=eliminar_oid_p",
           method:"POST",
-          data:{id_orden:id_orden,numero_orden:numero_orden,id_paciente:id_paciente},
+          data:{numero_orden:numero_orden,id_paciente:id_paciente,estado:estado},
           dataType:"json",
           success:function(data)
           {
@@ -1604,7 +1524,7 @@ function eliminar_oid(id_orden, numero_orden, id_paciente){
               setTimeout ("Swal.fire('OID Eliminada Existosamente','','success')", 100);
               setTimeout ("explode();", 2000);
             }
-            $("#oid_aprobadas").DataTable().ajax.reload();   
+            $("#data_orden_aprob").DataTable().ajax.reload();   
           }
         });
 
