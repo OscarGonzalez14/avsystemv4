@@ -1503,7 +1503,7 @@ function listar_oid_aprobadas(){
 
 //////Eliminar oid solo para administradores
 
-function eliminar_oid_p(numero_orden,id_paciente,estado){
+function eliminar_oid_p(numero_orden){
 
   let cat_user = $("#cat_user").val();
   console.log(cat_user);
@@ -1515,26 +1515,25 @@ function eliminar_oid_p(numero_orden,id_paciente,estado){
         $.ajax({
           url:"ajax/creditos.php?op=eliminar_oid_p",
           method:"POST",
-          data:{numero_orden:numero_orden,id_paciente:id_paciente,estado:estado},
-          dataType:"json",
+          data:{numero_orden:numero_orden},
+          //dataType:"json",
           success:function(data)
           {
             console.log(data);
             if(data=="ok"){
-              setTimeout ("Swal.fire('OID Eliminada Existosamente','','success')", 100);
-              setTimeout ("explode();", 2000);
-            }
-            $("#data_orden_aprob").DataTable().ajax.reload();   
+              setTimeout ("Swal.fire('OID Eliminada Existosamente','','success')", 100);            
           }
-        });
-
+        }
+      });
       }
-});//bootbox
+      $("#data_orden_aprob").DataTable().ajax.reload(); 
+    });//bootbox
 
-  }else if (cat_user=="optometra","asesor") {
+  }else if (cat_user=="optometra","asesor"){
       setTimeout ("Swal.fire('No posse permisos para eliminar OID','','error')", 100);
     }
 }
+
 
 /////////////////////////agregar item a credito fiscal //////////////
 let array_total_ccf = [];

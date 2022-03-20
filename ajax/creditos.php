@@ -472,7 +472,8 @@ switch ($_GET["op"]){
         $sub_array[] = $estado;  
         $sub_array[] = '<i class="fas fa-cog" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
         $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:blue"></i></button></a>';
-        $sub_array[] = '<button type="button"  class="btn btn-md bg-light" onClick="eliminar_oid_p(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></button>';
+        
+        
         $data[] = $sub_array;
       }
 
@@ -834,7 +835,7 @@ if ($_POST['sucursal']=="Empresarial") {
 
     /////eliminar oid sin aprobar
     case "eliminar_oid_p":
-       $datos=$creditos->eliminar_oid_p($_POST["numero_orden"],$_POST["id_paciente"],$_POST["estado"]);
+       $datos=$creditos->eliminar_oid_p($_POST["numero_orden"]);
     break;
 
   case "get_det_ventas_flotantes":
