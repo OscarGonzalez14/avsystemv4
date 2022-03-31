@@ -20,17 +20,23 @@ $datos_factura_paciente = $reporteria->get_datos_factura_paciente($_GET["id_paci
 $datos_factura_venta    = $reporteria->get_datos_factura_venta($_GET["n_venta"],$_GET["id_paciente"]);
 
 
-if ($sucursal == "Metrocentro") {
+if ($sucursal == "Metrocentro"  or  $sucursal == "Empresarial-Metrocentro") {
+  $giro = "OTROS SERVICIO RELACIONADOS CON LA SALUD";
+  $encabezado = "OPTICA AV PLUS S.A de C.V.";
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";
   $wha = "7469-2542";
   $correo = "metrocentro@opticaavplussv.com";
-}elseif ($sucursal == "San Miguel") {
+}elseif ($sucursal == "San Miguel" or  $sucursal == "Empresarial-San Miguel") {
+  $giro = "Venta al por mayor de artículos de óptica";
+  $encabezado = "OPTICA AV PLUS";
   $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
   $telefono = "2661 7549";
-  $wha = "7946-0464";
+  $wha = "6955-3056";
   $correo = "opticaavplussanmiguel@gmail.com";
-}elseif ($sucursal == "Santa Ana"){
+}elseif ($sucursal == "Santa Ana"  or  $sucursal == "Empresarial-Santa Ana"){
+  $giro = "OTROS SERVICIO RELACIONADOS CON LA SALUD";
+    $encabezado = "OPTICA AV PLUS S.A de C.V.";
     $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
     $telefono = "2445 3150";
     $wha = "-";
@@ -85,17 +91,17 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado;?></strong></td>
   </tr>
 
   <tr>
-    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: </strong>OTROS SERVICIO RELACIONADOS CON LA SALUD</td>
+    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO:</strong> <?php echo $giro; ?> </td>
   </tr>
   <tr>
     <td style="text-align:center; font-size:11px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
   </tr>
   <tr>
-    <td style="text-align:center; font-size:11px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;<br></span>E-mail;&nbsp;<?php echo $correo;?></td>
+    <td style="text-align:center; font-size:11px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;<br></span>E-mail:&nbsp;<?php echo $correo;?></td>
   </tr>
 
 
@@ -131,7 +137,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <tr style="font-size:12px" class="even_row">
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><?php echo $datos_recibo[$i]["recibi_de"];?></td>
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><span class=""><?php echo $datos_recibo[$i]["servicio_para"];?></span></td>
-    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s"); echo $hoy; ?></span></td>   
+    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php echo $datos_recibo[$i]["fecha"]?></span></td>   
 
 </tr>
 </table>
@@ -262,11 +268,11 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:20px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado;?></strong></td>
   </tr>
 
   <tr>
-    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: </strong>OTROS SERVICIO RELACIONADOS CON LA SALUD</td>
+    <td style="text-align:center; font-size:14px;font-family: Helvetica, Arial, sans-serif;"><strong>GIRO: </strong> <?php echo $giro; ?></td>
   </tr>
   <tr>
     <td style="text-align:center; font-size:11px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
@@ -308,7 +314,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_ve
 <tr style="font-size:12px" class="even_row">
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><?php echo $datos_recibo[$i]["recibi_de"];?></td>
     <td style="text-align: center;width:39%" colspan="39" class="stilot1"><span class=""><?php echo $datos_recibo[$i]["servicio_para"];?></span></td>
-    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s"); echo $hoy; ?></span></td>   
+    <td style="text-align: center;width:22%" colspan="22" class="stilot1"><span class=""><span style="text-align:center; font-size:12px"><?php echo $datos_recibo[$i]["fecha"]?></span></td>   
 
 </tr>
 </table>

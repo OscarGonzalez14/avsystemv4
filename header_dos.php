@@ -118,14 +118,19 @@ $level_user = $_SESSION["id_user_emp"];
 
             </ul>
           </li>
-
-
+        
+        <?php if ($_SESSION["Empresas"]) {
+           echo '
           <li class="nav-item">
             <a href="empresas.php" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
-              <p>Empresas</p>
+              <i class="nav-icon fas fa-bulding"></i>
+              <p>
+                Empresas
+                <span class="right badge badge-danger" style="visibility:hidden">New</span>
+              </p>
             </a>
-          </li>  
+          </li>';
+        }?>
 
           <li class="nav-item">
             <a href="adquisiciones.php" class="nav-link">
@@ -234,6 +239,22 @@ $level_user = $_SESSION["id_user_emp"];
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
                 Comisiones y planillas
+                <span class="right badge badge-danger" style="visibility:hidden">New</span>
+              </p>
+            </a>
+          </li> 
+            ';
+          }
+        ?>
+        
+        <?php
+          if ($level_user=="Admin") {
+            echo '
+            <li class="nav-item">
+            <a href="reportes.php" class="nav-link">
+              <i class="nav-icon  fas fa-file-alt"></i>
+              <p>
+                Reportes
                 <span class="right badge badge-danger" style="visibility:hidden">New</span>
               </p>
             </a>

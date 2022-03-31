@@ -49,7 +49,7 @@ function listar_creditos_sucursal(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "iDisplayLength": 10,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -1583,7 +1583,7 @@ function listar_oid_aprobadas(){
 //////Eliminar oid solo para administradores
 
 
-function eliminar_oid(id_orden, numero_orden, id_paciente){
+function eliminar_oid(id_orden,numero_orden,id_paciente){
 
   let cat_user = $("#cat_user").val();
   console.log(cat_user);
@@ -1736,6 +1736,68 @@ function calcularMontoCcf(){
         });
 
     }  
+    
+  function eliminar_oid_p(numero_orden){
+
+  let cat_user = $("#cat_user").val();
+  console.log(cat_user);
+  if (cat_user=="administrador"){
+
+    bootbox.confirm("¿Está Seguro de eliminar OID pendiente de aprobación?", function(result){
+      if(result){
+
+        $.ajax({
+          url:"ajax/creditos.php?op=eliminar_oid_p",
+          method:"POST",
+          data:{numero_orden:numero_orden},
+          //dataType:"json",
+          success:function(data)
+          {
+            console.log(data);
+            if(data=="ok"){
+              setTimeout ("Swal.fire('OID Eliminada Existosamente','','success')", 100);            
+          }
+        }
+      });
+      }
+      $("#data_orden_aprob").DataTable().ajax.reload(); 
+    });//bootbox
+
+  }else if (cat_user=="optometra","asesor"){
+      setTimeout ("Swal.fire('No posse permisos para eliminar OID','','error')", 100);
+    }
+}
+
+function eliminar_abono(n_recibo,numero_venta){
+
+  let cat_user = $("#cat_user").val();
+  console.log(cat_user);
+  if (cat_user=="administrador"){
+
+    bootbox.confirm("¿Está Seguro de eliminar este abono?", function(result){
+      if(result){
+
+        $.ajax({
+          url:"ajax/creditos.php?op=eliminar_abono",
+          method:"POST",
+          data:{n_recibo:n_recibo,numero_venta:numero_venta},
+          //dataType:"json",
+          success:function(data)
+          {
+            console.log(data);
+            if(data=="ok"){
+              setTimeout ("Swal.fire('Abono Eliminado Existosamente','','success')", 100);            
+          }
+        }
+      });
+      }
+      $("#lista_det_abonos").DataTable().ajax.reload(); 
+    });//bootbox
+
+  }else if (cat_user=="optometra","asesor"){
+      setTimeout ("Swal.fire('No posse permisos para eliminar abono','','error')", 100);
+    }
+}
 
 init();
 

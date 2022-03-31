@@ -14,18 +14,21 @@ $reporteria=new Reporteria();
   $n_orden =$_GET["n_orden"];
   $sucursal = $_GET["sucursal"];
   //echo $id_paciente.$n_venta.$n_orden;
-if ($sucursal == "Metrocentro") {
+if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
+  $encabezado = "OPTICA AV PLUS S.A de C.V.";
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";
   $wha = "7469-2542";
   $dir2="San Salvador";
 
-}elseif ($sucursal == "San Miguel") {
+}elseif ($sucursal == "San Miguel" or $sucursal == "Empresarial-San Miguel") {
+  $encabezado = "OPTICA AV PLUS";
   $direccion = "3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115 ";
   $telefono = "2661 7549";
-  $wha = "7946-0464";
+  $wha = "6955-3056";
   $dir2="San Miguel";
-}elseif ($sucursal == "Santa Ana"){
+}elseif ($sucursal == "Santa Ana" or $sucursal == "Empresarial-Santa Ana"){
+    $encabezado = "OPTICA AVPLUS S.A de C.V.";
     $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
     $telefono = "2445 3150";
     $wha = "-";
@@ -101,7 +104,7 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado; ?></strong></td>
   </tr>
   <tr>
     <td  style="text-align: center;margin-top: 0px;color:#0088b6;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><b>PAGARÉ SIN PROTESTO</b></td>

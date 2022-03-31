@@ -66,6 +66,7 @@ require_once("modals/modal_correlativo_factura.php");
 <input type="hidden" id="name_pag" value="COBROS DE CONTADO">
 <input type="hidden" id="id_consulta">
 <input type="hidden" id="id_paciente">
+<input type="hidden" name="cat_user" id="cat_user" value="<?php echo $cat_user;?>"/>
 <input type="hidden" id="optometra" value="">
 <script type="text/javascript" src="js/cleave.js"></script>
 <script type="text/javascript" src="js/productos.js"></script>
