@@ -3,7 +3,8 @@ var tabla_recibos_emitidos;
 function init(){
    get_correlativo_recibo();
     //prueba();
-    listar_recibos_emitidos();
+    //listar_recibos_emitidos();
+    listar_reporte_recibos();
 }
 
 ////////OCULTAR BTN DE IMPRIMIR RECIBO AL INICIO
@@ -468,5 +469,33 @@ function registrar_abono_oid(){
 
   });
 
+  ///LISTAR RECIBOS 
+  function listar_reporte_recibos(){
+    var sucursal = $("#sucursal").val();
+    var sucursal_usuario = $("#sucursal_usuario").val();
+
+    $("#listar_reporte_recibos").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      dom: 'Bfrtip',
+      "buttons": [ "excel"],
+      "searching": true,
+      "ajax":
+      {
+        url: "ajax/recibos.php?op=listar_recibos",
+        type : "post",
+        dataType : "json",    
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},    
+        error: function(e){
+          //console.log(e.responseText);  
+        },
+      },
+      "iDisplayLength": 30,//Por cada 10 registros hace una paginación
+      "language": {
+        "sSearch": "Buscar:"
+
+      }
+    }).buttons().container().appendTo('#dt_recibos_wrapper .col-md-6:eq(0)');
+
+  }
 
 init();

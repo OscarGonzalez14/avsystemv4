@@ -66,8 +66,8 @@ switch ($_GET["op"]){
         $atrib = "btn btn-secondary";
         $txt = '';
         $href='#';
-        $event = "";
-        $event_ccf ='';
+        $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
+        $event = 'print_invoices';
     }
 
     $sub_array[] = $row["numero_venta"];
@@ -129,8 +129,8 @@ switch ($_GET["op"]){
         $icon=" fas fa-clock";
         $atrib = "btn btn-secondary";
         $txt = '';
-        $href='#';
-        $event = "";
+        $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
+        $event = 'print_invoices';
     }
 
     $sub_array[] = $row["numero_venta"];
@@ -191,11 +191,11 @@ switch ($_GET["op"]){
         $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
         $event = 'print_invoices';
     }elseif ($row["saldo"] > 0) {
-        $icon=" fas fa-clock";
+        $icon=" fas fa-print";
         $atrib = "btn btn-secondary";
         $txt = '';
-        $href='#';
-        $event = "";
+        $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
+        $event = "print_invoices";
     }
 
     $sub_array[] = $row["numero_venta"];
@@ -436,7 +436,7 @@ switch ($_GET["op"]){
 
     case 'get_finaliza_fecha':
       $inicio = $_POST["inicio"];
-      $plazo_credito = $_POST["plazo_credito"];
+      $plazo_credito = $_POST["plazo_credito"]-1;
       $finalizacion = date("d-m-Y",strtotime($inicio."+ $plazo_credito month"));
       echo json_encode($finalizacion);
       break;
@@ -471,9 +471,8 @@ switch ($_GET["op"]){
         $sub_array[] = $row["fecha_registro"];
         $sub_array[] = $estado;  
         $sub_array[] = '<i class="fas fa-cog" style="border-radius:0px;color:blue" onClick="acciones_oid(\''.$row["numero_orden"].'\','.$row["id_paciente"].','.$row["estado"].')"></i>';
-        //$sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><i class="fal fa-print" style="border-radius:0px;color:blue"></i>';
         $sub_array[] = '<a href="imprimir_oid_pdf.php?n_orden='.$row["numero_orden"].'&'."id_paciente=".$row["id_paciente"].'&'."sucursal=".$row["sucursal"].'" method="POST" target="_blank"><button type="button"  class="btn btn-bg-ligth btn-md"><i class="fa fa-print" aria-hidden="true" style="color:blue"></i></button></a>';
-        $sub_array[] = '<i class="fas fa-trash" style="border-radius:0px;color:red" data-toggle="modal" data-target="#detalle_ventas" onClick="detalleVentas(\''.$row["numero_orden"].'\','.$row["id_paciente"].')"></i>';
+        $sub_array[] = '<button type="button"  class="btn btn-md bg-light" onClick="eliminar_oid_p(\''.$row["numero_orden"].'\')"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></button>';
         $data[] = $sub_array;
       }
 
@@ -484,6 +483,11 @@ switch ($_GET["op"]){
       "aaData"=>$data);
       echo json_encode($results);
       //echo json_encode($datos);      
+    break;
+    
+    /////eliminar oid sin aprobar
+    case "eliminar_oid_p":
+       $datos=$creditos->eliminar_oid_p($_POST["numero_orden"]);
     break;
 
      /************************************************************

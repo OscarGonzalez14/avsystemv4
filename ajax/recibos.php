@@ -161,8 +161,17 @@ switch ($_GET["op"]) {
   break;
 
   case 'listar_recibos_emitidos':
+
+    $sucursal = $_POST['sucursal'];
+
+    if ($sucursal=="Empresarial"){
+      $suc = $_POST["sucursal_usuario"];
+    }else{
+      $suc = $_POST["sucursal"];
+    }
+
     $datos=$recibos->get_recibos_emitidos($_POST["sucursal"]);
-    //Vamos a declarar un array
+
     $data= Array();
 
     foreach($datos as $row){
@@ -222,6 +231,7 @@ switch ($_GET["op"]) {
     echo json_encode($output);
   } 
   break;
+
   //////////GET DATA ANTIREFLEJANTE RECIBO INICIAL 
   case 'get_datos_prima':
   $datos= $recibos->get_detalle_ar_prima($_POST["id_paciente"],$_POST["correlativo_oid"]); 
@@ -232,6 +242,46 @@ switch ($_GET["op"]) {
     }       
     echo json_encode($output);
   } 
+  break;
+
+  ////LISTAR RECIBOS EN DATATABLE REPORTE
+  case 'listar_recibos':  
+  $sucursal = $_POST['sucursal'];
+
+    if ($sucursal=="Empresarial"){
+      $suc = $_POST["sucursal_usuario"];
+    }else{
+      $suc = $_POST["sucursal"];
+    }
+
+  $datos=$recibos->listar_recibos($suc);
+
+  $data= Array();
+
+  foreach($datos as $row)
+  {
+    $sub_array = array();
+    $sub_array[] = $row["id_recibo"];
+    $sub_array[] = $row["fecha"];
+    $sub_array[] = $row["numero_recibo"];
+    $sub_array[] = $row["recibi_de"];
+    $sub_array[] = "$".number_format((float)$row["monto"],2,".",",");
+    $sub_array[] = "$".number_format((float)$row["a_anteriores"],2,".",",");
+    $sub_array[] = "$".number_format((float)$row["abono_act"],2,".",",");
+    $sub_array[] = "$".number_format((float)$row["saldo"],2,".",",");
+    $sub_array[] = $row["forma_pago"];
+    $sub_array[] = $row["empresas"];
+    $sub_array[] = $row["observaciones"];
+
+    $data[] = $sub_array;
+  }
+
+  $results = array(
+         "sEcho"=>1, //Información para el datatables
+         "iTotalRecords"=>count($data), //enviamos el total registros al datatable
+         "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+         "aaData"=>$data);
+  echo json_encode($results);
   break;
 
 }

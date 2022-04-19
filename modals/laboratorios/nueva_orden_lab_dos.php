@@ -83,6 +83,8 @@
         <option value="PrismaLab">PrismaLab</option>
         <option value="Optiservicios">Optiservicios</option>
         <option value="Alvaro">Alvaro</option>
+        <option value="Laboratorios Little">Laboratorios Little</option>
+        <option value="Laboratorios Garcia">Laboratorios Garcia</option>
     </select>
     </div>
 

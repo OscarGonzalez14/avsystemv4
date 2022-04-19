@@ -697,10 +697,13 @@ function buscar_existe_oid(){
     })
       }
     }
-})     
+}) 
+    
 }
 
+
 function data_cargo_form(){
+
     $("#oid").modal("show");
     let id_paciente = $("#id_paciente").val();    
     let tipo_pago = $("#tipo_pago").val();
@@ -726,6 +729,7 @@ function data_cargo_form(){
     }
     })
 }
+
 
 function get_plazo_orden(n_orden_add,id_paciente){    
   ///////////GET PLAZO ACTUAL DE ORDEN CREDITO //////

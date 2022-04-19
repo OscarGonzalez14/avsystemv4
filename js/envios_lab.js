@@ -664,6 +664,7 @@ $(document).on('click', '.envio_orden_labs', function(){
     let indice = items_envios_ord.findIndex((objeto, indice, items_envios_ord) =>{
       return objeto.cod == codigo
     });
+
     items_envios_ord.splice(indice, 1)
 
   }

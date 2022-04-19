@@ -14,40 +14,31 @@ $reporteria=new Reporteria();
   $n_orden =$_GET["n_orden"];
   $sucursal = $_GET["sucursal"];
 if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
-  $encabezado = "OPTICA AVPLUS S.A de C.V.";
+  $encabezado = "OPTICA AV PLUS S.A de C.V.";
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";
   $wha = "7469-2542";
   $correo = "metrocentro@opticaavplussv.com";
   $dir2="San Salvador";
   $info="";
-  $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
-  <b>Giro:</b> Venta al por mayor de artículos de óptica";
-  $correo = "opticaavplussanmiguel@gmail.com";
-  $info="";
 }elseif ($sucursal == "San Miguel" or $sucursal == "Empresarial-San Miguel") {
-   $encabezado = "OPTICA AVPLUS";
+  $encabezado = "
+  OPTICA AV PLUS";
   $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
   $telefono = "2661-7549";
   $wha ="7946-0464";
-  $correo = "opticaavplussanmiguel@gmail.com";
   $dir2="San Miguel";
-  $info="";
-  $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
+  $info="<b>CARMEN ARELY VASQUEZ FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
   <b>Giro:</b> Venta al por mayor de artículos de óptica";
   $correo = "opticaavplussanmiguel@gmail.com";
-  $info="";
 }elseif ($sucursal == "Santa Ana" or $sucursal == "Empresarial-Santa Ana"){
-    $encabezado = "OPTICA AVPLUS S.A de C.V.";
+    $encabezado = "
+    OPTICA AVPLUS S.A de C.V.";
     $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
     $telefono = "2445 3150";
     $wha = "-";
     $correo = "opticaavplussantana@gmail.com";
     $dir2="Santa Ana";
-    $info="";
-    $info="<b>CARMEN ARELY FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
-    <b>Giro:</b> Venta al por mayor de artículos de óptica";
-    $correo = "opticaavplussanmiguel@gmail.com";
     $info="";
 }
 //$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_venta"],$_GET["id_paciente"]);
@@ -125,27 +116,29 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
 
 <table style="width: 100%;margin-top:2px">
 <tr>
-<td width="10%"><img src="images/logooficial.jpg" width="130" height="75"/></td>
 
-<td width="80%">
-<table style="width:95%;">
-
+<td width="10%" style="width: 10%;margin:0px"><img src="images/logooficial.jpg" width="130" height="75"/></td>
+<td width="75%" style="width: 75%;margin:0px">
+<table style="width:100%">
  <tr>
-    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado; ?></strong></td>
   </tr>
   <tr>
     <td  style="text-align: center;margin-top: 0px;color:#0088b6;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><b>ORDEN DE DESCUENTO EN PLANILLA</b></td>
   </tr>
   <tr>
+    <td style="text-align: center;margin-top: 0px;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><?php echo $info; ?>      
+    </td>
+  </tr>
+  <tr>
     <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
   </tr>
   <tr>
-    <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;<br></span>E-mail: <?php echo $correo;?></td>
+    <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;</span><br><b>E-mail:</b> <?php echo $correo;?></td>
   </tr>
-
 </table><!--fin segunda tabla-->
 </td>
-<td width="25%">
+<td width="30%" style="width: 30%;margin:0px">
 <table>
   <tr>
     <td style="text-align:right; font-size:12px"><strong>ORDEN</strong></td>
@@ -180,7 +173,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
     <tr>
       <td colspan="45" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:45%;text-align: center"><?php echo $datos_paciente[$j]["nombres"];?></td>
       <td colspan="30" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:30%;text-align: center"><?php echo $datos_paciente[$j]["ocupacion"];?></td>
-      <td colspan="25" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:25%;text-align: center"><?php echo strtoupper($datos_paciente[$j]["empresa_dept"]);?></td>
+      <td colspan="25" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:25%;text-align: center"><?php echo "Corrugado";?></td>
     </tr>
 
     <tr>

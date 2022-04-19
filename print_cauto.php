@@ -26,7 +26,7 @@ if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
    $encabezado = "OPTICA AVPLUS";
   $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
   $telefono = "2661-7549";
-  $wha ="7946-0464";
+  $wha ="6955-3056";
   $correo = "opticaavplussanmiguel@gmail.com";
   $dir2="San Miguel";
   $info="";
@@ -124,7 +124,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
 <tr>
 <td width="10%"><img src="images/logooficial.jpg" width="130" height="75"/></td>
 
-<td width="80%">
+<td width="75%">
 <table style="width:95%;">
 
  <tr>
@@ -142,7 +142,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
 
 </table><!--fin segunda tabla-->
 </td>
-<td width="25%">
+<td width="30%">
 <table>
   <tr>
     <td style="text-align:right; font-size:12px"><strong>ORDEN</strong></td>
@@ -177,7 +177,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
     <tr>
       <td colspan="45" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:45%;text-align: center"><?php echo $datos_paciente[$j]["nombres"]; ?></td>
       <td colspan="30" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:30%;text-align: center"><?php echo $n_tarjeta;?></td>
-      <td colspan="25" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:25%;text-align: center"><?php echo $tipo_tarjeta;?></td>
+      <td colspan="25" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:25%;text-align: center"><?php echo $fecha_vencimiento;?></td>
     </tr>
 
     <tr>
@@ -188,7 +188,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
       <th colspan="25" style="color:black;font-size:11px;border: 1px solid #034f84;font-family: Helvetica, Arial, sans-serif;width:25%" bgcolor="#c5e2f6"><b>DUI</b></th>
     </tr>
     <tr>
-      <td colspan="10" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:20%;text-align: center"><?php echo $fecha_vencimiento;?></td>
+      <td colspan="10" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:20%;text-align: center"><?php echo $tipo_tarjeta;?></td>
       <td colspan="20" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:10%;text-align: center"><?php echo $datos_paciente[$j]["edad"]." años";?></td>
       <td colspan="15" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:15%;text-align: center"><?php echo $datos_paciente[$j]["telefono"];?></td>
       <td colspan="30" style="font-size:12px;border: 1px solid :black;font-family: Helvetica, Arial, sans-serif;width:30%;text-align: center"><?php echo $datos_paciente[$j]["telefono_oficina"];?></td>
@@ -197,6 +197,10 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
     <tr>
       <td colspan="100" style="font-size:12px;border: 1px solid black;font-family: Helvetica, Arial, sans-serif;width:100%">&nbsp;&nbsp;<b>DIRECCIÓN COMPLETA:</b>&nbsp;<?php echo $datos_paciente[$j]["direccion"];?></td>
       
+    </tr>
+    <tr>
+      <td colspan="35" style="font-size:12px;border: 1px solid black;font-family: Helvetica, Arial, sans-serif;width:35%">&nbsp;&nbsp;<b>CORREO:</b>&nbsp;<?php echo $datos_paciente[$j]["correo"];?></td>
+      <td colspan="65" style="font-size:12px;border: 1px solid black;font-family: Helvetica, Arial, sans-serif;width:65%">&nbsp;&nbsp;<b>EMPRESA:</b>&nbsp;<?php echo $datos_paciente[$j]["empresas"];?></td>
     </tr>
   </table>
 <br>    

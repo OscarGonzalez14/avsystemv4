@@ -91,7 +91,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="cargos_pend.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Cargos Automaticos</p>
                 </a>
@@ -117,7 +117,6 @@
             </a>
           </li>-->
       
-              
           <li class="nav-item">
             <a href="adquisiciones.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
