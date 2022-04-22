@@ -916,6 +916,64 @@ public function get_cautos_aprob($sucursal_usuario){
     echo 'ok';
   }
 
+//*******************************;)
+///CONSULTAR A BD, CREDITOS DEPENDIENDO DE SU FILTRADO
+    public function listar_creditos_general($sucursal){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? group by v.numero_venta order by v.numero_venta asc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_pendientes($sucursal,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? and c.saldo > 0 group by v.numero_venta order by v.numero_venta asc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_finalizados($sucursal,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? and c.saldo = 0 group by v.numero_venta order by v.numero_venta asc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_pendientes_emp($sucursal,$nombre_empresa,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas= ? and c.saldo > 0 group by v.numero_venta order by v.numero_venta asc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_finalizados_emp($sucursal,$nombre_empresa,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas= ? and c.saldo = 0 group by v.numero_venta order by v.numero_venta asc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }/////FIN CLASS
 
