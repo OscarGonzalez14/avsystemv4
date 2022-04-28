@@ -320,12 +320,14 @@ $(document).on("click","#select_paciente_venta", function(){
     listar_pacientes_sin_consultas_ventas();
   }
 
-}else{
+}else if{
 
   show_pacientes_empresas();
 }
 
 });
+
+
 
 //////////////////LISTAR PACIENTES CON CONSULTAS EN VENTAS
 

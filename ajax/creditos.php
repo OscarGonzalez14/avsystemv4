@@ -932,7 +932,6 @@ if ($_POST["sucursal"]=="Empresarial") {
     $class = "";
     $href = "";
     $event = "";
-    $event_ccf ='';
 
     if($row["saldo"] == 0  and $row["cancelacion"]=="0"){
         $icon="fas fa-print";
@@ -940,7 +939,6 @@ if ($_POST["sucursal"]=="Empresarial") {
         $txt = '';
         $href='imprimir_factura_pdf.php?n_venta='.$row['numero_venta'].'&id_paciente='.$row['id_paciente'].'';
         $event = 'print_invoices';
-        $event_ccf ='emitir_ccf';
     }elseif($row["saldo"] == 0  and $row["cancelacion"]=="1"){
         $icon="fas fa-print";
         $atrib = "btn btn-danger";
@@ -964,11 +962,13 @@ if ($_POST["sucursal"]=="Empresarial") {
     $sub_array[] = "$".number_format($row["monto"],2,".",",");
     $sub_array[] = $row["plazo"]." meses";  
     $sub_array[] = "$".number_format($row["saldo"],2,".",",");    
+    $sub_array[] = $row["fecha_abono"];
+    $sub_array[] = '<button type="button" onClick="realizarAbonos('.$row["id_paciente"].','.$row["id_credito"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-warning" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus" aria-hidden="true" style="color:white"></i></button>
 
-    $sub_array[] = '<button type="button" onClick="realizarAbonos('.$row["id_paciente"].','.$row["id_credito"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-warning" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus" aria-hidden="true" style="color:white"></i></button>';
+      <button type="button" onClick="verDetAbonos('.$row["id_paciente"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-success"><i class="fas fa-file-invoice-dollar" aria-hidden="true" style="color:white"></i></button>
 
-    $sub_array[] = '<button type="button" onClick="verDetAbonos('.$row["id_paciente"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-success"><i class="fas fa-file-invoice-dollar" aria-hidden="true" style="color:white"></i></button>';
-    $sub_array[] = '<button type="button"  class="btn '.$atrib.' btn-xs" onClick="'.$event.'('.$row["id_paciente"].',\''.$row["numero_venta"].'\');"><i class="'.$icon.'"></i>'.$txt.'</button>';
+      <button type="button"  class="btn '.$atrib.' btn-xs" onClick="'.$event.'('.$row["id_paciente"].',\''.$row["numero_venta"].'\');"><i class="'.$icon.'"></i>'.$txt.'</button>';
+
          
                                                 
     $data[] = $sub_array;
@@ -981,6 +981,15 @@ if ($_POST["sucursal"]=="Empresarial") {
     echo json_encode($results);
   break;
 
+/*case 'get_abonos_pend':
+  $datos = $ordenes->abonos_pend($_POST["empresa"]);
+  $data = Array();
+  $i=0;
+  foreach ($datos as $row) {
+    
+  }
+  echo json_encode($i);
+  break;*/
 
 }//Fin case
 

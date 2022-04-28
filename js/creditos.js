@@ -1820,6 +1820,21 @@ function calcularMontoCcf(){
   });
   } 
 
+/*/creditos pendientes de abono según empresa
+  function listar_credito_pend(){
+  let empresa = $("#nom_empresa").val();
+    $.ajax({
+    url:"ajax/creditos.php?op=get_abonos_pend",
+    method:"POST",
+    data:{nom_pend:nom_pend},
+    dataType:"json",
+    success:function(data){
+    console.log(data);//return false;
+    $("#alert_abonos_pend").html(data);    
+    }     
+  });
+}*/
+
 init();
 
 

@@ -52,12 +52,15 @@ require_once("modals/modal_correlativo_factura.php");
         <div class="col-sm-2">
           <label>CCF</label>
             <div class="input-group">
-              <button class="btn btn-primary" id="select_paciente_venta" onClick="listar_ventas_ccf();"><i class="fas fa-file-alt"></i> Emitir CCF</button>
+              <button class="btn btn-primary" id="ccf_emp" onClick="listar_ventas_ccf();"><i class="fas fa-file-alt"></i> Emitir CCF</button>
           </div>
         </div>
-
-        <!--<div class="form-group col-sm-2" style="margin-top:32px;">
-          <button type="button" class=" btn btn-light cobrar" ><i class="fas fa-tasks" style="color: green; border:gray;"></i> Cobrar</button>
+        <!--<div>
+          <a class="btn btn-app" onClick="">
+            <span class="badge bg-danger"><i class=" fas fa-bell"></i></span>
+            <i class="fas fa-clipboard-check" style="color:#00407e"></i> ABONOS PENDIENTES
+            </a>
+        </div>
         </div>-->
       </div>
     </div>
@@ -77,14 +80,13 @@ require_once("modals/modal_correlativo_factura.php");
             <th style='text-align: center;'>Titular de credito</th>
             <th style='text-align: center;'>Empresa</th>
             <th style='text-align: center;'>Sucursal</th>       
-            <th style='text-align: center;'>Fecha inicio</th>
-            <th style='text-align: center;'>Fecha final</th>
+            <th style='text-align: center;'>Inicio Crédito</th>
+            <th style='text-align: center;'>Finalización Crédito</th>
             <th style='text-align: center;'>Monto</th> 
             <th style='text-align: center;'>Plazo</th>
             <th style='text-align: center;'>Saldo</th>
-            <th style='text-align: center;'>Abonar</th>
-            <th style='text-align: center;'>Historial</th>
-            <th style='text-align: center;'>FACT.</th>
+            <th style='text-align: center;'>Último cobro</th>
+            <th style='text-align: center;'>Acciones</th>
           </tr>
      </thead>
      <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center">
