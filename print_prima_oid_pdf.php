@@ -218,7 +218,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_or
     <td style="text-align: center;width: 14%" colspan="14" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["monto"];?></span></td>
     <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$".number_format(floatval($datos_recibo[$i]["a_anteriores"]),2,".",",");?></span></td>
 
-    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$ ".number_format($datos_recibo[$i]["abono_act"],2,".",",");?></span></td>
+    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$ ".number_format(floatval($datos_recibo[$i]["abono_act"]),2,".",",");?></span></td>
     <td style="text-align: center;width: 20%" colspan="20" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["saldo"];?></span></td>
     <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo $datos_recibo[$i]["forma_pago"];?></span></td>
 </tr>
@@ -395,7 +395,7 @@ $datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_or
     <td style="text-align: center;width: 14%" colspan="14" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["monto"];?></span></td>
     <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$".number_format(floatval($datos_recibo[$i]["a_anteriores"]),2,".",",");?></span></td>
 
-    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$ ".number_format($datos_recibo[$i]["abono_act"],2,".",",");?></span></td>
+    <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo "$ ".number_format(floatval($datos_recibo[$i]["abono_act"]),2,".",",");?></span></td>
     <td style="text-align: center;width: 20%" colspan="20" class="stilot1"><span class=""><?php echo "$ ".$datos_recibo[$i]["saldo"];?></span></td>
     <td style="text-align: center;width: 22%" colspan="22" class="stilot1"><span class=""><?php echo $datos_recibo[$i]["forma_pago"];?></span></td>
 </tr>

@@ -1,3 +1,7 @@
+function init(){
+listar_reporte_facturas();
+}
+
 function get_data_ccf(){
 
  let items = array_total_ccf.length;
@@ -30,3 +34,34 @@ function emitir_ccf(id_paciente,numero_venta,nombres){
 	$("#id_paciente_ccf").val(id_paciente);
 	$("#cliente_ccf").val(nombres);
 }
+
+ ///LISTAR FACTURAS EN DATATABLES REPORTE
+  function listar_reporte_facturas(){
+    var sucursal = $("#sucursal").val();
+    var sucursal_usuario = $("#sucursal_usuario").val();
+
+    $("#listar_reporte_facturas").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      dom: 'Bfrtip',
+      "buttons": [ "excel"],
+      "searching": true,
+      "ajax":
+      {
+        url: "ajax/reporteria.php?op=listar_facturas",
+        type : "post",
+        dataType : "json",    
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},    
+        error: function(e){
+          //console.log(e.responseText);  
+        },
+      },
+      "iDisplayLength": 30,//Por cada 10 registros hace una paginación
+      "language": {
+        "sSearch": "Buscar:"
+
+      }
+    }).buttons().container().appendTo('#dt_recibos_wrapper .col-md-6:eq(0)');
+
+  }
+
+init();

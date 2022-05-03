@@ -27,7 +27,7 @@ function init(){
 
     "aProcessing": true,//Activamos el procesamiento del datatables
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
-      dom: 'Bfrti',//Definimos los elementos del control de tabla
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
       
       buttons: [
                 'copyHtml5',
@@ -47,7 +47,7 @@ function init(){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-    "iDisplayLength": 8,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 20,//Por cada 10 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {

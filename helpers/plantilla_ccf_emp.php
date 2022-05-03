@@ -31,8 +31,7 @@
  
   <td colspan="50" style="border: 1px solid black;font-family: Helvetica, Arial, sans-serif;font-size: 10px;text-align: left;margin:20px">
      <?php 
-     echo "SERVICIOS OPTICOS"."<br>";
-     echo $items;
+     echo "SUMINISTRO DE SERVICIO ÓPTICO (EXÁMEN VISUAL, ARO, LENTE, ESTUCHE, FRANELA Y SOLUCIÓN DE LIMPIEZA)";
      ?>    
   </td>
  
@@ -77,7 +76,7 @@ if ($retenido>0) {
 ?>
 <!---FIN CALCULOS-->
 <tr>
-  <td colspan="60" rowspan="2" class="stilot1" style="width: 60%;text-align: left">Son: </td>
+  <td colspan="60" rowspan="2" class="stilot1" style="width: 60%;text-align: left">Son: <?php echo numletras(number_format($total,2,".",""),$_moneda);?></td>
   <td colspan="10" class="stilot1" style="font-size:8px">SUMAS</td>
   <td colspan="10" class="stilot1"></td>
   <td colspan="10" class="stilot1"></td>

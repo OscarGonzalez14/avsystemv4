@@ -14,7 +14,7 @@ $reporteria=new Reporteria();
   $n_orden =$_GET["n_orden"];
   $sucursal = $_GET["sucursal"];
 if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
-  $encabezado = "OPTICA AVPLUS S.A de C.V.";
+  $encabezado = "OPTICA AV PLUS S.A de C.V.";
   $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
   $telefono = "2260-1653";
   $wha = "7469-2542";
@@ -23,10 +23,10 @@ if ($sucursal == "Metrocentro" or $sucursal == "Empresarial-Metrocentro") {
   $info="";
 }elseif ($sucursal == "San Miguel" or $sucursal == "Empresarial-San Miguel") {
   $encabezado = "
-  OPTICA AVPLUS";
+  OPTICA AV PLUS";
   $direccion = "San Miguel, 3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115";
   $telefono = "2661-7549";
-  $wha ="7946-0464";
+  $wha ="6955-3056";
   $dir2="San Miguel";
   $info="<b>CARMEN ARELY VASQUEZ FLORES</b><br><strong>NIT:</strong> 0610-201188-102-4&nbsp;&nbsp;<b>No. Registro</b>: 295093-3<br>
   <b>Giro:</b> Venta al por mayor de artículos de óptica";
@@ -160,7 +160,7 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
       $nombre_pac = $datos_paciente[$j]["nombres"];
      ?>
       <span> <b>EMPRESA:</b>&nbsp; <u><?php echo $datos_paciente[$j]["empresas"]."."?></u></span><br>
-      <span style="font-size:13px;font-family: Helvetica, Arial, sans-serif;">Por la presente y de confirmidad con el artículo N° 136 del código de trabajo, publicado en el Diario Oficial del 31 de Julio de 1972, autorizo a usted a descontar de mi sueldo mensual que devengo en esta empresa como empleado(a) de la misma; la cantidad de:&nbsp;<b style="color: black"><u><?php echo "$".number_format($suma_monto_orden,2,".",",");?></u></b> en <?php echo $plazo_credito?> cuotas __mensuales de: <b><u><?php echo "$".number_format($cuotas_creditos,2,".",",");?></u></b>, las cuales deberán pagar por mi cuenta a partir de: <u><?php echo date("d-m-Y", strtotime($inicio_credito));?></u> hasta <u><?php echo date("d-m-Y", strtotime($fin_credito));?></u>. Por lo tanto autorizo a que se realicen los pagos en concepto de producto y servicios visuales. <br><br>  <b>Atentamente.</b><br></span>
+      <span style="font-size:13px;font-family: Helvetica, Arial, sans-serif;">Por la presente y de confirmidad con el artículo N° 136 del código de trabajo, publicado en el Diario Oficial del 31 de Julio de 1972, autorizo a usted a descontar de mi sueldo mensual que devengo en esta empresa como empleado(a) de la misma; la cantidad de:&nbsp;<b style="color: black"><u><?php echo "$".number_format($suma_monto_orden,2,".",",");?></u></b> en <?php echo $plazo_credito?> cuotas mensuales de: <b><u><?php echo "$".number_format($cuotas_creditos,2,".",",");?></u></b>, las cuales deberán pagar por mi cuenta a partir de: <u><?php echo date("d-m-Y", strtotime($inicio_credito));?></u> hasta <u><?php echo date("d-m-Y", strtotime($fin_credito));?></u>. Por lo tanto autorizo a que se realicen los pagos en concepto de producto y servicios visuales. <br><br>  <b>Atentamente.</b><br></span>
 
   <table width="100%" class="table2">
         <tr>
@@ -316,23 +316,6 @@ $cuotas_creditos = $suma_monto_orden/$plazo_credito;
 
 
 <?php
-if ($sucursal == "Metrocentro") {
-  $direccion = "Boulevard de los Heroes. Centro Comercial Metrocentro Local#7 San Salvador";
-  $telefono = "2260-1653";
-  $wha = "7469-2542";
-  $dir2="San Salvador";
-
-}elseif ($sucursal == "San Miguel") {
-  $direccion = "3<sup>ra</sup> Calle Poniente Av. Roosevelt Sur Esquina #115 ";
-  $telefono = "2661 7549";
-  $wha = "7946-0464";
-  $dir2="San Miguel";
-}elseif ($sucursal == "Santa Ana"){
-    $direccion = " 61 Calle Pte. Block K9 #10, Col, Avenida El Trebol, Santa Ana";
-    $telefono = "2445 3150";
-    $wha = "-";
-    $dir2="Santa Ana";
-}
 //$datos_recibo = $reporteria->print_recibo_paciente($_GET["n_recibo"],$_GET["n_venta"],$_GET["id_paciente"]);
 date_default_timezone_set('America/El_Salvador'); $hoy = date("d-m-Y H:i:s");
 $datos_paciente = $reporteria->get_datos_factura_paciente($id_paciente);
@@ -403,16 +386,21 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
 <table style="width:95%;">
 
  <tr>
-    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong>OPTICA AVPLUS S.A de C.V.</strong></td>
+    <td style="text-align:center; font-size:16px";font-family: Helvetica, Arial, sans-serif;><strong><?php echo $encabezado; ?></strong></td>
   </tr>
   <tr>
     <td  style="text-align: center;margin-top: 0px;color:#0088b6;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><b>PAGARÉ SIN PROTESTO</b></td>
   </tr>
+    <tr>
+    <td style="text-align: center;margin-top: 0px;font-size:13px;font-family: Helvetica, Arial, sans-serif;"><?php echo $info; ?>      
+    </td>
+  </tr>
   <tr>
     <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><?php echo $direccion;?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="date"></span></td>
   </tr>
+
   <tr>
-    <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;<br></span>E-mail: metrocentro@opticaavplussv.com</td>
+    <td style="text-align:center; font-size:12px;font-family: Helvetica, Arial, sans-serif;"><span><strong>Telefono:</strong> <?php echo $telefono;?>&nbsp;&nbsp;&nbsp;</span><span><strong>Whatsapp:</strong> <?php echo $wha;?>&nbsp;&nbsp;&nbsp;</span><br><b>E-mail:</b> <?php echo $correo;?></td>
   </tr>
 
 
@@ -431,7 +419,7 @@ for ($i=0; $i <sizeof($data_orden_desc) ; $i++) {
 </tr>
 </table>
 <p style="text-align: right;font-size:11px;font-family: Helvetica, Arial, sans-serif;" align="right"><?php echo $dir2.",&nbsp;".$hoy;?></p>
-<div style="width:100%;margin-top:0px;font-size:12px;font-family: Helvetica, Arial, sans-serif;height: 885px">
+<div style="width:100%;margin-top:0px;font-size:12px;font-family: Helvetica, Arial, sans-serif;height: 835px">
 <!--INICIO GET DATA PACIENTES-->
 <?php    
     for($j=0; $j<count($datos_paciente);$j++){

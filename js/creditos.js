@@ -7,7 +7,7 @@ function init(){
   //listar_ordenes_pendientes();
   listar_oid_aprobadas();
    listar_cautos_aprob();
-
+   filtrar_creditos();    
   
 }
 ///////////OCULTAR ELEMENTOS AL INICIO
@@ -49,7 +49,7 @@ function listar_creditos_sucursal(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+      "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -228,7 +228,7 @@ function listar_ventas_ccf(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-      "iDisplayLength": 15,//Por cada 10 registros hace una paginación
+      "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -308,7 +308,7 @@ function listar_creditos_oid(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -595,7 +595,7 @@ function registrar_abono(){
         "bDestroy": true,
         "responsive": true,
         "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -711,7 +711,7 @@ $(document).on('click', '.cat_creditos', function(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -929,7 +929,7 @@ function get_finaliza(){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+        "iDisplayLength": 20,//Por cada 20 registros hace una paginación
           "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
           "language": {
@@ -1016,7 +1016,7 @@ function get_finaliza(){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+        "iDisplayLength": 20,//Por cada 20 registros hace una paginación
           "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
           "language": {
@@ -1365,6 +1365,7 @@ function aprobar_od_planilla(){
   success:function(data){
     console.log(data);
     $('#data_orden_aprob').DataTable().ajax.reload();
+    $('#cargos_pendientes').DataTable().ajax.reload();
   }
 })
  Swal.fire('Orden de descuento registrado!','','success');
@@ -1446,7 +1447,7 @@ function listar_creditos_cauto(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -1526,7 +1527,7 @@ function listar_oid_aprobadas(){
       "bDestroy": true,
       "responsive": true,
       "bInfo":true,
-    "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+    "iDisplayLength": 20,//Por cada 20 registros hace una paginación
       "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
       "language": {
@@ -1680,7 +1681,7 @@ function calcularMontoCcf(){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+        "iDisplayLength": 20,//Por cada 20 registros hace una paginación
           "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
           "language": {
@@ -1736,6 +1737,87 @@ function calcularMontoCcf(){
         });
 
     }  
+    
+    function eliminar_oid_p(numero_orden){
+
+  let cat_user = $("#cat_user").val();
+  console.log(cat_user);
+  if (cat_user=="administrador"){
+
+    bootbox.confirm("¿Está Seguro de eliminar OID pendiente de aprobación?", function(result){
+      if(result){
+
+        $.ajax({
+          url:"ajax/creditos.php?op=eliminar_oid_p",
+          method:"POST",
+          data:{numero_orden:numero_orden},
+          //dataType:"json",
+          success:function(data)
+          {
+            console.log(data);
+            if(data=="ok"){
+              setTimeout ("Swal.fire('OID Eliminada Existosamente','','success')", 100);            
+          }
+        }
+      });
+      }
+      $("#data_orden_aprob").DataTable().ajax.reload(); 
+    });//bootbox
+
+  }else if (cat_user=="optometra","asesor"){
+      setTimeout ("Swal.fire('No posse permisos para eliminar OID','','error')", 100);
+    }
+}
+
+//listar todos los creditos de planilla
+  function filtrar_creditos(){
+    let ver_credito = $("#ver_credito").val();
+    let empresa = $("#nom_empresa").val();
+    let nombre_empresa = empresa.toString();
+    let sucursal = $("#sucursal").val();
+    let sucursal_usuario = $("#sucursal_usuario").val();
+
+    table_creditos = $('#creditos_globales').DataTable({      
+    "aProcessing": true,//Activamos el procesamiento del datatables
+    "aServerSide": true,//Paginación y filtrado realizados por el servidor
+    dom: 'frtip',//Definimos los elementos del control de tabla
+    //buttons: ['excelHtml5'],
+    "ajax":{
+      url:"ajax/creditos.php?op=filtra_creditos",
+      type : "POST",
+      //dataType : "json",
+      data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,ver_credito:ver_credito,nombre_empresa:nombre_empresa},
+      error: function(e){
+      console.log(data);
+    },},
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength":50,//Por cada 10 registros hace una paginación
+    "order": [[ 0, "desc" ]],//Ordenar (columna,orden
+      "language": { 
+      "sProcessing":     "Procesando...",       
+      "sLengthMenu":     "Mostrar _MENU_ registros",       
+      "sZeroRecords":    "No se encontraron resultados",       
+      "sEmptyTable":     "Ningún dato disponible en esta tabla",       
+      "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",       
+      "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",       
+      "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",       
+      "sInfoPostFix":    "",       
+      "sSearch":         "Buscar:",       
+      "sUrl":            "",       
+      "sInfoThousands":  ",",       
+      "sLoadingRecords": "Cargando...",       
+      "oPaginate": {       
+      "sFirst":"Primero","sLast":"Último","sNext":"Siguiente","sPrevious": "Anterior"       
+      },      
+      "oAria": {       
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",       
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"       
+      }
+    }, //cerrando language
+  });
+  } 
 
 init();
 

@@ -179,7 +179,7 @@ function data_comisiones_cat_uno(sucursal,year,mes){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+        "iDisplayLength": 30,//Por cada 30 registros hace una paginación
           "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
           "language": {
@@ -262,7 +262,7 @@ function data_comisiones_cat_dos(sucursal,year,mes,id_empleado){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+        "iDisplayLength": 30,//Por cada 30 registros hace una paginación
           "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
           "language": {
@@ -346,7 +346,7 @@ function data_comisiones_cat_tres(sucursal,year,mes,id_empleado){
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
-        "iDisplayLength": 10,//Por cada 10 registros hace una paginación
+        "iDisplayLength": 30,//Por cada 30 registros hace una paginación
           "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
 
           "language": {

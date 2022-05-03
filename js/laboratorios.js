@@ -302,7 +302,7 @@ function registrarEnvio(){
  	}
 })
 }else{
-Swal.fire('LLEnar los campos obligatorios correctamente!','','error');	
+Swal.fire('Llenar los campos obligatorios correctamente!','','error');	
 }
 }
 
@@ -576,7 +576,7 @@ function listado_ordenes_recibidas(){
 ////////////// ACCIONES ORDENES DE LABORATORIOS //////////////////////////
 
 function acciones_envios_lab(id_paciente,numero_orden,evaluado,estado,laboratorio){
-	console.log(`id paciente ${id_paciente} numero_orden: ${numero_orden} evaluado: ${evaluado} estado ${estado} laboratorio ${laboratorio}`)
+	//console.log(`id paciente ${id_paciente} numero_orden: ${numero_orden} evaluado: ${evaluado} estado ${estado} laboratorio ${laboratorio}`)
 	let tipo_accion = "Envio a Laboratorio";
     let sucursal = $("#sucursal").val();
     let id_usuario	= $("#id_usuario").val();

@@ -7,7 +7,10 @@
       background-color:#034f84;
       color: white;
     }
-}
+    html{ 
+    overflow: scroll; 
+    -webkit-overflow-scrolling: touch;
+  }
 </style>      
 
       <div class="modal fade bd-example-modal-lg" role="dialog" id="newPaciente">
