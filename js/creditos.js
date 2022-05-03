@@ -1761,7 +1761,8 @@ function calcularMontoCcf(){
         }
       });
       }
-      $("#data_orden_aprob").DataTable().ajax.reload(); 
+      $("#data_orden_aprob").DataTable().ajax.reload();
+      $("#cargos_pendientes").DataTable().ajax.reload();
     });//bootbox
 
   }else if (cat_user=="optometra","asesor"){
