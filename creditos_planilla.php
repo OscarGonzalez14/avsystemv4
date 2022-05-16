@@ -63,10 +63,31 @@ require_once("modals/modal_correlativo_factura.php");
           <label>CCF</label>
             <div class="input-group">
               <button class="btn btn-primary" id="select_paciente_venta" onClick="listar_ventas_ccf();"><i class="fas fa-file-alt"></i> Emitir CCF</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="row" style="margin:5px">
+       <div class="input-group input-group-sm col-sm-3">
+        <span class="input-group-append">
+          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Monto Total:&nbsp;</button>
+        </span>
+        <input type="text" class="form-control" id="ventas_empresa" readonly="">
+      </div>
+      <div class="input-group input-group-sm col-sm-3">
+        <span class="input-group-append">
+          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Recuperado Actual:&nbsp;</button>
+        </span>
+        <input type="text" class="form-control" id="recuperado" readonly="">
+      </div>
+      <div class="input-group input-group-sm col-sm-3">
+        <span class="input-group-append">
+          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Previsión económica:&nbsp;</button>
+        </span>
+        <input type="text" class="form-control" id="proyeccion" readonly="">
+      </div> 
+      </div>
+      
 
 <section class="content" style="margin-top:5px">
   <div class="row">
@@ -85,8 +106,9 @@ require_once("modals/modal_correlativo_factura.php");
             <th style='text-align: center;'>Sucursal</th>       
             <th style='text-align: center;'>Inicio Crédito</th>
             <th style='text-align: center;'>Finalización Crédito</th>
-            <th style='text-align: center;'>Monto</th> 
             <th style='text-align: center;'>Plazo</th>
+            <th style='text-align: center;'>Monto</th> 
+            <th style='text-align: center;'>Cuota</th>
             <th style='text-align: center;'>Saldo</th>
             <th style='text-align: center;'>Acciones</th>
           </tr>

@@ -868,6 +868,7 @@ function registrar_impresion(){
         $('#creditos_de_contado').DataTable().ajax.reload();
         $('#creditos_oid').DataTable().ajax.reload();
         $('#creditos_cauto').DataTable().ajax.reload();
+        $('#creditos_globales').DataTable().ajax.reload();       
       }  
 
     }
@@ -1781,8 +1782,8 @@ function calcularMontoCcf(){
     table_creditos = $('#creditos_globales').DataTable({      
     "aProcessing": true,//Activamos el procesamiento del datatables
     "aServerSide": true,//Paginación y filtrado realizados por el servidor
-    dom: 'frtip',//Definimos los elementos del control de tabla
-    //buttons: ['excelHtml5'],
+    dom: 'Bfrtip',//Definimos los elementos del control de tabla
+    buttons: ['excelHtml5'],
     "ajax":{
       url:"ajax/creditos.php?op=filtra_creditos",
       type : "POST",
@@ -1820,6 +1821,38 @@ function calcularMontoCcf(){
   });
   } 
 
+function get_finanzas_empresarial(){
+  //let ver_credito = $("#ver_credito").val();
+  let empresa = $("#nom_empresa").val();
+  let nombre_empresa = empresa.toString();
+  let sucursal = $("#sucursal").val();
+  let sucursal_usuario = $("#sucursal_usuario").val();
+
+    $.ajax({
+    url:"ajax/creditos.php?op=control_cplanilla",
+    method:"POST",
+    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,nombre_empresa:nombre_empresa},
+    cache: false,
+    dataType:"json",
+    error:function(x,y,z){
+      d_pacole.log(x);
+      console.log(y);
+      console.log(z);
+    },     
+    success:function(data){
+      let total_ventas = data.total_ventas;
+      let recuperado = data.recuperado;
+      let saldo_pend = data.saldo_pend;
+      $("#ventas_empresa").val("$"+total_ventas);
+      //$("#recuperado").val("$"+recuperado);
+      //$("#proyeccion").val("$"+saldo_pend);
+
+    }
+
+    });//////FIN AJAX 
+
+  data_comisiones_cat_uno(sucursal,year,mes);  
+}
 init();
 
 

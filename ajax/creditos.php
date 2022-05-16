@@ -898,7 +898,9 @@ if ($_POST['sucursal']=="Empresarial") {
       "aaData"=>$data);
       echo json_encode($results);
       //echo json_encode("salida prueba: ".$sucursal_usuario);      
-    break;   
+    break;  
+
+
     //LISTA DE CREDITOS DE PLANILLA*****
     //********************************//
     case 'filtra_creditos':
@@ -911,6 +913,8 @@ if ($_POST["sucursal"]=="Empresarial") {
 
   if ($_POST["ver_credito"]=="" and $_POST["nombre_empresa"]=="" ) {
     $datos=$creditos->listar_creditos_general($sucursal);
+  }elseif($_POST["ver_credito"]=="" and $_POST["nombre_empresa"]!==""){
+    $datos=$creditos->listar_creditos_empresa($sucursal,$_POST["nombre_empresa"]); 
   }elseif($_POST["ver_credito"]=="Creditos_Pendientes" and $_POST["nombre_empresa"]==""){
     $datos=$creditos->listar_creditos_pendientes($sucursal,$_POST["ver_credito"]);
   }elseif($_POST["ver_credito"]=="Creditos_Finalizados" and $_POST["nombre_empresa"]==""){
@@ -961,8 +965,9 @@ if ($_POST["sucursal"]=="Empresarial") {
     $sub_array[] = $row["sucursal"];
     $sub_array[] = date("d-m-Y",strtotime($row["fecha_inicio"]));
     $sub_array[] = $row["fecha_finalizacion"];
-    $sub_array[] = "$".number_format($row["monto"],2,".",",");
     $sub_array[] = $row["plazo"]." meses";  
+    $sub_array[] = "$".number_format($row["monto"],2,".",",");
+    $sub_array[] = "$".number_format($row["monto"]/$row["plazo"],2,".",",");
     $sub_array[] = "$".number_format($row["saldo"],2,".",",");    
 
     $sub_array[] = '<button type="button" onClick="realizarAbonos('.$row["id_paciente"].','.$row["id_credito"].',\''.$row["numero_venta"].'\');" id="'.$row["id_paciente"].'" class="btn btn-xs bg-warning" data-backdrop="static" data-keyboard="false"><i class="fas fa-plus" aria-hidden="true" style="color:white"></i></button>
@@ -979,6 +984,24 @@ if ($_POST["sucursal"]=="Empresarial") {
       "iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
       "aaData"=>$data);
     echo json_encode($results);
+  break;
+
+  case 'get_datos_empresas':
+    $datos=$creditos->get_cred_empresa($_POST["sucursal"],$_POST["nombre_empresa"]);
+      if (is_array($datos) and count($datos)) {
+          foreach ($datos as $row) {
+            $total_ventas = $row["total"];
+            /*$saldo_pend = $row["saldo"];
+            $recuperado = $row["total"]/$row["saldo"];*/                 
+        }
+    }
+
+        $data["total_ventas"] = number_format($total_ventas,2,".",",");
+        /*$data["saldo_pend"] = number_format($saldo_pend,2,".",",");        
+        $data["recuperado"] = number_format($recuperado,2,".",",");*/
+        
+          
+    echo json_encode($data);
   break;
 
 

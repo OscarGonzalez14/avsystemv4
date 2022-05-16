@@ -921,9 +921,21 @@ public function get_cautos_aprob($sucursal_usuario){
     $conectar= parent::conexion();
     $suc = "%".$sucursal."%";
 
-    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? group by v.numero_venta order by v.numero_venta asc;";
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? and saldo > 0 group by v.numero_venta order by v.numero_venta asc;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_empresa($sucursal,$nombre_empresa){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select p.id_paciente,p.nombres,p.empresas,p.sucursal,oc.fecha_inicio,oc.fecha_finalizacion,oc.plazo,v.evaluado,c.monto,c.saldo,v.numero_venta,c.id_credito,c.cancelacion from pacientes as p inner join orden_credito as oc on p.id_paciente=oc.id_paciente inner join ventas as v on p.id_paciente=v.id_paciente inner join creditos as c on v.numero_venta=c.numero_venta WHERE c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas= ? group by v.numero_venta order by v.numero_venta asc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -972,6 +984,17 @@ public function get_cautos_aprob($sucursal_usuario){
     $sql->bindValue(2,$nombre_empresa);
     $sql->execute();
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function get_cred_empresa($sucursal,$empresas){
+        $conectar = parent::conexion();
+        $suc = $sucursal;
+        $sql = "select SUM(v.monto_total) as total_ventas, SUM(c.saldo) saldo_creditos from ventas as v inner join creditos as c on v.numero_venta=c.numero_venta inner join pacientes as p on v.id_paciente=p.id_paciente where p.sucursal like ? and p.empresas=? and c.forma_pago='Descuento en Planilla';";
+        $sql=$conectar->prepare($sql);
+        $sql->bindValue(1,$suc);
+        $sql->bindValue(2,$empresas);
+        $sql->execute();
+        return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }/////FIN CLASS
