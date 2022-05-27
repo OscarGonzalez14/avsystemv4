@@ -990,15 +990,11 @@ if ($_POST["sucursal"]=="Empresarial") {
     $datos=$creditos->get_cred_empresa($_POST["sucursal"],$_POST["nombre_empresa"]);
       if (is_array($datos) and count($datos)) {
           foreach ($datos as $row) {
-            $total_ventas = $row["total"];
-            /*$saldo_pend = $row["saldo"];
-            $recuperado = $row["total"]/$row["saldo"];*/                 
+            $total_ventas = $row["total"];                
         }
     }
 
         $data["total_ventas"] = number_format($total_ventas,2,".",",");
-        /*$data["saldo_pend"] = number_format($saldo_pend,2,".",",");        
-        $data["recuperado"] = number_format($recuperado,2,".",",");*/
         
           
     echo json_encode($data);
