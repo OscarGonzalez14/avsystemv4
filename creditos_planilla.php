@@ -61,11 +61,11 @@ require_once("modals/modal_correlativo_factura.php");
 
         <div class="col-sm-2">
           <label>CCF</label>
-            <div class="input-group">
-              <button class="btn btn-primary" id="select_paciente_venta" onClick="listar_ventas_ccf();"><i class="fas fa-file-alt"></i> Emitir CCF</button>
-            </div>
+          <div class="input-group">
+            <button class="btn btn-primary" id="select_paciente_venta" onClick="listar_ventas_ccf();"><i class="fas fa-file-alt"></i> Emitir CCF</button>
           </div>
         </div>
+      </div>
       </div>
       <div class="row" style="margin:5px">
        <div class="input-group input-group-sm col-sm-3">
@@ -82,7 +82,13 @@ require_once("modals/modal_correlativo_factura.php");
       </div>
       <div class="input-group input-group-sm col-sm-3">
         <span class="input-group-append">
-          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Previsión económica:&nbsp;</button>
+          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Proyección recuperado mensual:&nbsp;</button>
+        </span>
+        <input type="text" class="form-control" id="proyeccion" readonly="">
+      </div>
+      <div class="input-group input-group-sm col-sm-3">
+        <span class="input-group-append">
+          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Saldo Total:&nbsp;</button>
         </span>
         <input type="text" class="form-control" id="proyeccion" readonly="">
       </div> 
@@ -244,6 +250,7 @@ require_once("modals/modal_correlativo_factura.php");
 <script type="text/javascript" src="js/bootbox.min.js"></script>
 <script type="text/javascript" src="js/reporteria.js"></script>
 <script type="text/javascript" src="js/empresas.js"></script>
+
 <script type="text/javascript">
     var title = document.getElementById("name_pag").value;
     document.getElementById("title_mod").innerHTML=" "+

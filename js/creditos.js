@@ -125,6 +125,7 @@ function listar_ventas_ccf(){
   totalFinalCcf = 0;
 
   let empresa = $("#empresa").val();
+  let empresa =$("#nom_empresa").val();
   if(empresa==""){
     Swal.fire('Error!, Debe Seleccionar una empresa','','error');
     return false
