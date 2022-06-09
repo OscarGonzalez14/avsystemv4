@@ -2,12 +2,13 @@ function init(){
 
   listar_ordenes_pendientes();
   listar_ordenes_pendientes_cauto();
-	listar_creditos_sucursal();
+  listar_creditos_sucursal();
   listar_creditos_cauto();
   //listar_ordenes_pendientes();
   listar_oid_aprobadas();
    listar_cautos_aprob();
-   filtrar_creditos();    
+   filtrar_creditos(); 
+   countCreditosDescplanilla();   
   
 }
 ///////////OCULTAR ELEMENTOS AL INICIO
@@ -125,7 +126,6 @@ function listar_ventas_ccf(){
   totalFinalCcf = 0;
 
   let empresa = $("#empresa").val();
-  let empresa =$("#nom_empresa").val();
   if(empresa==""){
     Swal.fire('Error!, Debe Seleccionar una empresa','','error');
     return false
@@ -791,7 +791,6 @@ function registrar_impresion(){
         $('#creditos_de_contado').DataTable().ajax.reload();
         $('#creditos_oid').DataTable().ajax.reload();
         $('#creditos_cauto').DataTable().ajax.reload();
-        $('#creditos_globales').DataTable().ajax.reload();       
       }  
 
     }
@@ -1744,36 +1743,32 @@ function calcularMontoCcf(){
   });
   } 
 
-function get_finanzas_empresarial(){
-  //let ver_credito = $("#ver_credito").val();
+
+///*****CALCULA TODOS LOS CREDITOS EMPRESARIALES CLASIFICANDOLOS EN MONTO TOTALES DE VENTA, 
+///RECUPERADO, PROYECCION A RECUPERAR MENSUAL Y SALDO PENDIENTE A COBRAR.
+ function countCreditosDescplanilla(){
+  let ver_credito = $("#ver_credito").val();
   let empresa = $("#nom_empresa").val();
   let nombre_empresa = empresa.toString();
   let sucursal = $("#sucursal").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
+  console.log("prueba");
 
-    $.ajax({
-    url:"ajax/creditos.php?op=control_cplanilla",
+  $.ajax({
+    url:"ajax/creditos.php?op=totales_venta",
     method:"POST",
-    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,nombre_empresa:nombre_empresa},
-    cache: false,
+    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,ver_credito:ver_credito,nombre_empresa:nombre_empresa},
     dataType:"json",
-    error:function(x,y,z){
-      d_pacole.log(x);
-      console.log(y);
-      console.log(z);
-    },     
     success:function(data){
-      let total_ventas = data.total_ventas;
-      let recuperado = data.recuperado;
-      let saldo_pend = data.saldo_pend;
-      $("#ventas_empresa").val("$"+total_ventas);
+      $('#ventas_empresa').val(data.monto_total);
+      $('#recuperado').val(data.recuperado);
+      $('#proyeccion_mensual').val(data.abono_mensual);
+      $('#saldo').val(data.saldos);
+      }
+  });
 
-    }
+ } 
 
-    });//////FIN AJAX 
-
-  data_comisiones_cat_uno(sucursal,year,mes);  
-}
 init();
 
 

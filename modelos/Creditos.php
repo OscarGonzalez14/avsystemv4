@@ -1,10 +1,10 @@
 <?php 
 require_once("../config/conexion.php");
 
-	class Creditos extends Conectar{
+    class Creditos extends Conectar{
 
-	
-	public function get_creditos_contado($sucursal){
+    
+    public function get_creditos_contado($sucursal){
     $conectar= parent::conexion();
     $sql= "select c.numero_venta,p.nombres,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado,c.cancelacion
 from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
@@ -915,6 +915,8 @@ public function get_cautos_aprob($sucursal_usuario){
     $sql->execute();
     echo 'ok';
   }
+
+
 //***************************************************//
 ///CONSULTAR A BD, CREDITOS DEPENDIENDO DE SU FILTRADO
     public function listar_creditos_general($sucursal){
@@ -985,17 +987,76 @@ public function get_cautos_aprob($sucursal_usuario){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function get_cred_empresa($sucursal,$empresas){
-        $conectar = parent::conexion();
-        $suc = $sucursal;
-        $sql = "select SUM(v.monto_total) as total_ventas, SUM(c.saldo) saldo_creditos from ventas as v inner join creditos as c on v.numero_venta=c.numero_venta inner join pacientes as p on v.id_paciente=p.id_paciente where p.sucursal like ? and p.empresas=? and c.forma_pago='Descuento en Planilla';";
-        $sql=$conectar->prepare($sql);
-        $sql->bindValue(1,$suc);
-        $sql->bindValue(2,$empresas);
-        $sql->execute();
-        return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    //******************************************************************//
+    ///OBETENER INFORME DE CREDITO POR EMPRESA CON DESCUENTO EN PLANILLA
+    //*******************************************************************//
+    public function totales_venta($sucursal){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+    $sql="select SUM(c.monto) as monto_total,SUM(c.saldo) as saldos,SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as abono_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function montoTotalEmp($sucursal,$nombre_empresa){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select SUM(c.monto) as monto_total,SUM(c.saldo) as saldo,SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as abono_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas = ?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function verPendientes($sucursal,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select SUM(c.monto) as monto_total,SUM(c.saldo) as saldo,SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as abono_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and c.saldo > 0;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function verFinalizados($sucursal,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select SUM(c.monto) as monto_total,SUM(c.saldo) as saldo,SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as abono_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and c.saldo <= 0;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function verPendientesEmp($sucursal,$nombre_empresa,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select SUM(c.monto) as monto_total,SUM(c.saldo) as saldo,SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as abono_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas = ? and c.saldo > 0;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function verFinalizadosEmp($sucursal,$nombre_empresa,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select SUM(c.monto) as monto_total,SUM(c.saldo) as saldo,SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as abono_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas = ? and c.saldo <= 0;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 }/////FIN CLASS
 
 ?>

@@ -643,7 +643,7 @@ $(document).on('click', '.envio_orden_labs', function(){
   let paciente = $(this).attr("name");
   let id_item = $(this).attr("id");
   let checkbox = document.getElementById(id_item);
-  let check_state = checkbox.checked;
+  let check_state = checkbox.checked;mont
   /****GET ESTADO ORDEN****/
   $.ajax({
   url:"ajax/laboratorios.php?op=get_estado_orden",

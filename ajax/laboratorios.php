@@ -598,14 +598,14 @@ case 'listar_ordenes_entregadas':
   echo json_encode($data);     
   break;
 
-  case 'get_estado_orden':
+  /*case 'get_estado_orden':
     $data = $laboratorios->state_order($_POST["codigo"]);
     foreach ($data as $row) {
       $state = $row["estado"];
     }
     echo json_encode($state);
     break;
-
+*/
 
 }
  ?>

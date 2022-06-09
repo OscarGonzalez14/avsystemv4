@@ -24,10 +24,10 @@ require_once("modals/modal_correlativo_factura.php");
             <ol class="breadcrumb float-sm-right">
               <!--<li class="breadcrumb-item"><a href="creditos.php" style="color:black">Créditos</a></li>-->
               <li class="breadcrumb-item"><a href="creditos_contado.php">Contado</a></li>
-              <li class="breadcrumb-item"><a href="creditos_oid.php">Desc. Planilla</a></li>
+              <li class="breadcrumb-item active"><a>Desc. Planilla</a></li>
               <li class="breadcrumb-item"><a href="creditos_cautomaticos.php">Cargo Auto</a></li>
               <li class="breadcrumb-item"><a href="creditos_mora.php">Créditos en mora</a></li>
-              <li class="breadcrumb-item active"><a>Creditos Pl.</a></li>
+              <!--<li class="breadcrumb-item active"><a>Creditos Pl.</a></li>-->
             </ol>
           </div>
       </div><!-- /.container-fluid -->
@@ -84,13 +84,13 @@ require_once("modals/modal_correlativo_factura.php");
         <span class="input-group-append">
           <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Proyección recuperado mensual:&nbsp;</button>
         </span>
-        <input type="text" class="form-control" id="proyeccion" readonly="">
+        <input type="text" class="form-control" id="proyeccion_mensual" readonly="">
       </div>
       <div class="input-group input-group-sm col-sm-3">
         <span class="input-group-append">
           <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Saldo Total:&nbsp;</button>
         </span>
-        <input type="text" class="form-control" id="proyeccion" readonly="">
+        <input type="text" class="form-control" id="saldo" readonly="">
       </div> 
       </div>
       
@@ -107,7 +107,7 @@ require_once("modals/modal_correlativo_factura.php");
         <thead style="background:#034f84;color:white;font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center;">
            <tr>
             <th style='text-align: center;'>No. Venta</th>
-            <th style='text-align: center;'>Titular de credito</th>
+            <th style='text-align: center;'>Titular del credito</th>
             <th style='text-align: center;'>Empresa</th>
             <th style='text-align: center;'>Sucursal</th>       
             <th style='text-align: center;'>Inicio Crédito</th>
