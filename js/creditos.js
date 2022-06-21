@@ -1705,15 +1705,24 @@ function calcularMontoCcf(){
     "aProcessing": true,//Activamos el procesamiento del datatables
     "aServerSide": true,//Paginación y filtrado realizados por el servidor
     dom: 'Bfrtip',//Definimos los elementos del control de tabla
-    buttons: ['excelHtml5'],
+    buttons: [{extend:'excelHtml5', footer:true}],
     "ajax":{
       url:"ajax/creditos.php?op=filtra_creditos",
       type : "POST",
-      //dataType : "json",
-      data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,ver_credito:ver_credito,nombre_empresa:nombre_empresa},
+      dataType : "json",
+      data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
       error: function(e){
-      console.log(data);
-    },},
+      console.log(e.responseText);
+    }
+  },
+    drawCallback: function () {
+        var ventas = $('#creditos_globales').DataTable().column(7).data().sum();
+        $('#total_ventas').html('$'+ventas.toFixed(2));
+        var crobro_mes = $('#creditos_globales').DataTable().column(8).data().sum();
+        $('#cobro_mensual').html('$'+cobro_mes.toFixed(2));
+        var saldo = $('#creditos_globales').DataTable().column(9).data().sum();
+        $('#saldos').html('$'+saldo.toFixed(2));
+      },
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
@@ -1743,7 +1752,6 @@ function calcularMontoCcf(){
   });
   } 
 
-
 function countCreditosDescplanilla(){
   let ver_credito = $("#ver_credito").val();
   let empresa = $("#nom_empresa").val();
@@ -1767,15 +1775,6 @@ function countCreditosDescplanilla(){
     });
 }  
 
-//Extraer los montos(reporte) de los créditos en Planilla
-function sumCreditosPlanilla(sum,countCreditosDescplanilla, ...args){
-  let ventas_total = 0;
-  console.log("Prueba2");
-
-  for (let arg of args) ventas_total += arg;
-    return sum;
-
-}
 
 
 init();

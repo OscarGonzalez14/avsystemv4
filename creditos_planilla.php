@@ -118,8 +118,23 @@ require_once("modals/modal_correlativo_factura.php");
             <th style='text-align: center;'>Saldo</th>
             <th style='text-align: center;'>Acciones</th>
           </tr>
-     </thead>
+         </thead>
      <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center">
+      <tfoot>
+      <tr>
+        <th style="text-align:center"></th>
+        <th style="text-align:center"></th>
+        <th style="text-align:center"></th>
+        <th style="text-align:center"></th>
+        <th style="text-align:center"></th>
+        <th style="text-align:center"></th>
+        <th style="text-align:center"></th>
+        <th style="text-align:center" id="total_ventas"></th>
+        <th style="text-align:center" id="cobro_mensual"></th>
+        <th style="text-align:center" id="saldos"></th>
+        <th style="text-align:center"></th>
+      </tr>
+    </tfoot>
    </table> 
       </div>
       </section>
