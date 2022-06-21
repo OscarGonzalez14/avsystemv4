@@ -82,9 +82,9 @@ require_once("modals/modal_correlativo_factura.php");
       </div>
       <div class="input-group input-group-sm col-sm-3">
         <span class="input-group-append">
-          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Proyección recuperado mensual:&nbsp;</button>
+          <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Cobro mensual:&nbsp;</button>
         </span>
-        <input type="text" class="form-control" id="proyeccion_mensual" readonly="">
+        <input type="text" class="form-control" id="cobro_mes" readonly="">
       </div>
       <div class="input-group input-group-sm col-sm-3">
         <span class="input-group-append">

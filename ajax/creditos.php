@@ -983,62 +983,29 @@ if ($_POST["sucursal"]=="Empresarial") {
     echo json_encode($results);
   break;
 
- case 'totales_venta':
-  if ($_POST["sucursal"]=="Empresarial") {
-    $sucursal = $_POST["sucursal_usuario"];
-  }else{
-    $sucursal = $_POST["sucursal"];    
-  }
-
-  if ($_POST["ver_credito"]=="" and $_POST["nombre_empresa"]=="" ) {
-    $datos=$creditos->totales_venta($sucursal);
-  }elseif($_POST["ver_credito"]=="" and $_POST["nombre_empresa"]!==""){
-    $datos=$creditos->montoTotalEmp($sucursal,$_POST["nombre_empresa"]); 
-  }elseif($_POST["ver_credito"]=="Creditos_Pendientes" and $_POST["nombre_empresa"]==""){
-    $datos=$creditos->verPendientes($sucursal,$_POST["ver_credito"]);
-  }elseif($_POST["ver_credito"]=="Creditos_Finalizados" and $_POST["nombre_empresa"]==""){
-    $datos=$creditos->verFinalizados($sucursal,$_POST["ver_credito"]);
-  }elseif($_POST["ver_credito"]=="Creditos_Pendientes" and $_POST["nombre_empresa"] !=""){
-    $datos=$creditos->verPendientesEmp($sucursal,$_POST["nombre_empresa"],$_POST["ver_credito"]);
-  }elseif($_POST["ver_credito"]=="Creditos_Finalizados" and $_POST["nombre_empresa"] !=""){
-    $datos=$creditos->verFinalizadosEmp($sucursal,$_POST["nombre_empresa"],$_POST["ver_credito"]);
-  }
-  foreach ($datos as $row){
-    $output["monto_total"] ="$".number_format($row["monto_total"],2,".",",");
-    $output["recuperado"] = "$".number_format($row["recuperado"],2,".",",");
-    $output["abono_mensual"] = "$".number_format($row["abono_mensual"],2,".",",");
-    $output["saldos"] = "$".number_format($row["saldos"],2,".",",");
-  }
-  echo json_encode($output);
-  break;
-
-/*case 'totales_venta':
+case 'get_reporte_creditos':
 if ($_POST["sucursal"]=="Empresarial") {
     $sucursal = $_POST["sucursal_usuario"];
   }else{
     $sucursal = $_POST["sucursal"];    
   }
-  $datos = $creditos->totales_venta($sucursal);
-  foreach ($datos as $row){
-    $output["monto_total"] ="$".number_format($row["monto_total"],2,".",",");
-    $output["recuperado"] = "$".number_format($row["recuperado"],2,".",",");
-    $output["abono_mensual"] = "$".number_format($row["abono_mensual"],2,".",",");
-    $output["saldos"] = "$".number_format($row["saldos"],2,".",",");
-  }
-   echo json_encode($output);
-  break;
+    $datos=$creditos->montos_globales($_POST["sucursal"]);
+      if (is_array($datos) and count($datos)) {
+          foreach ($datos as $row) {
+            $total_ventas = $row["total_ventas"];
+            $recuperado = $row["recuperado"];
+            $cobro_mensual = $row["cobro_mensual"];   
+            $saldos = $row["saldos"];               
+        }
+    }
 
-/*case 'totales_venta':
-  $datos = $creditos->montoTotalEmp($sucursal,$_POST["nombre_empresa"]);
-  //$ventas= array();
-  foreach ($datos as $row){
-    $output["monto_total"] = $row["monto_total"];
-    $output["saldo"] = $row["saldo"];
-    $output["recuperado"] = $row["recuperado"];
-    $output["abono_mensual"] = $row["abono_mensual"];
-  }
-   echo json_encode($output);
-break;*/
+        $output["total_ventas"] = "$".number_format($total_ventas,2,".",",");  
+        $output["recuperado"] = "$".number_format($recuperado,2,".",",");
+        $output["cobro_mensual"] = "$".number_format($cobro_mensual,2,".",",");         
+        $output["saldos"] = "$".number_format($saldos,2,".",",");
+
+    echo json_encode($output);
+    break;
 
 }//Fin case
 

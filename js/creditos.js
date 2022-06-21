@@ -6,9 +6,9 @@ function init(){
   listar_creditos_cauto();
   //listar_ordenes_pendientes();
   listar_oid_aprobadas();
-   listar_cautos_aprob();
-   filtrar_creditos(); 
-   countCreditosDescplanilla();   
+  listar_cautos_aprob();
+  filtrar_creditos(); 
+  countCreditosDescplanilla();   
   
 }
 ///////////OCULTAR ELEMENTOS AL INICIO
@@ -1744,30 +1744,39 @@ function calcularMontoCcf(){
   } 
 
 
-///*****CALCULA TODOS LOS CREDITOS EMPRESARIALES CLASIFICANDOLOS EN MONTO TOTALES DE VENTA, 
-///RECUPERADO, PROYECCION A RECUPERAR MENSUAL Y SALDO PENDIENTE A COBRAR.
- function countCreditosDescplanilla(){
+function countCreditosDescplanilla(){
   let ver_credito = $("#ver_credito").val();
   let empresa = $("#nom_empresa").val();
   let nombre_empresa = empresa.toString();
   let sucursal = $("#sucursal").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
-  console.log("prueba");
-
-  $.ajax({
-    url:"ajax/creditos.php?op=totales_venta",
-    method:"POST",
-    data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,ver_credito:ver_credito,nombre_empresa:nombre_empresa},
-    dataType:"json",
-    success:function(data){
-      $('#ventas_empresa').val(data.monto_total);
-      $('#recuperado').val(data.recuperado);
-      $('#proyeccion_mensual').val(data.abono_mensual);
-      $('#saldo').val(data.saldos);
+  console.log("Probando");
+   $.ajax({
+      url:"ajax/creditos.php?op=get_reporte_creditos",
+      method:"POST",
+      data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
+      cache:false,
+      dataType:"json",
+      success:function(data){ 
+        $("#ventas_empresa").val(data.total_ventas);
+        $("#recuperado").val(data.recuperado);
+        $("#cobro_mes").val(data.cobro_mensual);
+        $("#saldo").val(data.saldos);
+   
       }
-  });
+    });
+}  
 
- } 
+//Extraer los montos(reporte) de los créditos en Planilla
+function sumCreditosPlanilla(sum,countCreditosDescplanilla, ...args){
+  let ventas_total = 0;
+  console.log("Prueba2");
+
+  for (let arg of args) ventas_total += arg;
+    return sum;
+
+}
+
 
 init();
 
