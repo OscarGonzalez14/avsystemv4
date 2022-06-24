@@ -1002,7 +1002,7 @@ if ($_POST["sucursal"]=="Empresarial") {
         $output["total_ventas"] = "$".number_format($total_ventas,2,".",",");  
         $output["recuperado"] = "$".number_format($recuperado,2,".",",");
         $output["cobro_mensual"] = "$".number_format($cobro_mensual,2,".",",");         
-        $output["saldos"] = "$".number_format($saldos,2,".",",");
+        $output["saldo_planilla"] = "$".number_format($saldos,2,".",",");
 
     echo json_encode($output);
     break;

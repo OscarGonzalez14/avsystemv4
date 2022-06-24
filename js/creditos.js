@@ -1715,14 +1715,14 @@ function calcularMontoCcf(){
       console.log(e.responseText);
     }
   },
-    drawCallback: function () {
+    /*drawCallback: function () {
         var ventas = $('#creditos_globales').DataTable().column(7).data().sum();
         $('#total_ventas').html('$'+ventas.toFixed(2));
         var crobro_mes = $('#creditos_globales').DataTable().column(8).data().sum();
         $('#cobro_mensual').html('$'+cobro_mes.toFixed(2));
         var saldo = $('#creditos_globales').DataTable().column(9).data().sum();
         $('#saldos').html('$'+saldo.toFixed(2));
-      },
+      },*/
     "bDestroy": true,
     "responsive": true,
     "bInfo":true,
@@ -1769,13 +1769,24 @@ function countCreditosDescplanilla(){
         $("#ventas_empresa").val(data.total_ventas);
         $("#recuperado").val(data.recuperado);
         $("#cobro_mes").val(data.cobro_mensual);
-        $("#saldo").val(data.saldos);
+        $("#saldo_planilla").val(data.saldos);
    
       }
     });
 }  
 
-
+/*function reporte_descPlanilla(filtrar_creditos ...args){
+  let ventas = 0;
+  let cuota = 1;
+  let saldo =2;
+  for (const arg of args){
+    total += arg;
+    cuota += arg;
+    saldo += arg;
+  }
+  return total + cuota + saldo;
+}
+console.log(reporte_descPlanilla);*/
 
 init();
 

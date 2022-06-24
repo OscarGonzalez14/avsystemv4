@@ -354,5 +354,21 @@ public function state_order($codigo){
     return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
 
 }
+////////// ORDENES EN GENERAL ////
+public function get_ordenes_general(){
+	$conectar = parent::conexion();
+	$sql = "select estado,paciente,empresa,sucursal,laboratorio,id_orden_lab,cod_orden,fecha_creacion from ordenes_lab group by id_orden_lab;";
+	$sql = $conectar->prepare($sql);
+	$sql->execute();    
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function getOrdenesTotal(){
+	$conectar = parent::conexion();
+	$sql = "select*from ordenes_lab order by id_orden_lab DESC;";
+	$sql = $conectar->prepare($sql);
+	$sql->execute();    
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }////////FIN DE LA CLASE

@@ -67,6 +67,11 @@ $alerts = new Reporteria();
                   <i class="far fa-frown"></i> RETRASOS
                 </a>
 
+                <a class="btn btn-app" onClick="get_ordenes_general();">
+                  <span class="badge bg-success" id="alert_total_ord"></span>
+                  <i class="fas fa-clipboard-list"></i> GENERAL
+                </a>
+
             </div>
     <section>
     <table id="data_orders_lab" width="100%" style="text-align: center;text-align:center" data-order='[[ 0, "desc" ]]' class="table-hover table-bordered display nowrap">

@@ -90,7 +90,7 @@ require_once("modals/modal_correlativo_factura.php");
         <span class="input-group-append">
           <button type="button" class="btn btn-secondary btn-flat btn-md" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;border:#A8A8A8 1px solid">&nbsp;&nbsp;Saldo Total:&nbsp;</button>
         </span>
-        <input type="text" class="form-control" id="saldo" readonly="">
+        <input type="text" class="form-control" id="saldo_planilla" readonly="">
       </div> 
       </div>
       

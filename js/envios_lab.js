@@ -3,6 +3,7 @@ function init(){
   get_ordenes_retrasadas();
   get_numero_orden();
   count_states_orders();
+  get_ordenes_general();
 }
 $(document).ready(ocultar_btns);
 
@@ -11,6 +12,7 @@ function ocultar_btns(){
   document.getElementById("btn_receive_lab").style.display = "none";
   document.getElementById("btn_entregar_lab").style.display = "none";
   document.getElementById("section_acciones").style.display = "none";
+  document.getElementById("section_acciones").style.display = "block";
 }
 
 function get_numero_orden(){
@@ -129,7 +131,7 @@ function alerts(alert){
 function listar_ordenes_creadas(){
   document.getElementById("head_th").style.background = "#C0C0C0";
   document.getElementById("header_title").style.color = "black";
-  $("#acciones_orden").html("");
+  $("#acciones_orden").html("Acción");
   $("#col_seis").html("Fecha creación");
   let estado = "Creadas";
   let titulo = "ORDENES POR ENVIAR";
@@ -145,6 +147,7 @@ function listar_ordenes_enviadas(){
   document.getElementById("head_th").style.background = "#0275d8";
   document.getElementById("header_title").style.color = "white";
   //let tabla = 'data_orders_lab';
+  $("#acciones_orden").html("Acción");
   $("#col_cinco").html("Empresa");
   $("#col_diez").html("Tiempo transc.");
   $("#col_seis").html("Fecha Envío");
@@ -206,7 +209,7 @@ function get_ordenes_aprobadas(){
   $("#header_title").html("ORDENES APROBADAS");
   document.getElementById("head_th").style.background = "#007E93";
   document.getElementById("header_title").style.color = "white";
-  $("#acciones_orden").html("");
+  $("#acciones_orden").html("Acción");
   $("#col_cinco").html("Empresa");
   $("#col_diez").html("Acciones");
   $("#col_seis").html("Fecha Recibido");
@@ -214,6 +217,19 @@ function get_ordenes_aprobadas(){
   document.getElementById("btn_receive_lab").style.display = "none";
   document.getElementById("btn_entregar_lab").style.display = "block";
   get_ordenes_aprobadas_data();
+}
+
+function get_ordenes_general(){
+$("#header_title").html("VERIFICACION DE ESTADO (ORDENES)");
+document.getElementById("head_th").style.background = "#00758F";
+document.getElementById("header_title").style.color = "white";
+$("#acciones_orden").html("Cod. orden");
+$("#col_cinco").html("Empresa");
+$("#col_seis").html("Fecha Envío");
+$("#col_diez").html("Acciones");
+$("#col_ocho").html("Estado");
+$("#col_nueve").html("Detalles");
+get_ordenes_general_data();
 }
 /////////////////////LISTAR ORDENES CREADAS - PENDIENTES
 function listar_ordenes(tabla,estado,titulo){
@@ -941,6 +957,17 @@ function count_states_orders(){
     }     
   });
 
+  $.ajax({
+    url:"ajax/laboratorios.php?op=count_ordenes_total",
+    method:"POST",
+    //data:{sucursal:sucursal},
+    dataType:"json",
+    success:function(data){
+    console.log(data);//return false;
+    $("#alert_total_ord").html(data);    
+    }     
+  });
+
 }
 
 /////////////// 
@@ -1053,5 +1080,56 @@ function listar_historial_orden(){
     
     $('#det_acciones_ordenes').html(filas);
 }
+
+/////////////////////   LISTAR ORDENES EN GENERAL ///////////////
+function get_ordenes_general_data(){
+  tabla_envios_gral=$('#data_orders_lab').dataTable(
+  {
+    "aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      dom: 'Bfrtip',//Definimos los elementos del control de tabla
+            buttons: ['excelHtml5'],
+    "ajax":
+        {
+          url: 'ajax/laboratorios.php?op=listar_ordenes_general',
+          type : "post",
+          dataType : "json",
+          //data:{estado:estado},
+          error: function(e){
+            console.log(e.responseText);}
+        },
+    "bDestroy": true,
+    "responsive": true,
+    "bInfo":true,
+    "iDisplayLength": 25,//Por cada 10 registros hace una paginación
+      "order": [[ 0, "desc" ]],//Ordenar (columna,orden)
+
+      "language": {
+          "sProcessing":     "Procesando...",
+          "sLengthMenu":     "Mostrar _MENU_ registros",
+          "sZeroRecords":    "No se encontraron resultados",
+          "sEmptyTable":     "Ningún dato disponible en esta tabla",
+          "sInfo":           "Mostrando un total de _TOTAL_ registros",
+          "sInfoEmpty":      "Mostrando un total de 0 registros",
+          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+          "sInfoPostFix":    "",
+          "sSearch":         "Buscar:",
+          "sUrl":            "",
+          "sInfoThousands":  ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+              "sFirst":    "Primero",
+              "sLast":     "Último",
+              "sNext":     "Siguiente",
+              "sPrevious": "Anterior" },
+          "oAria": {
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          }
+         }//cerrando language
+  }).DataTable();
+}
+
+
 
  init();

@@ -991,8 +991,7 @@ public function get_cautos_aprob($sucursal_usuario){
     public function montos_globales($sucursal){
     $conectar= parent::conexion();
     $suc = "%".$sucursal."%";
-
-    $sql="select SUM(c.monto) as total_ventas, SUM(c.saldo) as saldos, SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as cobro_mensual from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ?;";
+    $sql="select SUM(v.monto_total)as total_ventas, SUM(c.saldo) as saldos, SUM(c.monto-c.saldo) as recuperado,SUM(c.monto/c.plazo) as cobro_mensual from creditos as c inner join ventas as v on c.numero_venta=v.numero_venta inner join pacientes as p on v.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and v.sucursal like ?;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$suc);
     $sql->execute();
