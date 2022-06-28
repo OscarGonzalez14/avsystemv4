@@ -67,7 +67,15 @@ class Externos extends conectar
     	$sql->bindValue(1, $sucursal);
     	$sql->execute();
     	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
-
+    }
+    
+     public function get_empresas_creditos(){
+    	$conectar = parent::conexion();
+    	parent::set_names();
+    	$sql = "select*from empresas;";
+    	$sql=$conectar->prepare($sql);
+    	$sql->execute();
+    	return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 
 	}/////FIN CLASS

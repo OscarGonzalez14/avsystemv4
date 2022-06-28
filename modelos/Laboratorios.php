@@ -355,4 +355,30 @@ public function state_order($codigo){
 
 }
 
+////////// ORDENES EN GENERAL ////
+public function get_ordenes_general(){
+	$conectar = parent::conexion();
+	$sql = "select estado,paciente,empresa,sucursal,laboratorio,id_orden_lab,cod_orden,fecha_creacion from ordenes_lab group by id_orden_lab;";
+	$sql = $conectar->prepare($sql);
+	$sql->execute();    
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function getOrdenesTotal(){
+	$conectar = parent::conexion();
+	$sql = "select * from ordenes_lab as ol inner join acciones_ordenes_envios as ao on ol.cod_orden=ao.cod_orden order by id_accion desc;";
+	$sql = $conectar->prepare($sql);
+	$sql->execute();    
+    return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+}
+
+  public function eliminar_orden_lab($cod_orden){
+    $conectar=parent::conexion();
+    $sql="delete ol,ao from ordenes_lab as ol join acciones_ordenes_envios as ao on (ol.cod_orden=ao.cod_orden) where ol.cod_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $cod_orden);
+    $sql->execute();
+    echo 'ok';
+  }
+
 }////////FIN DE LA CLASE

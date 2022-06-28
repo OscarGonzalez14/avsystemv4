@@ -202,7 +202,7 @@ case "buscar_aros_venta":
   foreach($datos as $row){
     $sub_array = array();         
       
-      $sub_array[] = $row["categoria"]." ".$row["desc_producto"];
+      $sub_array[] = $row["desc_producto"]." ". $row["marca"];
       $sub_array[] = $row["stock"];
       $sub_array[] = $row["fecha_ingreso"];
       $sub_array[] = $row["num_compra"];      

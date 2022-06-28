@@ -66,6 +66,11 @@ $alerts = new Reporteria();
                   <span class="badge bg-danger" id="alert_retrasados_ord"></span>
                   <i class="far fa-frown"></i> RETRASOS
                 </a>
+                
+                <a class="btn btn-app" onClick="get_ordenes_general();">
+                  <span class="badge bg-success" id="alert_total_ord"></span>
+                  <i class="fas fa-clipboard-list"></i> GENERAL
+                </a>
 
             </div>
     <section>

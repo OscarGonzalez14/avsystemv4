@@ -46,8 +46,8 @@
               </tbody>
             </table><br>
 
-            <table id="lista_det_abonos" width="100%" class ="table-hover">
-              <thead style="background:#034f84;color:white;text-align: center;">
+            <table id="lista_det_abonos" width="100%" class ="table-hover table-bordered">
+              <thead style="background:#034f84;color:white;text-align: center;font-size: 14px;font-family: Helvetica, Arial, sans-serif;">
                 <tr>
                 <th>Fecha Abono</th>
                 <th>Paciente</th>
@@ -58,7 +58,7 @@
                 <th>Monto</th> 
                 </tr>
               </thead>
-              <tbody style="text-align:center">                                  
+              <tbody style="text-align:center;font-size: 12px;font-family: Helvetica, Arial, sans-serif;">                                  
               </tbody>
             </table>
           </div>

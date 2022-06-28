@@ -75,6 +75,7 @@
         <option value="Opti Procesos">Opti Procesos</option>
         <option value="PrismaLab">PrismaLab</option>
         <option value="Optiservicios">Optiservicios</option>
+        <option value="Cubas">Cubas</option>
     </select>
     </div>
 

@@ -17,7 +17,7 @@ where c.tipo_credito='Contado' and p.sucursal=? order by c.id_credito DESC;";
 
 public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
     $conectar= parent::conexion();
-    $sql= "select c.numero_venta,p.nombres,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta where c.tipo_credito='Contado' and (p.sucursal=? or p.sucursal=?) order by c.id_credito DESC;";
+    $sql= "select c.numero_venta,p.nombres,c.monto,c.saldo,p.id_paciente,c.id_credito,v.evaluado,c.cancelacion from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta where c.tipo_credito='Contado' and (p.sucursal=? or p.sucursal=?) order by c.id_credito DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$sucursal_usuario);
     $sql->bindVAlue(2,"Empresarial-".$sucursal_usuario);
@@ -55,9 +55,12 @@ public function get_creditos_contado_emp($sucursal,$sucursal_usuario){
    //////////////////////LISTAR CREDITOS DE DESCUENTO EN PLANILLA EMPRESARIALES ////////////////
     public function get_creditos_oid_empresarial($sucursal,$empresa,$sucursal_usuario){
     $conectar= parent::conexion();
+    /* $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion,v.evaluado
+        from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
+        where c.forma_pago='Descuento en Planilla' and (p.sucursal=? or p.sucursal=?) and p.empresas=? group by c.numero_venta order by c.id_credito DESC;";*/
     $sql= "select c.numero_venta,p.nombres,p.empresas,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion,v.evaluado
         from creditos as c inner join pacientes as p on c.id_paciente=p.id_paciente inner join ventas as v on c.numero_venta=v.numero_venta
-        where c.forma_pago='Descuento en Planilla' and (p.sucursal=? or p.sucursal=?) and p.empresas=? group by c.numero_venta order by c.id_credito DESC;";
+        where c.forma_pago='Descuento en Planilla' group by c.numero_venta order by c.id_credito DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1,$sucursal_usuario);
     $sql->bindValue(2,"Empresarial-".$sucursal_usuario);
@@ -440,6 +443,7 @@ public function aprobar_orden(){
         $sql->execute();
         $resultados = $sql->fetchAll(PDO::FETCH_ASSOC);
 
+       $suma_pfinal = 0;
        foreach ($resultados as $v => $row) {//Recorrer detalle ventas flotantes
          $id_producto = $row["id_producto"];
          $producto = $row["producto"];
@@ -487,7 +491,7 @@ public function aprobar_orden(){
        $sql->bindValue(10,$id_paciente);
        $sql->bindValue(11,$beneficiario);
        $sql->execute();
-
+       $suma_pfinal = $suma_pfinal+$precio_final;
        }///////fin recorrer detalle ventas flotantes
 
        ///////CONSULTAR VENTA FLOTANTE POR BENEFICIARIO
@@ -518,7 +522,7 @@ public function aprobar_orden(){
     $sql2->bindValue(2,$num_venta);
     $sql2->bindValue(3,$paciente);
     $sql2->bindValue(4,$vendedor);       
-    $sql2->bindValue(5,$monto_total);
+    $sql2->bindValue(5,$suma_pfinal);
     $sql2->bindValue(6,$tipo_pago);
     $sql2->bindValue(7,$tipo_venta);          
     $sql2->bindValue(8,$id_usuario);
@@ -569,10 +573,6 @@ public function aprobar_orden(){
        $sql6->bindValue(3,$id_credito);
        $sql6->execute();
        
-       ///////////////////////////UPDATE VENTA //////////////////
-
-       // $sql8 = "update ventas set monto";
-
     }else{
 
     $sql7 = "select plazo from orden_credito where numero_orden=?;";
@@ -591,7 +591,7 @@ public function aprobar_orden(){
        $sql7="insert into creditos values(null,?,?,?,?,?,?,?,?,?,?,?);";
        $sql7= $conectar->prepare($sql7);
        $sql7->bindValue(1,$tipo_venta);
-       $sql7->bindValue(2,$monto_total);
+       $sql7->bindValue(2,$suma_pfinal);
        $sql7->bindValue(3,$plazo_orden);
        $sql7->bindValue(4,$monto_total);
        $sql7->bindValue(5,$tipo_pago);
@@ -604,6 +604,13 @@ public function aprobar_orden(){
 
        $sql7->execute();
     }
+
+    $sql14="update abonos set numero_venta=? where numero_venta=? and id_paciente=?;";
+    $sql14=$conectar->prepare($sql14);
+    $sql14->bindValue(1,$num_venta);
+    $sql14->bindValue(2,$numero_orden);
+    $sql14->bindValue(3,$id_paciente);
+    $sql14->execute();
 
     }///////FIN COMPROBACION DE ESTADO
     }/////////// FIN GET BENEFICARIOS FOREACH
@@ -707,7 +714,7 @@ public function agregar_benefiaciario_oid(){
   $id_ref = $_POST["id_ref"];
   $numero_orden = $_POST["n_orden_add"];
   $nuevo_saldo_add = $_POST["nuevo_saldo_add"];
-  $nuevo_plazo = $_POST["new_plazo"];  
+  $nuevo_plazo = $_POST["new_plazo"]-1;  
 
   $str = '';
   $detalles = array();
@@ -899,6 +906,86 @@ public function get_cautos_aprob($sucursal_usuario){
 
 }
 
+      //////////////FUNCION PARA ELIMINAR OID SIN APROBAR
+  public function eliminar_oid_p($numero_orden){
+    $conectar=parent::conexion();
+    $sql="delete vf,dvf,oc from ventas_flotantes as vf join detalle_ventas_flotantes as dvf on (dvf.numero_orden=vf.numero_orden) join orden_credito as oc on (oc.numero_orden=vf.numero_orden) where vf.numero_orden = ?";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $numero_orden);
+    $sql->execute();
+    echo 'ok';
+  }
+
+
+//***************************************************//
+///CONSULTAR A BD, CREDITOS DEPENDIENDO DE SU FILTRADO
+    public function listar_creditos_general($sucursal){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+    $sql="select c.numero_venta,p.sucursal,p.nombres,p.empresas,oc.fecha_inicio,oc.fecha_finalizacion,c.plazo,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? group by c.numero_venta order by c.id_credito desc";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_empresa($sucursal,$nombre_empresa){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select c.numero_venta,p.sucursal,p.nombres,p.empresas,oc.fecha_inicio,oc.fecha_finalizacion,c.plazo,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas= ? group by c.numero_venta order by c.id_credito desc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_pendientes($sucursal,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select c.numero_venta,p.sucursal,p.nombres,p.empresas,oc.fecha_inicio,oc.fecha_finalizacion,c.plazo,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and c.saldo > 0 group by c.numero_venta order by c.id_credito desc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_finalizados($sucursal,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select c.numero_venta,p.sucursal,p.nombres,p.empresas,oc.fecha_inicio,oc.fecha_finalizacion,c.plazo,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and c.saldo <= 0 group by c.numero_venta order by c.id_credito desc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_pendientes_emp($sucursal,$nombre_empresa,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select c.numero_venta,p.sucursal,p.nombres,p.empresas,oc.fecha_inicio,oc.fecha_finalizacion,c.plazo,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas = ? and saldo > 0 group by c.numero_venta order by c.id_credito desc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function listar_creditos_finalizados_emp($sucursal,$nombre_empresa,$ver_credito){
+    $conectar= parent::conexion();
+    $suc = "%".$sucursal."%";
+
+    $sql ="select c.numero_venta,p.sucursal,p.nombres,p.empresas,oc.fecha_inicio,oc.fecha_finalizacion,c.plazo,c.monto,c.saldo,p.id_paciente,c.id_credito,c.cancelacion from orden_credito as oc inner join creditos as c on oc.id_paciente=c.id_paciente inner join pacientes as p on c.id_paciente=p.id_paciente where c.forma_pago='Descuento en Planilla' and p.sucursal like ? and p.empresas = ? and saldo <= 0 group by c.numero_venta order by c.id_credito desc;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1,$suc);
+    $sql->bindValue(2,$nombre_empresa);
+    $sql->execute();
+    return $resultado= $sql->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }/////FIN CLASS
 

@@ -26,7 +26,7 @@ require_once('header_dos.php');
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
-            <!-- small box -->
+            
             <div class="small-box bg-primary">
               <div class="inner">
                 <h4><b>Descuento Planilla</b></h4>
@@ -50,6 +50,20 @@ require_once('header_dos.php');
                 <i class="fas fa-money-check-alt"></i>
               </div>
               <a href="creditos_cautomaticos.php" class="small-box-footer">Ir a Cargos Automáticos<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+            <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h4><b>Creditos General (Desc.Planilla)</b></h4>
+
+                <p>0</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <a href="creditos_planilla.php" class="small-box-footer"> Gestión de Créditos<i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -81,7 +95,8 @@ require_once('header_dos.php');
               </div>
               <a href="creditos_mora.php" class="small-box-footer"> Ir a Créditos en Mora<i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>        
+          </div> 
+
     
  </div>
 

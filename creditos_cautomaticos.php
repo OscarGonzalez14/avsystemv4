@@ -18,7 +18,7 @@ require_once("modals/modal_correlativo_factura.php");
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="creditos.php" style="color:black">Créditos</a></li>
               <li class="breadcrumb-item"><a href="creditos_contado.php">Contado</a></li>
-              <li class="breadcrumb-item"><a href="creditos_oid.php">Desc. Planilla</a></li>
+              <li class="breadcrumb-item"><a href="creditos_planilla.php">Desc. Planilla</a></li>
               <li class="breadcrumb-item active"><a>Cargo Auto</a></li>
               <li class="breadcrumb-item"><a href="creditos_mora.php">Créditos en mora</a></li>
             </ol>

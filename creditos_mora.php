@@ -17,7 +17,7 @@ require_once("modals/info_pacientes_modal.php");
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="creditos.php" style="color:black">Créditos</a></li>
               <li class="breadcrumb-item"><a href="creditos_contado.php">Contado</a></li>
-              <li class="breadcrumb-item"><a href="creditos_oid.php">Desc. Planilla</a></li>
+              <li class="breadcrumb-item"><a href="creditos_planilla.php">Desc. Planilla</a></li>
               <li class="breadcrumb-item"><a href="creditos_cautomaticos.php">Cargo Auto</a></li>
               <li class="breadcrumb-item active"><a>Créditos en mora</a></li>
             </ol>
