@@ -1130,6 +1130,35 @@ function get_ordenes_general_data(){
   }).DataTable();
 }
 
+function eliminar_orden_lab(cod_orden){
 
+  let cat_user = $("#cat_user").val();
+  console.log(cat_user);
+  if (cat_user=="administrador"){
+
+    bootbox.confirm("¿Está Seguro de eliminar esta orden?", function(result){
+      if(result){
+
+        $.ajax({
+          url:"ajax/laboratorios.php?op=eliminar_orden_lab",
+          method:"POST",
+          data:{cod_orden:cod_orden},
+          dataType:"json",
+          success:function(data)
+          {
+            console.log(data);
+            if(data=="ok"){
+              setTimeout ("Swal.fire('La orden ha sido eliminada Existosamente','','success')", 100);
+              setTimeout ("explode();", 2000);
+            }
+          }
+        });
+         $("#data_orders_lab").DataTable().ajax.reload();   
+      }
+});//bootbox
+  }else if (cat_user=="optometra","asesor") {
+      setTimeout ("Swal.fire('No posse permisos para eliminar orden','','error')", 100);
+    }
+}
 
  init();

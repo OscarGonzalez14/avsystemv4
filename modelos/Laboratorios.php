@@ -276,7 +276,7 @@ public function entregarOrdenes(){
 		$sql2->bindValue(7,$id_orden_lab);
         $sql2->execute();
 
-        $sql3 = "update ordenes_lab set estado='5' where id_orden_lab=? and cod_orden=? and paciente=?;";
+        $sql3 = "update ordenes_lab set estado='5' where id_orden_lab=? and cod_orden=? and paciente=? order by ;";
         $sql3=$conectar->prepare($sql3);
 		$sql3->bindValue(1,$id_orden_lab);
 		$sql3->bindValue(2,$codigo);
@@ -365,10 +365,20 @@ public function get_ordenes_general(){
 
 public function getOrdenesTotal(){
 	$conectar = parent::conexion();
-	$sql = "select*from ordenes_lab order by id_orden_lab DESC;";
+	$sql = "select * from ordenes_lab as ol inner join acciones_ordenes_envios as ao on ol.cod_orden=ao.cod_orden order by id_accion DESC LIMIT 1;";
 	$sql = $conectar->prepare($sql);
 	$sql->execute();    
     return $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 }
+
+      //////////////FUNCION PARA ELIMINAR OID SIN APROBAR
+  public function eliminar_orden_lab($cod_orden){
+    $conectar=parent::conexion();
+    $sql="delete ol,ao from ordenes_lab as ol join acciones_ordenes_envios as ao on (ol.cod_orden=ao.cod_orden) where ol.cod_orden=?;";
+    $sql=$conectar->prepare($sql);
+    $sql->bindValue(1, $cod_orden);
+    $sql->execute();
+    echo 'ok';
+  }
 
 }////////FIN DE LA CLASE

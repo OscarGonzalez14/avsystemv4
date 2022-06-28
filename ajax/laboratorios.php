@@ -638,7 +638,7 @@ case 'listar_ordenes_general':
         $sub_array[] = $row["sucursal"];
         $sub_array[] = $estado;
         $sub_array[] = '<button type="button" class="btn btn-sm btn-outline-secondary btn-sm" onClick="detOrdenes('.$row["id_orden_lab"].',\''.$row["cod_orden"].'\');"><i class="fas fa-eye" aria-hidden="true" style="color:blue"></i></button>';
-        $sub_array[] = $sub_array[] = '<button type="button"  class="btn btn-sm bg-light" onClick="eliminar_orden_lab('.$row["id_orden_lab"].')"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></button>';    
+        $sub_array[] = $sub_array[] = '<button type="button"  class="btn btn-sm bg-light" onClick="eliminar_orden_lab('.$row["cod_orden"].')"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></button>';    
         $data[] = $sub_array;
       }
 
@@ -649,6 +649,12 @@ case 'listar_ordenes_general':
       "aaData"=>$data);
        echo json_encode($results);
       break;
+
+      /////eliminar oid sin aprobar
+    case "eliminar_orden_lab":
+       $datos=$laboratorios->eliminar_orden_lab($_POST["cod_orden"]);
+    break;
+
   /*case 'get_estado_orden':
     $data = $laboratorios->state_order($_POST["codigo"]);
     foreach ($data as $row) {
