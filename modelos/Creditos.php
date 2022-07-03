@@ -262,7 +262,7 @@ public function get_ordenes_descuento_pendientes($sucursal){
     parent::set_names();
 
     $suc = '%'.$sucursal.'%';
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ? and estado='0' and tipo_orden !='Cargo Automatico' order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal,u.usuario from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='0' and tipo_orden !='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $suc);
     $sql->execute();
@@ -274,7 +274,7 @@ public function get_ordenes_descuento_empresarial($sucursal_usuario){
     $conectar=parent::conexion();
     parent::set_names();
     $suc = "%".$sucursal_usuario."%";
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ?  and estado='0' and tipo_orden !='Cargo Automatico' order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal,u.usuario from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='0' and tipo_orden !='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $suc);
     $sql->execute();
@@ -288,7 +288,7 @@ public function get_ordenes_cauto_pendientes($sucursal){
     parent::set_names();
 
     $suc = '%'.$sucursal.'%';
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ? and estado='0' and tipo_orden ='Cargo Automatico'  order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,u.usuario,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='0' and tipo_orden ='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $suc);
     $sql->execute();
@@ -300,7 +300,7 @@ public function get_ordenes_cauto_empresarial($sucursal_usuario){
     $conectar=parent::conexion();
     parent::set_names();
     $suc = "%".$sucursal_usuario."%";
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ?  and estado='0' and tipo_orden ='Cargo Automatico'  order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,u.usuario,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='0' and tipo_orden ='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $suc);
     $sql->execute();
@@ -687,7 +687,7 @@ public function get_ordenes_descuento_aprobadas($suc){
     $conectar=parent::conexion();
     parent::set_names();
     $sucursal = "%".$suc."%";
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ? and estado='1' order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal,u.usuario from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='1' and tipo_orden !='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $sucursal);
     $sql->execute();
@@ -886,7 +886,7 @@ public function get_cautos_empresarial($sucursal){
     parent::set_names();
 
     $suc = '%'.$sucursal.'%';
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ? and estado='1' and tipo_orden ='Cargo Automatico' order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,u.usuario,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='1' and tipo_orden ='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $suc);
     $sql->execute();
@@ -898,7 +898,7 @@ public function get_cautos_aprob($sucursal_usuario){
     $conectar=parent::conexion();
     parent::set_names();
     $suc = "%".$sucursal_usuario."%";
-    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente where o.sucursal like ?  and estado='1' and tipo_orden ='Cargo Automatico' order by o.id_orden DESC;";
+    $sql="select o.numero_orden,p.nombres,p.empresas,p.id_paciente,u.usuario,o.fecha_registro,o.estado,o.id_orden,o.sucursal from orden_credito as o inner join pacientes as p on o.id_paciente = p.id_paciente inner join usuarios as u on o.id_usuario=u.id_usuario where o.sucursal like ? and o.estado='1' and tipo_orden ='Cargo Automatico' order by o.id_orden DESC;";
     $sql=$conectar->prepare($sql);
     $sql->bindValue(1, $suc);
     $sql->execute();
