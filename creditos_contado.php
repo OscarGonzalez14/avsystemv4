@@ -62,6 +62,7 @@ require_once("modals/modal_ccf_generica.php");
         <th style='text-align: center;'>Paciente Evaluado</th>        
         <th style='text-align: center;'>Monto</th>
         <th style='text-align: center;'>Saldo</th>
+        <th style='text-align: center;'>Contacto</th>
         <th style='text-align: center;'>Fecha Adquirido</th>
         <th style='text-align: center;'>Sucursal</th>
         <th style='text-align: center;'>Asesor</th>

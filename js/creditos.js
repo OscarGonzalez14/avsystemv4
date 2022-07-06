@@ -1362,8 +1362,10 @@ function denegar_od_planilla(){
 
 
 function listar_creditos_cauto(){
-  var sucursal= $("#sucursal").val();
+  let ver_credito = $("#ver_credito").val();
+  let sucursal = $("#sucursal").val();
   let sucursal_usuario = $("#sucursal_usuario").val();
+
   tabla_creditos_cauto=$('#creditos_cauto').dataTable(
   {
     "aProcessing": true,//Activamos el procesamiento del datatables
@@ -1377,7 +1379,7 @@ function listar_creditos_cauto(){
         url: 'ajax/creditos.php?op=listar_creditos_cauto',
         type : "post",
         dataType : "json",
-        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,ver_credito:ver_credito},
         error: function(e){
           console.log(e.responseText);
         }
@@ -1398,9 +1400,9 @@ function listar_creditos_cauto(){
 
         "sEmptyTable":     "Ningún dato disponible en esta tabla",
 
-        "sInfo":           "Mostrando un total de _TOTAL_ registros",
+        "sInfo":           "Mostrando 0 de un total de _TOTAL_ registros",
 
-        "sInfoEmpty":      "Mostrando un total de 0 registros",
+        "sInfoEmpty":      "Mostrando 0 de un total de 0 registros",
 
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
 

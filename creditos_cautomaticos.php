@@ -26,7 +26,23 @@ require_once("modals/modal_correlativo_factura.php");
         </div>
       </div><!-- /.container-fluid -->
     </section>
+
  <section class="content" style="margin-top:5px">
+      <div class="invoice p-3 mb-3" style="margin-top:12px;">
+      <div class="row row2" style="background:#E0E0E0;border-radius: 5px">
+        <div class="form-group col-sm-3">
+          <label for="">Verificar créditos:</label>
+          <select class="form-control input-dark" id="ver_credito">
+            <option value=''>Seleccionar...</option>
+            <option value='Creditos_Finalizados'>Creditos Finalizados</option>
+            <option value='Creditos_Pendientes'>Creditos Pendientes</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-2" style="margin-top:32px;">
+          <button type="button" class=" btn btn-light visualizar" onClick="listar_creditos_cauto();"><i class="fas fa-search" style="color: green; border:gray;"></i> Filtrar</button>
+        </div>
+      </div>
+      </div>
  	<div class="row">
  	 <div class="col-12">
  	  <div class="card">
@@ -43,9 +59,11 @@ require_once("modals/modal_correlativo_factura.php");
             <th style='text-align: center;'>Paciente Evaluado</th>        
             <th style='text-align: center;'>Monto</th>
             <th style='text-align: center;'>Saldo</th>
-            <th style='text-align: center;'>Abonar</th>
-            <th style='text-align: center;'>Historial</th>
-            <th style='text-align: center;'>Factura</th>
+            <th style='text-align: center;'>Contacto</th>
+            <th style='text-align: center;'>Fecha Adquirido</th>
+            <th style='text-align: center;'>Sucursal</th>
+            <th style='text-align: center;'>Asesor</th>
+            <th style='text-align: center;'>Acciones</th>
           </tr>
      </thead>
      <tbody style="font-family: Helvetica, Arial, sans-serif;font-size: 11px;text-align: center">
