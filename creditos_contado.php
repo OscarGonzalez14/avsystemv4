@@ -34,7 +34,22 @@ require_once("modals/modal_ccf_generica.php");
         <div class="col-12">
           <div class="card">
           <!-- /.card-header -->
-<div class="card-body"><!--CONTENIDO-->
+        <div class="card-body"><!--CONTENIDO-->
+              <div class="invoice p-3 mb-3" style="margin-top:12px;">
+      <div class="row row2" style="background:#E0E0E0;border-radius: 5px">
+        <div class="form-group col-sm-3">
+          <label for="">Verificar créditos:</label>
+          <select class="form-control input-dark" id="ver_credito">
+            <option value=''>Seleccionar...</option>
+            <option value='Creditos_Finalizados'>Creditos Finalizados</option>
+            <option value='Creditos_Pendientes'>Creditos Pendientes</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-2" style="margin-top:32px;">
+          <button type="button" class=" btn btn-light visualizar" onClick="listar_creditos_sucursal();"><i class="fas fa-search" style="color: green; border:gray;"></i> Filtrar</button>
+        </div>
+      </div>
+      </div>
 
 <section class="content">
   <div class="container-fluid"><!--INICIO DE CONTENIDO-->
@@ -47,10 +62,10 @@ require_once("modals/modal_ccf_generica.php");
         <th style='text-align: center;'>Paciente Evaluado</th>        
         <th style='text-align: center;'>Monto</th>
         <th style='text-align: center;'>Saldo</th>
-        <th style='text-align: center;'>Abonar</th>
-        <th style='text-align: center;'>Historial</th>
-        <th style='text-align: center;'>Fac.</th>
-        <th style='text-align: center;'>CCF.</th>
+        <th style='text-align: center;'>Fecha Adquirido</th>
+        <th style='text-align: center;'>Sucursal</th>
+        <th style='text-align: center;'>Asesor</th>
+        <th style='text-align: center;'>Acciones</th>
        </tr>
      </thead>
      <tbody style="text-align: center;font-family: Helvetica, Arial, sans-serif;font-size: 11px;">
@@ -66,7 +81,7 @@ require_once("modals/modal_ccf_generica.php");
 <input type="hidden" name="sucursal" id="sucursal" value="<?php echo $_SESSION["sucursal"];?>"/>
 <input type="hidden" name="sucursal_usuario" id="sucursal_usuario" value="<?php echo $_SESSION["sucursal_usuario"];?>"/>
 <input type="hidden" id="fecha" value="<?php echo $hoy;?>">
-<input type="hidden" id="name_pag" value="COBROS DE CONTADO">
+<input type="hidden" id="name_pag" value="CREDITOS DE CONTADO">
 <input type="hidden" id="id_consulta">
 <input type="hidden" id="id_paciente">
 <input type="hidden" id="optometra" value="">

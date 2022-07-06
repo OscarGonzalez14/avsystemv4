@@ -26,8 +26,10 @@ $(document).on('click', '.ocultar_btns_oid', function(){
 
 ////////////////LISTAR CREDITOS DE CONTADO
 function listar_creditos_sucursal(){
-  var sucursal= $("#sucursal").val();
-  let sucursal_usuario = $("#sucursal_usuario").val();
+    let ver_credito = $("#ver_credito").val();
+    let sucursal = $("#sucursal").val();
+    let sucursal_usuario = $("#sucursal_usuario").val();
+
   tabla_creditos_sucursal=$('#creditos_de_contado').dataTable(
   {
     "aProcessing": true,//Activamos el procesamiento del datatables
@@ -41,7 +43,7 @@ function listar_creditos_sucursal(){
         url: 'ajax/creditos.php?op=listar_creditos_contado',
         type : "post",
         dataType : "json",
-        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario},
+        data:{sucursal:sucursal,sucursal_usuario:sucursal_usuario,ver_credito:ver_credito},
         error: function(e){
           console.log(e.responseText);
         }
